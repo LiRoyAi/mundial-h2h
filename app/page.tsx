@@ -551,7 +551,7 @@ export default function MundialPage() {
   const [showAllUpcoming, setShowAllUpcoming] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
-  const [authState, setAuthState] = useState<"idle" | "checking" | "pin_register" | "pin_login" | "nick_taken">("idle");
+  const [authState, setAuthState] = useState<"idle" | "checking" | "pin_register" | "pin_login" | "pin_claim">("idle");
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
   const [pendingNick, setPendingNick] = useState("");
@@ -593,7 +593,7 @@ export default function MundialPage() {
       if (data.exists) {
         setAuthState("pin_login");
       } else if (data.hasRanking) {
-        setAuthState("nick_taken");
+        setAuthState("pin_claim");
       } else {
         setAuthState("pin_register");
       }
@@ -605,7 +605,7 @@ export default function MundialPage() {
   const submitPin = async () => {
     if (!/^\d{4}$/.test(pinInput)) { setPinError("PIN musi mieć dokładnie 4 cyfry"); return; }
     setPinError("");
-    const action = authState === "pin_register" ? "register" : "login";
+    const action = (authState === "pin_register" || authState === "pin_claim") ? "register" : "login";
     try {
       const res = await fetch("/api/mundial/auth", {
         method: "POST",
@@ -763,19 +763,33 @@ export default function MundialPage() {
                 className="w-full mt-3 text-[10px] tracking-widest hover:text-[#FFD700] transition-colors"
                 style={{ fontFamily: B, color: "#444" }}>← ZMIEŃ NICK</button>
             </motion.div>
-          ) : authState === "nick_taken" ? (
-            <motion.div key="nick-taken" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-              className="border border-red-900/40 bg-[#0a0a0a] p-6 rounded-sm">
-              <p className="text-xs tracking-[0.3em] mb-3 text-center" style={{ fontFamily: B, color: "#FF4444" }}>
-                NICK ZAJĘTY
+          ) : authState === "pin_claim" ? (
+            <motion.div key="pin-claim" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+              className="border border-[#FFD700]/30 bg-[#0a0a0a] p-6 rounded-sm">
+              <p className="text-xs tracking-[0.3em] mb-1 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
+                ZAREZERWUJ NICK
               </p>
-              <p className="text-[11px] tracking-wide text-center leading-relaxed mb-4" style={{ fontFamily: B, color: "#666" }}>
-                Ten nick jest już używany. Jeśli to Ty — wpisz PIN który ustawiłeś.
-                Jeśli nie masz PIN — wybierz inny nick.
+              <p className="text-[10px] tracking-wide text-center leading-relaxed mb-4" style={{ fontFamily: B, color: "#555" }}>
+                Nick &apos;{pendingNick}&apos; jest już w rankingu.{" "}
+                Jeśli to Twój nick — ustaw PIN żeby go zabezpieczyć na przyszłość.
               </p>
+              <div className="flex gap-2">
+                <input
+                  type="password" inputMode="numeric" maxLength={4} value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                  onKeyDown={(e) => e.key === "Enter" && submitPin()}
+                  placeholder="4 cyfry"
+                  autoFocus
+                  className="flex-1 bg-[#111] border border-[#333] px-4 py-2 text-sm text-white placeholder-[#333] focus:outline-none focus:border-[#FFD700]/50 tracking-[0.8em] text-center"
+                  style={{ fontFamily: B }}
+                />
+                <button onClick={submitPin} className="px-6 py-2 text-black text-sm tracking-widest"
+                  style={{ fontFamily: B, background: "#FFD700" }}>ZAREZERWUJ</button>
+              </div>
+              {pinError && <p className="text-red-500 text-xs text-center mt-2" style={{ fontFamily: B }}>{pinError}</p>}
               <button onClick={() => { setAuthState("idle"); setPinInput(""); setPinError(""); }}
-                className="w-full py-2 text-[10px] tracking-widest border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors"
-                style={{ fontFamily: B, color: "#555" }}>← WRÓĆ</button>
+                className="w-full mt-3 text-[10px] tracking-widest hover:text-[#FFD700] transition-colors"
+                style={{ fontFamily: B, color: "#444" }}>← ZMIEŃ NICK</button>
             </motion.div>
           ) : (
             <motion.div key="nick-input" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
