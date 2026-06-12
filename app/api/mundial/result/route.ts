@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
   const actualWinner = winner(g1, g2);
 
   const pointOps: Promise<unknown>[] = [];
+  const notifOps: Promise<unknown>[] = [];
   for (const vk of voteKeys) {
     const nick = vk.replace(`vote:${matchId}:`, "");
     const voted = await redis.get<string>(vk);
@@ -69,10 +70,17 @@ export async function POST(request: NextRequest) {
     if (pts > 0) {
       pointOps.push(redis.incrby(`ranking:${nick}`, pts));
     }
+
+    const msg =
+      pts === 3 ? "+3 pkt — trafiłeś dokładny wynik ✅" :
+      pts === 1 ? "+1 pkt — trafiony zwycięzca" :
+                  "pudło — 0 pkt, następnym razem";
+    notifOps.push(redis.set(`notification:${nick}`, msg, { ex: 7 * 24 * 3600 }));
   }
 
   await Promise.all([
     ...pointOps,
+    ...notifOps,
     redis.set(`result:${matchId}`, result),
     redis.set(`result_applied:${matchId}`, "1"),
   ]);

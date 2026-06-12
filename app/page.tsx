@@ -719,6 +719,8 @@ export default function MundialPage() {
   const [pinError, setPinError] = useState("");
   const [pendingNick, setPendingNick] = useState("");
 
+  const [notification, setNotification] = useState("");
+
   const [reminderChecked, setReminderChecked] = useState(false);
   const [reminderEmail, setReminderEmail] = useState("");
   const [reminderSubmitting, setReminderSubmitting] = useState(false);
@@ -741,8 +743,22 @@ export default function MundialPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem("mundial:nick");
-    if (stored) { setNick(stored); setNickSaved(true); fetchRanking(stored); }
-    else fetchRanking("");
+    if (stored) {
+      setNick(stored);
+      setNickSaved(true);
+      fetchRanking(stored);
+      fetch(`/api/mundial/notification?nick=${encodeURIComponent(stored)}`)
+        .then((r) => r.ok ? r.json() : null)
+        .then((data) => {
+          if (data?.message) {
+            setNotification(data.message);
+            setTimeout(() => setNotification(""), 6000);
+          }
+        })
+        .catch(() => {});
+    } else {
+      fetchRanking("");
+    }
     const interval = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(interval);
   }, []);
@@ -1250,6 +1266,29 @@ export default function MundialPage() {
           </a>
         </p>
       </footer>
+
+      {/* ── Notification toast ───────────────────────────────────────── */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            key="notif"
+            initial={{ opacity: 0, y: 48 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 48 }}
+            transition={{ duration: 0.35 }}
+            className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none"
+          >
+            <div
+              className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-3 text-center pointer-events-auto max-w-sm w-full"
+              onClick={() => setNotification("")}
+            >
+              <p className="text-sm tracking-[0.15em]" style={{ fontFamily: B, color: "#FFD700" }}>
+                {notification}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Modal ────────────────────────────────────────────────────── */}
       <AnimatePresence>
