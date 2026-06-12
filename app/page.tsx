@@ -719,6 +719,12 @@ export default function MundialPage() {
   const [pinError, setPinError] = useState("");
   const [pendingNick, setPendingNick] = useState("");
 
+  const [reminderChecked, setReminderChecked] = useState(false);
+  const [reminderEmail, setReminderEmail] = useState("");
+  const [reminderSubmitting, setReminderSubmitting] = useState(false);
+  const [reminderDone, setReminderDone] = useState(false);
+  const [reminderError, setReminderError] = useState("");
+
   const fetchRanking = async (overrideNick?: string) => {
     try {
       const n = overrideNick !== undefined ? overrideNick : nick;
@@ -789,6 +795,30 @@ export default function MundialPage() {
       }
     } catch {
       setPinError("Błąd połączenia. Spróbuj ponownie.");
+    }
+  };
+
+  const subscribeReminder = async () => {
+    const email = reminderEmail.trim();
+    if (!email) return;
+    setReminderSubmitting(true);
+    setReminderError("");
+    try {
+      const res = await fetch("/api/mundial/reminders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setReminderDone(true);
+      } else {
+        const data = await res.json();
+        setReminderError(data.error ?? "Błąd zapisu.");
+      }
+    } catch {
+      setReminderError("Błąd połączenia.");
+    } finally {
+      setReminderSubmitting(false);
     }
   };
 
@@ -1140,6 +1170,70 @@ export default function MundialPage() {
               Łącznie graczy: {rankingTotal}
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ── REMINDER ─────────────────────────────────────────────────── */}
+      <section className="px-6 pb-16 max-w-lg mx-auto">
+        <div className="border border-[#FFD700]/10 bg-[#0a0a0a] px-6 py-5 rounded-sm">
+          <label className="flex items-start gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={reminderChecked}
+              onChange={(e) => { setReminderChecked(e.target.checked); setReminderError(""); }}
+              className="mt-0.5 accent-[#FFD700]"
+            />
+            <span className="text-[11px] tracking-[0.15em] leading-relaxed"
+              style={{ fontFamily: B, color: "#555" }}>
+              PRZYPOMNIJ MI O TYPOWANIU — WPISZ EMAIL
+            </span>
+          </label>
+          <AnimatePresence>
+            {reminderChecked && !reminderDone && (
+              <motion.div
+                key="reminder-input"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="flex gap-2 mt-4">
+                  <input
+                    type="email"
+                    value={reminderEmail}
+                    onChange={(e) => setReminderEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && subscribeReminder()}
+                    placeholder="twoj@email.pl"
+                    autoFocus
+                    className="flex-1 bg-[#111] border border-[#333] px-4 py-2 text-sm text-white placeholder-[#333] focus:outline-none focus:border-[#FFD700]/50"
+                    style={{ fontFamily: B }}
+                  />
+                  <button
+                    onClick={subscribeReminder}
+                    disabled={reminderSubmitting}
+                    className="px-5 py-2 text-black text-xs tracking-widest disabled:opacity-50"
+                    style={{ fontFamily: B, background: "#FFD700" }}
+                  >
+                    {reminderSubmitting ? "..." : "OK"}
+                  </button>
+                </div>
+                {reminderError && (
+                  <p className="text-red-500 text-[10px] mt-1" style={{ fontFamily: B }}>{reminderError}</p>
+                )}
+              </motion.div>
+            )}
+            {reminderDone && (
+              <motion.p
+                key="reminder-done"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-[10px] tracking-widest mt-3"
+                style={{ fontFamily: B, color: "#FFD700" }}
+              >
+                ✓ ZAPISANO — dostaniesz przypomnienie o 9:00 w dniu meczu.
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 

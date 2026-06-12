@@ -40,6 +40,7 @@ export default function LeaguePage() {
   const [joining, setJoining] = useState(false);
   const [joinError, setJoinError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [welcomeMessage, setWelcomeMessage] = useState("");
 
   const [nickInput, setNickInput] = useState("");
   const [authState, setAuthState] = useState<AuthState>("idle");
@@ -132,6 +133,7 @@ export default function LeaguePage() {
         setAuthState("idle");
         setPinInput("");
         await joinLeague(pendingNick);
+        setWelcomeMessage(`Dołączyłeś do ligi ${league?.name ?? ""}. Wpisz swój pierwszy typ.`);
       } else {
         const data = await res.json();
         setPinError(res.status === 401 ? "Błędny PIN. Spróbuj ponownie." : (data.error ?? "Błąd."));
@@ -189,6 +191,24 @@ export default function LeaguePage() {
       </section>
 
       <section className="px-6 pb-20 max-w-lg mx-auto space-y-4">
+
+        {/* Welcome banner */}
+        <AnimatePresence>
+          {welcomeMessage && (
+            <motion.div
+              key="welcome"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="border border-[#FFD700]/40 bg-[#0d0d00] px-6 py-4 text-center"
+            >
+              <p className="text-xs tracking-[0.2em] leading-relaxed" style={{ fontFamily: B, color: "#FFD700" }}>
+                {welcomeMessage}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Invite link */}
         <motion.button
@@ -248,6 +268,12 @@ export default function LeaguePage() {
               ) : (
                 <motion.div key="nick-input" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                   className="border border-[#FFD700]/30 bg-[#0a0a0a] p-6 rounded-sm">
+                  <p className="text-lg tracking-wide mb-1 text-center leading-tight" style={{ fontFamily: B, color: "#fff" }}>
+                    {league.name}
+                  </p>
+                  <p className="text-[10px] tracking-[0.4em] mb-4 text-center" style={{ fontFamily: B, color: "#555" }}>
+                    {league.members} {league.members === 1 ? "UCZESTNIK" : "UCZESTNIKÓW"}
+                  </p>
                   <p className="text-xs tracking-[0.3em] mb-4 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
                     DOŁĄCZ DO LIGI
                   </p>
