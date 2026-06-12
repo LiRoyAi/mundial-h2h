@@ -326,7 +326,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         {matchResult && (
           <div className="mt-3 py-3 text-center border border-[#FFD700]/25 rounded-sm">
             <p className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>WYNIK MECZU</p>
-            <span style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
+            <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
           </div>
         )}
 
