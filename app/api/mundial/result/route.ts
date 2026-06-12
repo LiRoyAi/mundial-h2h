@@ -105,3 +105,67 @@ export async function POST(request: NextRequest) {
     playersScored: voteKeys.length,
   });
 }
+
+export async function DELETE(request: NextRequest) {
+  let body: { matchId?: string; adminKey?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const { matchId, adminKey } = body;
+
+  if (adminKey !== process.env.ADMIN_KEY) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!matchId) {
+    return Response.json({ error: "Missing matchId" }, { status: 400 });
+  }
+
+  const storedResult = await redis.get<string>(`result:${matchId}`);
+  if (!storedResult) {
+    return Response.json({ error: "No result found for this match" }, { status: 404 });
+  }
+
+  const parsed = parseScore(storedResult);
+  if (!parsed) {
+    return Response.json({ error: "Stored result is malformed" }, { status: 500 });
+  }
+
+  const voteKeys = await redis.keys(`vote:${matchId}:*`);
+  const { g1, g2 } = parsed;
+  const actualWinner = winner(g1, g2);
+
+  const reverseOps: Promise<unknown>[] = [];
+  for (const vk of voteKeys) {
+    const nick = vk.replace(`vote:${matchId}:`, "");
+    const voted = await redis.get<string>(vk);
+    if (!voted) continue;
+
+    const vParsed = parseScore(voted.replace("-", ":"));
+    if (!vParsed) continue;
+
+    let pts = 0;
+    if (vParsed.g1 === g1 && vParsed.g2 === g2) pts = 3;
+    else if (winner(vParsed.g1, vParsed.g2) === actualWinner) pts = 1;
+
+    if (pts > 0) {
+      reverseOps.push(redis.incrby(`ranking:${nick}`, -pts));
+    }
+    reverseOps.push(redis.del(`notification:${nick}`));
+  }
+
+  await Promise.all([
+    ...reverseOps,
+    redis.del(`result:${matchId}`),
+    redis.del(`result_applied:${matchId}`),
+  ]);
+
+  return Response.json({
+    ok: true,
+    matchId,
+    reversedResult: storedResult,
+    playersAffected: voteKeys.length,
+  });
+}
