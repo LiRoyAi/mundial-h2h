@@ -21,6 +21,14 @@ interface League {
 
 type AuthState = "idle" | "checking" | "pin_register" | "pin_login" | "pin_claim";
 
+async function shareOrCopy(text: string): Promise<void> {
+  if (typeof navigator === "undefined") return;
+  if (navigator.share) {
+    try { await navigator.share({ text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
+}
+
 export default function LeaguePage() {
   const params = useParams();
   const leagueId = params.id as string;
@@ -75,6 +83,7 @@ export default function LeaguePage() {
       if (res.ok || res.status === 409) {
         setIsMember(true);
         await fetchLeague();
+        void shareOrCopy(`Gram w lidze ${league?.name ?? ""} ⚽\nDołącz: mundial.liroy.pl/liga/${leagueId}`);
       } else {
         const data = await res.json();
         setJoinError(data.error ?? "Błąd dołączania.");
@@ -132,12 +141,10 @@ export default function LeaguePage() {
     }
   };
 
-  const copyInvite = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* ignore */ }
+  const shareInvite = async () => {
+    await shareOrCopy(`Gram w lidze ${league?.name ?? ""} ⚽\nDołącz: mundial.liroy.pl/liga/${leagueId}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   // ── Error / loading ──────────────────────────────────────────────────────────
@@ -187,7 +194,7 @@ export default function LeaguePage() {
         <motion.button
           initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}
           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-          onClick={copyInvite}
+          onClick={shareInvite}
           className="w-full py-3 text-xs tracking-[0.25em] border transition-colors"
           style={{
             fontFamily: B,
@@ -195,7 +202,7 @@ export default function LeaguePage() {
             color: copied ? "#FFD700" : "#555",
           }}
         >
-          {copied ? "✓ SKOPIOWANO LINK!" : "KOPIUJ LINK ZAPROSZENIA"}
+          {copied ? "✓ ZAPROSZONO!" : "ZAPROŚ ZNAJOMYCH"}
         </motion.button>
 
         {/* Join / auth panel */}

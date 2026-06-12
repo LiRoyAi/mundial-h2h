@@ -107,6 +107,16 @@ function getTimeLeft(target: Date) {
   };
 }
 
+// ─── Share helper ─────────────────────────────────────────────────────────────
+
+async function shareOrCopy(text: string): Promise<void> {
+  if (typeof navigator === "undefined") return;
+  if (navigator.share) {
+    try { await navigator.share({ text }); return; } catch { /* cancelled */ }
+  }
+  try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
+}
+
 // ─── Countdown ────────────────────────────────────────────────────────────────
 
 function Countdown({ target, short = false }: { target: Date; short?: boolean }) {
@@ -221,6 +231,11 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
     finally { setLoading(false); }
   };
 
+  const handleBrag = () => {
+    const vote = localStorage.getItem(`voted:${match.id}`);
+    void shareOrCopy(`Trafiłem wynik meczu ${match.t1.name} – ${match.t2.name}: ${vote} ⚽\nmundial.liroy.pl`);
+  };
+
   const myVote = voted ? localStorage.getItem(`voted:${match.id}`) : null;
 
   return (
@@ -312,6 +327,18 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
           <div className="mt-5 py-3 text-center border border-[#FFD700]/25 rounded-sm">
             <p className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>WYNIK MECZU</p>
             <span style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
+          </div>
+        )}
+
+        {matchResult && voted && myVote?.replace("-", ":") === matchResult && (
+          <div className="mt-3 flex justify-center">
+            <motion.button
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              onClick={handleBrag}
+              className="px-8 py-2 text-black text-xs tracking-[0.2em]"
+              style={{ fontFamily: B, background: "#FFD700" }}>
+              POCHWAL SIĘ 🎯
+            </motion.button>
           </div>
         )}
 
@@ -561,6 +588,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount }: {
       });
       if (res.ok) {
         const data = await res.json();
+        await shareOrCopy(`Gram w lidze ${name} ⚽\nDołącz: mundial.liroy.pl/liga/${data.id}`);
         window.location.href = `/liga/${data.id}`;
       } else {
         const data = await res.json();
