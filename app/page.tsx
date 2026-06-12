@@ -16,7 +16,7 @@ interface Match {
   youtube_en: string | null;
   tiktok_url: string | null;
   published: boolean;
-  h2h: {
+  h2h?: {
     balance: string;
     t1_wins: number;
     draws: number;
@@ -417,38 +417,40 @@ function EpisodeModal({ match: initialMatch, allMatches, onClose }: {
         )}
 
         {/* H2H */}
-        <div className="px-5 py-4 border-t border-[#111]">
-          <p className="text-[8px] tracking-widest mb-2" style={{ fontFamily: B, color: "#444" }}>
-            HISTORIA STARĆ H2H
-          </p>
-          <div className="flex items-center gap-3 flex-wrap">
-            <span style={{ fontFamily: B, color: "#FFD700", fontSize: "1.05rem" }}>
-              {current.h2h.balance}
-            </span>
-            <span className="text-[10px] tracking-wide" style={{ fontFamily: B, color: "#444" }}>
-              {current.h2h.key_fact}
-            </span>
+        {current.h2h && (
+          <div className="px-5 py-4 border-t border-[#111]">
+            <p className="text-[8px] tracking-widest mb-2" style={{ fontFamily: B, color: "#444" }}>
+              HISTORIA STARĆ H2H
+            </p>
+            <div className="flex items-center gap-3 flex-wrap">
+              <span style={{ fontFamily: B, color: "#FFD700", fontSize: "1.05rem" }}>
+                {current.h2h.balance}
+              </span>
+              <span className="text-[10px] tracking-wide" style={{ fontFamily: B, color: "#444" }}>
+                {current.h2h.key_fact}
+              </span>
+            </div>
+            {(current.h2h.t1_wins + current.h2h.draws + current.h2h.t2_wins) > 0 && (
+              <>
+                <div className="flex h-1.5 mt-3 rounded-sm overflow-hidden gap-px">
+                  {current.h2h.t1_wins > 0 && (
+                    <div className="h-full" style={{ flex: current.h2h.t1_wins, background: "#FFD700" }} />
+                  )}
+                  {current.h2h.draws > 0 && (
+                    <div className="h-full" style={{ flex: current.h2h.draws, background: "#333" }} />
+                  )}
+                  {current.h2h.t2_wins > 0 && (
+                    <div className="h-full" style={{ flex: current.h2h.t2_wins, background: "#777" }} />
+                  )}
+                </div>
+                <div className="flex justify-between mt-1">
+                  <span className="text-[8px]" style={{ fontFamily: B, color: "#444" }}>{current.t1.name}</span>
+                  <span className="text-[8px]" style={{ fontFamily: B, color: "#444" }}>{current.t2.name}</span>
+                </div>
+              </>
+            )}
           </div>
-          {(current.h2h.t1_wins + current.h2h.draws + current.h2h.t2_wins) > 0 && (
-            <>
-              <div className="flex h-1.5 mt-3 rounded-sm overflow-hidden gap-px">
-                {current.h2h.t1_wins > 0 && (
-                  <div className="h-full" style={{ flex: current.h2h.t1_wins, background: "#FFD700" }} />
-                )}
-                {current.h2h.draws > 0 && (
-                  <div className="h-full" style={{ flex: current.h2h.draws, background: "#333" }} />
-                )}
-                {current.h2h.t2_wins > 0 && (
-                  <div className="h-full" style={{ flex: current.h2h.t2_wins, background: "#777" }} />
-                )}
-              </div>
-              <div className="flex justify-between mt-1">
-                <span className="text-[8px]" style={{ fontFamily: B, color: "#444" }}>{current.t1.name}</span>
-                <span className="text-[8px]" style={{ fontFamily: B, color: "#444" }}>{current.t2.name}</span>
-              </div>
-            </>
-          )}
-        </div>
+        )}
 
         {/* Next episode */}
         {nextMatch && (
