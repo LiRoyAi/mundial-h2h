@@ -64,27 +64,38 @@ function extractYtId(url: string | null) {
   return m ? m[1] : null;
 }
 
-function categorize(matches: Match[], now: Date) {
-  const active: Match[] = [];
-  const upcoming: Match[] = [];
-  const finished: Match[] = [];
-  for (const m of matches) {
-    const dl = new Date(m.deadline);
-    const windowStart = new Date(dl.getTime() - 2 * 3600_000);
-    const windowEnd = new Date(dl.getTime() + 24 * 3600_000);
-    if (now > windowEnd) finished.push(m);
-    else if (now >= windowStart) active.push(m);
-    else upcoming.push(m);
-  }
-  return { active, upcoming, finished };
-}
-
-function isMatchToday(deadline: string): boolean {
+function isMatchToday(deadline: string, now: Date = new Date()): boolean {
   const d = new Date(new Date(deadline).getTime() + 2 * 3600_000);
-  const n = new Date(Date.now() + 2 * 3600_000);
+  const n = new Date(now.getTime() + 2 * 3600_000);
   return d.getUTCFullYear() === n.getUTCFullYear() &&
     d.getUTCMonth() === n.getUTCMonth() &&
     d.getUTCDate() === n.getUTCDate();
+}
+
+function categorize(matches: Match[], now: Date) {
+  const active: Match[] = [];
+  const todayUpcoming: Match[] = [];
+  const upcoming: Match[] = [];
+  const finished: Match[] = [];
+  const nowMs = now.getTime();
+
+  for (const m of matches) {
+    const dlMs = new Date(m.deadline).getTime();
+    if (dlMs <= nowMs - 24 * 3600_000) {
+      // Deadline passed more than 24h ago
+      finished.push(m);
+    } else if (dlMs <= nowMs + 2 * 3600_000) {
+      // Within the active window: up to 2h before deadline to 24h after
+      active.push(m);
+    } else if (isMatchToday(m.deadline, now)) {
+      // Voting window not yet open, but match is today
+      todayUpcoming.push(m);
+    } else {
+      // Future match, not today
+      upcoming.push(m);
+    }
+  }
+  return { active, todayUpcoming, upcoming, finished };
 }
 
 function getTimeLeft(target: Date) {
@@ -570,8 +581,7 @@ export default function MundialPage() {
     setNick(t); setNickSaved(true); fetchRanking(t);
   };
 
-  const { active, upcoming, finished } = useMemo(() => categorize(MATCHES, now), [now]);
-  const todayMatches = useMemo(() => MATCHES.filter((m) => isMatchToday(m.deadline)), []);
+  const { active, todayUpcoming, upcoming, finished } = useMemo(() => categorize(MATCHES, now), [now]);
 
   const nextMatch = useMemo(() => {
     return MATCHES.filter((m) => new Date(m.deadline) > now)
@@ -679,13 +689,13 @@ export default function MundialPage() {
 
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section className="px-6 pb-16 max-w-2xl mx-auto">
-        {todayMatches.length > 0 && (
+        {todayUpcoming.length > 0 && (
           <div className="mb-12 border border-[#FFD700]/60 rounded-sm p-4">
             <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
               ⚽ MECZE DZIŚ
             </p>
             <div className="space-y-6">
-              {todayMatches.map((m) => <MatchCard key={`today-${m.id}`} match={m} nick={nick} />)}
+              {todayUpcoming.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
             </div>
           </div>
         )}
