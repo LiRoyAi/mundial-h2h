@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     const batch = emails.slice(i, i + 100);
     await resend.batch.send(
       batch.map((to) => ({
-        from: "Mundial 2026 <onboarding@resend.dev>",
+        from: "Mundial 2026 <phantom@liroy.pl>",
         to,
         subject,
         text,
