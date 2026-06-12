@@ -5,6 +5,11 @@ const redis = Redis.fromEnv();
 
 export const dynamic = "force-dynamic";
 
+export async function GET() {
+  const emails = await redis.smembers<string[]>("reminders");
+  return Response.json({ emails, count: emails.length });
+}
+
 export async function POST(request: NextRequest) {
   let body: { email?: string };
   try {
