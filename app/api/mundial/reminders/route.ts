@@ -21,3 +21,20 @@ export async function POST(request: NextRequest) {
   await redis.sadd("reminders", email);
   return Response.json({ ok: true });
 }
+
+export async function DELETE(request: NextRequest) {
+  let body: { email?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const email = body.email?.trim().toLowerCase();
+  if (!email) {
+    return Response.json({ error: "Missing email" }, { status: 400 });
+  }
+
+  await redis.srem("reminders", email);
+  return Response.json({ ok: true });
+}
