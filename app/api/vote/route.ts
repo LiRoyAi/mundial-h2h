@@ -19,9 +19,14 @@ export async function POST(request: NextRequest) {
   }
 
   const scoreKey = `votes:${matchId}:${score}`;
-  const nickKey = `ranking:${nick}`;
+  const nickKey  = `ranking:${nick}`;
+  const voteKey  = `vote:${matchId}:${nick}`;
 
-  await Promise.all([redis.incr(scoreKey), redis.incr(nickKey)]);
+  await Promise.all([
+    redis.incr(scoreKey),
+    redis.incr(nickKey),
+    redis.set(voteKey, score),
+  ]);
 
   const keys = await redis.keys(`votes:${matchId}:*`);
   const counts: Record<string, number> = {};
@@ -70,9 +75,12 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  const result = matchId ? await redis.get<string>(`result:${matchId}`) : null;
+
   return Response.json({
     matchId,
     results,
+    result: result ?? null,
     ranking: ranking.slice(0, 50),
     total,
     userRank,

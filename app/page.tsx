@@ -16,6 +16,7 @@ interface Match {
   youtube_en: string | null;
   tiktok_url: string | null;
   published: boolean;
+  result?: string | null;
   h2h?: {
     balance: string;
     t1_wins: number;
@@ -76,6 +77,14 @@ function categorize(matches: Match[], now: Date) {
     else upcoming.push(m);
   }
   return { active, upcoming, finished };
+}
+
+function isMatchToday(deadline: string): boolean {
+  const d = new Date(new Date(deadline).getTime() + 2 * 3600_000);
+  const n = new Date(Date.now() + 2 * 3600_000);
+  return d.getUTCFullYear() === n.getUTCFullYear() &&
+    d.getUTCMonth() === n.getUTCMonth() &&
+    d.getUTCDate() === n.getUTCDate();
 }
 
 function getTimeLeft(target: Date) {
@@ -158,6 +167,7 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
   const [results, setResults] = useState<Results>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [matchResult, setMatchResult] = useState<string | null>(match.result ?? null);
   const isPast = new Date() > new Date(match.deadline);
   const windowOpenTime = useMemo(
     () => new Date(new Date(match.deadline).getTime() - 2 * 3600_000),
@@ -165,17 +175,22 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
   );
   const { date, time } = toLocal(match.deadline);
 
-  useEffect(() => {
-    const stored = localStorage.getItem(`voted:${match.id}`);
-    if (stored) { setVoted(true); fetchResults(); }
-  }, [match.id]);
-
   const fetchResults = useCallback(async () => {
     try {
       const res = await fetch(`/api/vote?matchId=${match.id}`);
-      if (res.ok) { const d = await res.json(); setResults(d.results ?? {}); }
+      if (res.ok) {
+        const d = await res.json();
+        setResults(d.results ?? {});
+        if (d.result) setMatchResult(d.result);
+      }
     } catch { /* ignore */ }
   }, [match.id]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(`voted:${match.id}`);
+    if (stored) setVoted(true);
+    fetchResults();
+  }, [match.id, fetchResults]);
 
   const totalVotes = Object.values(results).reduce((a, b) => a + b, 0);
   const getBarWidth = (key: string) =>
@@ -293,6 +308,41 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
             </motion.div>
           )}
         </AnimatePresence>
+
+        {matchResult && (
+          <div className="mt-5 py-3 text-center border border-[#FFD700]/25 rounded-sm">
+            <p className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>WYNIK MECZU</p>
+            <span style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
+          </div>
+        )}
+
+        {voted && (
+          <div className="mt-5 pt-4 border-t border-[#111]">
+            <p className="text-center text-[8px] tracking-widest mb-3" style={{ fontFamily: B, color: "#333" }}>
+              POLEĆ ZNAJOMYM — NIECH TEŻ TYPUJĄ!
+            </p>
+            <div className="flex justify-center gap-2 flex-wrap">
+              <a href="https://wa.me/?text=Typuj%C4%99%20wyniki%20Mundialu%202026%20z%20Liroyem!%20mundial.liroy.pl"
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                style={{ fontFamily: B, color: "#666" }}>
+                📱 WhatsApp
+              </a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=mundial.liroy.pl"
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                style={{ fontFamily: B, color: "#666" }}>
+                📘 Facebook
+              </a>
+              <a href="https://twitter.com/intent/tweet?text=Typuj%C4%99%20wyniki%20Mundialu%202026!%20mundial.liroy.pl%20%23mundial2026"
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                style={{ fontFamily: B, color: "#666" }}>
+                🐦 X/Twitter
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -307,20 +357,21 @@ function EpisodeCard({ match, onClick }: { match: Match; onClick: (m: Match) => 
   return (
     <button
       onClick={() => hasVideo && onClick(match)}
-      className="w-full text-left border rounded-sm p-3 transition-all duration-200"
+      className="w-full text-left border rounded-sm p-3 transition-all duration-200 flex flex-col justify-center"
       style={{
         borderColor: hasVideo ? "rgba(255,215,0,0.35)" : "rgba(255,255,255,0.05)",
         background: hasVideo ? "#0d0d0d" : "#060606",
         cursor: hasVideo ? "pointer" : "default",
+        minHeight: "140px",
       }}
     >
       <div className="flex items-center justify-center gap-1.5 mb-2">
-        <span className="text-xl">{match.t1.flag}</span>
+        <span style={{ fontSize: "3rem" }}>{match.t1.flag}</span>
         <span style={{ fontFamily: B, color: "#222", fontSize: "0.65rem" }}>VS</span>
-        <span className="text-xl">{match.t2.flag}</span>
+        <span style={{ fontSize: "3rem" }}>{match.t2.flag}</span>
       </div>
       <p className="text-center leading-tight mb-2" style={{
-        fontFamily: B, fontSize: "0.6rem", letterSpacing: "0.05em",
+        fontFamily: B, fontSize: "0.875rem", letterSpacing: "0.05em",
         color: hasVideo ? "#aaa" : "#333",
       }}>
         {match.t1.name} — {match.t2.name}
@@ -333,7 +384,7 @@ function EpisodeCard({ match, onClick }: { match: Match; onClick: (m: Match) => 
           </span>
         </div>
       ) : (
-        <p className="text-center text-[7px] tracking-widest" style={{ fontFamily: B, color: "#222" }}>
+        <p className="text-center text-xs tracking-widest" style={{ fontFamily: B, color: "#222" }}>
           {date}
         </p>
       )}
@@ -486,6 +537,7 @@ export default function MundialPage() {
   const [rankingTotal, setRankingTotal] = useState(0);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
   const [finishedOpen, setFinishedOpen] = useState(false);
+  const [showAllUpcoming, setShowAllUpcoming] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
 
@@ -519,6 +571,7 @@ export default function MundialPage() {
   };
 
   const { active, upcoming, finished } = useMemo(() => categorize(MATCHES, now), [now]);
+  const todayMatches = useMemo(() => MATCHES.filter((m) => isMatchToday(m.deadline)), []);
 
   const nextMatch = useMemo(() => {
     return MATCHES.filter((m) => new Date(m.deadline) > now)
@@ -617,10 +670,26 @@ export default function MundialPage() {
             </motion.div>
           )}
         </AnimatePresence>
+        <div className="mt-4 text-center">
+          <p style={{ fontFamily: B, fontSize: "0.65rem", color: "#333", letterSpacing: "0.05em" }}>
+            ✅ Dokładny wynik = 3 pkt &nbsp;·&nbsp; ⚽ Trafiony zwycięzca = 1 pkt &nbsp;·&nbsp; ❌ Pudło = 0 pkt
+          </p>
+        </div>
       </section>
 
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section className="px-6 pb-16 max-w-2xl mx-auto">
+        {todayMatches.length > 0 && (
+          <div className="mb-12 border border-[#FFD700]/60 rounded-sm p-4">
+            <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
+              ⚽ MECZE DZIŚ
+            </p>
+            <div className="space-y-6">
+              {todayMatches.map((m) => <MatchCard key={`today-${m.id}`} match={m} nick={nick} />)}
+            </div>
+          </div>
+        )}
+
         {active.length > 0 && (
           <div className="mb-12">
             <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
@@ -639,13 +708,19 @@ export default function MundialPage() {
               NADCHODZĄCE ({upcoming.length})
             </p>
             <div className="space-y-6">
-              {upcoming.slice(0, 6).map((m) => <MatchCard key={m.id} match={m} nick={nick} upcoming />)}
-              {upcoming.length > 6 && (
-                <p className="text-center text-[10px] tracking-widest" style={{ fontFamily: B, color: "#2a2a2a" }}>
-                  + {upcoming.length - 6} kolejnych
-                </p>
+              {(showAllUpcoming ? upcoming : upcoming.slice(0, 8)).map((m) =>
+                <MatchCard key={m.id} match={m} nick={nick} upcoming />
               )}
             </div>
+            {upcoming.length > 8 && (
+              <div className="mt-4 text-center">
+                <button onClick={() => setShowAllUpcoming((v) => !v)}
+                  className="px-6 py-2 text-[10px] tracking-widest border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors"
+                  style={{ fontFamily: B, color: "#555" }}>
+                  {showAllUpcoming ? "ZWIŃ ▲" : `POKAŻ WIĘCEJ (${upcoming.length - 8}) ▼`}
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -697,7 +772,7 @@ export default function MundialPage() {
                   </span>
                   <div className="flex-1 h-px" style={{ background: "rgba(255,215,0,0.08)" }} />
                 </div>
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
                   {gm.map((m) => (
                     <EpisodeCard key={m.id} match={m} onClick={setModalMatch} />
                   ))}
@@ -764,9 +839,16 @@ export default function MundialPage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer className="pb-12 text-center">
+      <footer className="pb-12 text-center space-y-2">
         <p className="text-[8px] tracking-[0.4em]" style={{ fontFamily: B, color: "#1a1a1a" }}>
           H2H ARCHIVE © 2026 · LIROY.PL
+        </p>
+        <p style={{ fontFamily: B, fontSize: "0.65rem", color: "#333" }}>
+          Część projektu H2H ARCHIVE |{" "}
+          <a href="https://liroy.pl" target="_blank" rel="noopener noreferrer"
+            className="hover:text-[#FFD700] transition-colors underline" style={{ color: "#444" }}>
+            liroy.pl
+          </a>
         </p>
       </footer>
 
