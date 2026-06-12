@@ -526,6 +526,153 @@ function EpisodeModal({ match: initialMatch, allMatches, onClose }: {
   );
 }
 
+// ─── Dashboard ───────────────────────────────────────────────────────────────
+
+function Dashboard({ nick, nickSaved, userRank, todayCount }: {
+  nick: string;
+  nickSaved: boolean;
+  userRank: UserRank | null;
+  todayCount: number;
+}) {
+  const [myLeague, setMyLeague] = useState<{ id: string; name: string; rank: number } | null>(null);
+  const [showCreate, setShowCreate] = useState(false);
+  const [leagueName, setLeagueName] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState("");
+
+  useEffect(() => {
+    if (!nick) { setMyLeague(null); return; }
+    fetch(`/api/mundial/leagues?nick=${encodeURIComponent(nick)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => setMyLeague(data))
+      .catch(() => {});
+  }, [nick]);
+
+  const createLeague = async () => {
+    const name = leagueName.trim();
+    if (!name || !nick) return;
+    setCreating(true);
+    setCreateError("");
+    try {
+      const res = await fetch("/api/mundial/leagues/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nick, name }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        window.location.href = `/liga/${data.id}`;
+      } else {
+        const data = await res.json();
+        setCreateError(data.error ?? "Błąd tworzenia ligi.");
+      }
+    } catch {
+      setCreateError("Błąd połączenia.");
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  if (!nickSaved && todayCount === 0) return null;
+
+  return (
+    <section className="px-6 pb-6 max-w-lg mx-auto">
+      {/* Stats tiles */}
+      {nickSaved && (
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="border border-[#FFD700]/15 bg-[#0a0a0a] px-3 py-4 text-center rounded-sm">
+            <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>PUNKTY</p>
+            <p style={{ fontFamily: B, fontSize: "1.8rem", color: "#FFD700", lineHeight: 1 }}>
+              {userRank?.points ?? "—"}
+            </p>
+          </div>
+          <div className="border border-[#FFD700]/15 bg-[#0a0a0a] px-3 py-4 text-center rounded-sm">
+            <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>RANKING</p>
+            <p style={{ fontFamily: B, fontSize: "1.8rem", color: userRank ? "#fff" : "#2a2a2a", lineHeight: 1 }}>
+              {userRank ? `#${userRank.position}` : "—"}
+            </p>
+          </div>
+          <div
+            className="border border-[#FFD700]/15 bg-[#0a0a0a] px-3 py-4 text-center rounded-sm overflow-hidden"
+            style={{ cursor: myLeague ? "pointer" : "default" }}
+            onClick={() => myLeague && (window.location.href = `/liga/${myLeague.id}`)}
+          >
+            <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>LIGA</p>
+            {myLeague ? (
+              <>
+                <p className="truncate" style={{ fontFamily: B, fontSize: "0.65rem", color: "#FFD700", lineHeight: 1.3 }}>
+                  {myLeague.name}
+                </p>
+                <p style={{ fontFamily: B, fontSize: "1.1rem", color: "#fff", lineHeight: 1 }}>
+                  #{myLeague.rank}
+                </p>
+              </>
+            ) : (
+              <p style={{ fontFamily: B, fontSize: "1.8rem", color: "#2a2a2a", lineHeight: 1 }}>—</p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Action row */}
+      <div className="flex gap-2">
+        {todayCount > 0 && (
+          <button
+            onClick={() => document.getElementById("mecze")?.scrollIntoView({ behavior: "smooth" })}
+            className="flex-1 py-3 px-4 border border-[#FFD700]/25 hover:border-[#FFD700]/55 transition-colors text-left"
+          >
+            <span className="block text-[8px] tracking-widest mb-0.5" style={{ fontFamily: B, color: "#444" }}>DZIŚ</span>
+            <span style={{ fontFamily: B, fontSize: "0.85rem", color: "#FFD700" }}>
+              {todayCount} {todayCount === 1 ? "MECZ" : "MECZÓW"} — TYPUJ TERAZ →
+            </span>
+          </button>
+        )}
+        {nickSaved && (
+          <button
+            onClick={() => { setShowCreate((v) => !v); setCreateError(""); }}
+            className="py-3 px-5 border border-[#FFD700]/15 hover:border-[#FFD700]/45 transition-colors text-[10px] tracking-widest whitespace-nowrap"
+            style={{ fontFamily: B, color: showCreate ? "#FFD700" : "#555" }}
+          >
+            ZAŁÓŻ LIGĘ
+          </button>
+        )}
+      </div>
+
+      {/* Create league form */}
+      <AnimatePresence>
+        {showCreate && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }} className="overflow-hidden"
+          >
+            <div className="flex gap-2 mt-2 border border-[#FFD700]/15 bg-[#0a0a0a] p-4 rounded-sm">
+              <input
+                type="text" maxLength={40} value={leagueName}
+                onChange={(e) => setLeagueName(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && createLeague()}
+                placeholder="Nazwa ligi"
+                autoFocus
+                className="flex-1 bg-[#111] border border-[#333] px-4 py-2 text-sm text-white placeholder-[#333] focus:outline-none focus:border-[#FFD700]/50"
+                style={{ fontFamily: B }}
+              />
+              <button
+                onClick={createLeague} disabled={creating}
+                className="px-5 py-2 text-black text-xs tracking-widest disabled:opacity-50"
+                style={{ fontFamily: B, background: "#FFD700" }}
+              >
+                {creating ? "..." : "UTWÓRZ"}
+              </button>
+            </div>
+            {createError && (
+              <p className="text-red-500 text-[10px] mt-1" style={{ fontFamily: B }}>{createError}</p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function MundialPage() {
@@ -805,8 +952,10 @@ export default function MundialPage() {
         </div>
       </section>
 
+      <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} />
+
       {/* ── MECZE ────────────────────────────────────────────────────── */}
-      <section className="px-6 pb-16 max-w-2xl mx-auto">
+      <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
         {todayUpcoming.length > 0 && (
           <div className="mb-12 border border-[#FFD700]/60 rounded-sm p-4">
             <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
