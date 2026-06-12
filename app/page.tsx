@@ -909,7 +909,9 @@ export default function MundialPage() {
             <motion.div key="saved" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
               className="flex items-center justify-between border border-[#FFD700]/15 bg-[#0a0a0a] px-5 py-3 rounded-sm">
               <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#444" }}>NICK:</span>
-              <span className="text-base tracking-wide" style={{ fontFamily: B, color: "#FFD700" }}>{nick}</span>
+              <a href={`/gracz/${encodeURIComponent(nick)}`}
+                className="text-base tracking-wide hover:underline"
+                style={{ fontFamily: B, color: "#FFD700" }}>{nick}</a>
               <button onClick={() => { setNickSaved(false); setNickInput(nick); setAuthState("idle"); setPinInput(""); setPinError(""); }}
                 className="text-[10px] tracking-widest underline" style={{ fontFamily: B, color: "#444" }}>
                 ZMIEŃ
@@ -1161,10 +1163,12 @@ export default function MundialPage() {
                     fontFamily: B,
                     color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
                   }}>{i + 1}</span>
-                  <span className="flex-1 text-sm tracking-wide" style={{
-                    fontFamily: B,
-                    color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
-                  }}>{entry.nick}</span>
+                  <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
+                    className="flex-1 text-sm tracking-wide hover:underline"
+                    style={{
+                      fontFamily: B,
+                      color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
+                    }}>{entry.nick}</a>
                   <span className="text-sm" style={{ fontFamily: B, color: "#444" }}>
                     {entry.points} pkt
                   </span>

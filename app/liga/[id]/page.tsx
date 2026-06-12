@@ -331,10 +331,12 @@ export default function LeaguePage() {
                     fontFamily: B,
                     color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
                   }}>{i + 1}</span>
-                  <span className="flex-1 text-sm tracking-wide" style={{
-                    fontFamily: B,
-                    color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
-                  }}>{entry.nick}</span>
+                  <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
+                    className="flex-1 text-sm tracking-wide hover:underline"
+                    style={{
+                      fontFamily: B,
+                      color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
+                    }}>{entry.nick}</a>
                   <span className="text-sm" style={{ fontFamily: B, color: "#444" }}>
                     {entry.points} pkt
                   </span>
