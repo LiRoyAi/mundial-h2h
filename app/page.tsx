@@ -82,17 +82,15 @@ function categorize(matches: Match[], now: Date) {
   for (const m of matches) {
     const dlMs = new Date(m.deadline).getTime();
     if (dlMs <= nowMs - 24 * 3600_000) {
-      // Deadline passed more than 24h ago
       finished.push(m);
-    } else if (dlMs <= nowMs + 2 * 3600_000) {
-      // Within the active window: up to 2h before deadline to 24h after
-      active.push(m);
     } else if (isMatchToday(m.deadline, now)) {
-      // Voting window not yet open, but match is today
       todayUpcoming.push(m);
-    } else {
-      // Future match, not today
+    } else if (dlMs > nowMs && dlMs <= nowMs + 24 * 3600_000) {
+      active.push(m);
+    } else if (dlMs > nowMs) {
       upcoming.push(m);
+    } else {
+      finished.push(m);
     }
   }
   return { active, todayUpcoming, upcoming, finished };
@@ -118,7 +116,7 @@ function Countdown({ target, short = false }: { target: Date; short?: boolean })
     return () => clearInterval(id);
   }, [target]);
 
-  if (!tl) return <span style={{ fontFamily: B, color: "#FFD700" }}>OTWARTO!</span>;
+  if (!tl) return null;
 
   if (short)
     return (
@@ -171,7 +169,7 @@ function ScorePicker({ value, onChange }: { value: number; onChange: (v: number)
 
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
-function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: string; upcoming?: boolean }) {
+function MatchCard({ match, nick }: { match: Match; nick: string }) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [voted, setVoted] = useState(false);
@@ -180,10 +178,6 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
   const [error, setError] = useState("");
   const [matchResult, setMatchResult] = useState<string | null>(match.result ?? null);
   const isPast = new Date() > new Date(match.deadline);
-  const windowOpenTime = useMemo(
-    () => new Date(new Date(match.deadline).getTime() - 2 * 3600_000),
-    [match.deadline]
-  );
   const { date, time } = toLocal(match.deadline);
 
   const fetchResults = useCallback(async () => {
@@ -233,15 +227,14 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
     <motion.div
       initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
       className="relative border border-[#FFD700]/20 bg-[#0a0a0a] rounded-sm overflow-hidden"
-      style={upcoming ? { opacity: 0.6 } : {}}
     >
       <div className="absolute top-0 left-0 px-3 py-1 text-xs tracking-widest"
-        style={{ fontFamily: B, background: upcoming ? "#1a1a1a" : "#FFD700", color: upcoming ? "#555" : "#000" }}>
+        style={{ fontFamily: B, background: "#FFD700", color: "#000" }}>
         GRUPA {match.group}
       </div>
       <div className="pt-10 pb-6 px-6">
         <p className="text-center text-[11px] tracking-widest mb-6"
-          style={{ fontFamily: B, color: upcoming ? "#333" : "#FFD700" }}>
+          style={{ fontFamily: B, color: "#FFD700" }}>
           {date} · {time}
         </p>
         <div className="flex items-center gap-4">
@@ -252,12 +245,7 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
             </span>
           </div>
 
-          {upcoming ? (
-            <div className="flex flex-col items-center gap-1 px-2 text-center min-w-[100px]">
-              <span className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#333" }}>OTWARCIE ZA</span>
-              <Countdown target={windowOpenTime} short />
-            </div>
-          ) : voted ? (
+          {voted ? (
             <div className="text-center px-4"
               style={{ fontFamily: B, fontSize: "2.5rem", color: "#FFD700", letterSpacing: "0.05em" }}>
               {myVote ?? "?"}
@@ -281,12 +269,12 @@ function MatchCard({ match, nick, upcoming = false }: { match: Match; nick: stri
         </div>
 
         {error && <p className="text-center text-red-500 text-xs mt-4 tracking-wide">{error}</p>}
-        {isPast && !voted && !upcoming && (
+        {isPast && !voted && (
           <p className="text-center text-xs mt-6 tracking-widest" style={{ fontFamily: B, color: "#333" }}>
             ⏰ Typowanie zamknięte
           </p>
         )}
-        {!isPast && !voted && !upcoming && (
+        {!isPast && !voted && (
           <div className="flex justify-center mt-6">
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={handleVote} disabled={loading}
@@ -636,9 +624,6 @@ export default function MundialPage() {
       .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())[0] ?? null;
   }, [now]);
 
-  const nextWindowOpen = nextMatch
-    ? new Date(new Date(nextMatch.deadline).getTime() - 2 * 3600_000)
-    : null;
 
   const publishedCount = MATCHES.filter((m) => m.published).length;
 
@@ -679,13 +664,13 @@ export default function MundialPage() {
         </motion.div>
 
         {/* Countdown */}
-        {nextMatch && nextWindowOpen && (
+        {nextMatch && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }} className="mt-8 flex flex-col items-center gap-3">
             <p className="text-[9px] tracking-[0.4em]" style={{ fontFamily: B, color: "#444" }}>
-              TYPOWANIE OTWIERA SIĘ ZA
+              TYPOWANIE ZAMYKA SIĘ ZA
             </p>
-            <Countdown target={nextWindowOpen} />
+            <Countdown target={new Date(nextMatch.deadline)} />
             <p className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
               {nextMatch.t1.flag} {nextMatch.t1.name} — {nextMatch.t2.name} {nextMatch.t2.flag}
             </p>
@@ -852,7 +837,7 @@ export default function MundialPage() {
             </p>
             <div className="space-y-6">
               {(showAllUpcoming ? upcoming : upcoming.slice(0, 8)).map((m) =>
-                <MatchCard key={m.id} match={m} nick={nick} upcoming />
+                <MatchCard key={m.id} match={m} nick={nick} />
               )}
             </div>
             {upcoming.length > 8 && (
