@@ -247,14 +247,14 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         style={{ fontFamily: B, background: "#FFD700", color: "#000" }}>
         GRUPA {match.group}
       </div>
-      <div className="pt-10 pb-6 px-6">
+      <div className="pt-10 pb-6 px-4">
         <p className="text-center text-[11px] tracking-widest mb-6"
           style={{ fontFamily: B, color: "#FFD700" }}>
           {date} · {time}
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <div className="flex-1 flex flex-col items-center gap-2">
-            <span className="text-5xl">{match.t1.flag}</span>
+            <span className="text-4xl">{match.t1.flag}</span>
             <span className="text-sm tracking-widest text-center" style={{ fontFamily: B, color: "#f5f5f5" }}>
               {match.t1.name}
             </span>
@@ -276,7 +276,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
           )}
 
           <div className="flex-1 flex flex-col items-center gap-2">
-            <span className="text-5xl">{match.t2.flag}</span>
+            <span className="text-4xl">{match.t2.flag}</span>
             <span className="text-sm tracking-widest text-center" style={{ fontFamily: B, color: "#f5f5f5" }}>
               {match.t2.name}
             </span>
@@ -303,7 +303,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         <AnimatePresence>
           {voted && topScores.length > 0 && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }} className="mt-6 space-y-2">
+              exit={{ opacity: 0, height: 0 }} className="mt-4 space-y-2">
               <p className="text-xs tracking-widest mb-3 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
                 ROZKŁAD TYPOWAŃ ({totalVotes} {totalVotes === 1 ? "głos" : "głosy/głosów"})
               </p>
@@ -324,7 +324,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         </AnimatePresence>
 
         {matchResult && (
-          <div className="mt-5 py-3 text-center border border-[#FFD700]/25 rounded-sm">
+          <div className="mt-3 py-3 text-center border border-[#FFD700]/25 rounded-sm">
             <p className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>WYNIK MECZU</p>
             <span style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
           </div>
@@ -343,26 +343,26 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         )}
 
         {voted && (
-          <div className="mt-5 pt-4 border-t border-[#111]">
-            <p className="text-center text-[8px] tracking-widest mb-3" style={{ fontFamily: B, color: "#333" }}>
+          <div className="mt-3 pt-3 border-t border-[#111]">
+            <p className="text-center text-[8px] tracking-widest mb-2" style={{ fontFamily: B, color: "#333" }}>
               POLEĆ ZNAJOMYM — NIECH TEŻ TYPUJĄ!
             </p>
             <div className="flex justify-center gap-2 flex-wrap">
               <a href="https://wa.me/?text=Typuj%C4%99%20wyniki%20Mundialu%202026%20z%20Liroyem!%20mundial.liroy.pl"
                 target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                className="flex items-center gap-1 px-3 py-2.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
                 style={{ fontFamily: B, color: "#666" }}>
                 📱 WhatsApp
               </a>
               <a href="https://www.facebook.com/sharer/sharer.php?u=mundial.liroy.pl"
                 target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                className="flex items-center gap-1 px-3 py-2.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
                 style={{ fontFamily: B, color: "#666" }}>
                 📘 Facebook
               </a>
               <a href="https://twitter.com/intent/tweet?text=Typuj%C4%99%20wyniki%20Mundialu%202026!%20mundial.liroy.pl%20%23mundial2026"
                 target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1 px-3 py-1.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
+                className="flex items-center gap-1 px-3 py-2.5 border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors text-[9px]"
                 style={{ fontFamily: B, color: "#666" }}>
                 🐦 X/Twitter
               </a>
@@ -647,7 +647,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount }: {
         {todayCount > 0 && (
           <button
             onClick={() => document.getElementById("mecze")?.scrollIntoView({ behavior: "smooth" })}
-            className="flex-1 py-3 px-4 border border-[#FFD700]/25 hover:border-[#FFD700]/55 transition-colors text-left"
+            className="flex-1 py-3 px-4 min-h-[44px] border border-[#FFD700]/25 hover:border-[#FFD700]/55 transition-colors text-left"
           >
             <span className="block text-[8px] tracking-widest mb-0.5" style={{ fontFamily: B, color: "#444" }}>DZIŚ</span>
             <span style={{ fontFamily: B, fontSize: "0.85rem", color: "#FFD700" }}>
@@ -658,7 +658,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount }: {
         {nickSaved && (
           <button
             onClick={() => { setShowCreate((v) => !v); setCreateError(""); }}
-            className="py-3 px-5 border border-[#FFD700]/15 hover:border-[#FFD700]/45 transition-colors text-[10px] tracking-widest whitespace-nowrap"
+            className="py-3 px-5 min-h-[44px] flex items-center border border-[#FFD700]/15 hover:border-[#FFD700]/45 transition-colors text-[10px] tracking-widest whitespace-nowrap"
             style={{ fontFamily: B, color: showCreate ? "#FFD700" : "#555" }}
           >
             ZAŁÓŻ LIGĘ
