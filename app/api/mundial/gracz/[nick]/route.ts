@@ -40,9 +40,10 @@ export async function GET(
   const { nick: rawNick } = await params;
   const nick = decodeURIComponent(rawNick);
 
-  const [voteValues, resultValues] = await Promise.all([
+  const [voteValues, resultValues, gbValues] = await Promise.all([
     redis.mget<(string | null)[]>(...MATCHES.map((m) => `vote:${m.id}:${nick}`)),
     redis.mget<(string | null)[]>(...MATCHES.map((m) => `result:${m.id}`)),
+    redis.mget<(string | null)[]>(...MATCHES.map((m) => `golden_ball_used:${m.id}:${nick}`)),
   ]);
 
   const votes: {
@@ -54,6 +55,7 @@ export async function GET(
     myVote: string;
     result: string | null;
     pts: number | null;
+    goldenBall: boolean;
   }[] = [];
 
   let totalPoints = 0;
@@ -99,6 +101,7 @@ export async function GET(
       myVote,
       result,
       pts,
+      goldenBall: !!gbValues[i],
     });
   }
 

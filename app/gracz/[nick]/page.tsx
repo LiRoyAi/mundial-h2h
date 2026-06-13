@@ -15,6 +15,7 @@ interface VoteEntry {
   myVote: string;
   result: string | null;
   pts: number | null;
+  goldenBall: boolean;
 }
 
 interface PlayerData {
@@ -248,7 +249,15 @@ export default function PlayerPage() {
                   </div>
 
                   {/* Points */}
-                  <PtsBadge pts={v.pts} />
+                  <div className="flex flex-col items-end gap-1 shrink-0">
+                    <PtsBadge pts={v.pts} />
+                    {v.goldenBall && (
+                      <span className="text-[8px] tracking-widest whitespace-nowrap"
+                        style={{ fontFamily: B, color: "#FFD700" }}>
+                        ⭐ ZŁOTA PIŁKA
+                      </span>
+                    )}
+                  </div>
                 </motion.li>
               ))}
             </ul>
