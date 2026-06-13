@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
     await Promise.all(
       batch.map((to) =>
         brevo.transactionalEmails.sendTransacEmail({
-          sender: { name: "Mundial 2026", email: "mundial@liroy.pl" },
+          sender: { name: "Mundial 2026", email: "liroy@liroy.pl" },
           to: [{ email: to }],
           subject,
           textContent,
