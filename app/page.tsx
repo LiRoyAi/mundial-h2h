@@ -230,10 +230,11 @@ function PtsBadge({ pts }: { pts: number }) {
 
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
-function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, firstLeagueId }: {
+function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, firstLeagueId, onGoldenBallResult }: {
   match: Match; nick: string; onFirstVote?: () => void;
   goldenBalls?: number | null; onGoldenBallUse?: () => void;
   firstLeagueId?: string | null;
+  onGoldenBallResult?: (pts: number) => void;
 }) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
@@ -293,6 +294,18 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
       .then((data) => { if (data?.used) setGoldenBallUsed(true); })
       .catch(() => {});
   }, [voted, nick, match.id]);
+
+  const gbToastShown = useRef(false);
+  useEffect(() => {
+    if (!matchResult || !voted || !goldenBallUsed || gbToastShown.current) return;
+    const vote = localStorage.getItem(`voted:${match.id}`);
+    if (!vote) return;
+    const key = `gb_toast:${match.id}`;
+    if (sessionStorage.getItem(key)) { gbToastShown.current = true; return; }
+    gbToastShown.current = true;
+    sessionStorage.setItem(key, "1");
+    onGoldenBallResult?.(calcPts(vote, matchResult, true));
+  }, [matchResult, voted, goldenBallUsed, match.id, onGoldenBallResult]);
 
   useEffect(() => {
     if (isPast || matchResult) return;
@@ -1257,6 +1270,7 @@ export default function MundialPage() {
   const [pendingNick, setPendingNick] = useState("");
 
   const [notification, setNotification] = useState("");
+  const [notifShareText, setNotifShareText] = useState<string | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const [reminderChecked, setReminderChecked] = useState(false);
@@ -1276,6 +1290,22 @@ export default function MundialPage() {
   const handleIntroDone = useCallback(() => {
     sessionStorage.setItem("flags_intro_seen", "1");
     setShowIntro(false);
+  }, []);
+
+  const handleGoldenBallResult = useCallback((pts: number) => {
+    let msg: string;
+    let shareText: string | null = null;
+    if (pts === 6) {
+      msg = "⭐ ZŁOTA PIŁKA TRAFIŁA! +6 pkt — To był strzał życia!";
+      shareText = "Złota Piłka trafiła! +6 pkt w H2H Archive ⭐\nmundial.liroy.pl";
+    } else if (pts === 2) {
+      msg = "⭐ ZŁOTA PIŁKA — zwycięzca trafiony! +2 pkt";
+    } else {
+      msg = "💥 Złota Piłka w trybie autodestrukcji. -1 pkt. Szacun za odwagę.";
+    }
+    setNotification(msg);
+    setNotifShareText(shareText);
+    setTimeout(() => { setNotification(""); setNotifShareText(null); }, 7000);
   }, []);
 
   useEffect(() => {
@@ -1317,6 +1347,7 @@ export default function MundialPage() {
                   ? `Awansujesz z #${userOldPos} na #${userNewPos} — przeskakujesz ${jumpedOver}!`
                   : `Awansujesz z #${userOldPos} na #${userNewPos}!`;
                 setNotification(msg);
+                setNotifShareText(null);
                 setTimeout(() => setNotification(""), 5000);
               }
             }
@@ -1369,6 +1400,7 @@ export default function MundialPage() {
         .then((data) => {
           if (data?.message) {
             setNotification(data.message);
+            setNotifShareText(null);
             setTimeout(() => setNotification(""), 6000);
           }
           if (data?.showOnboarding) setShowOnboarding(true);
@@ -1747,7 +1779,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...todayUpcoming, ...active].map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} onGoldenBallResult={handleGoldenBallResult} />
               ))
             )}
           </div>
@@ -1787,7 +1819,7 @@ export default function MundialPage() {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden">
                         <div className="space-y-4 px-4 pt-2 pb-4">
-                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />)}
+                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} onGoldenBallResult={handleGoldenBallResult} />)}
                         </div>
                       </motion.div>
                     )}
@@ -1807,7 +1839,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...finished].reverse().map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} onGoldenBallResult={handleGoldenBallResult} />
               ))
             )}
           </div>
@@ -2145,11 +2177,20 @@ export default function MundialPage() {
           >
             <div
               className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-3 text-center pointer-events-auto max-w-sm w-full"
-              onClick={() => setNotification("")}
+              onClick={() => { setNotification(""); setNotifShareText(null); }}
             >
               <p className="text-sm tracking-[0.15em]" style={{ fontFamily: B, color: "#FFD700" }}>
                 {notification}
               </p>
+              {notifShareText && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); void shareOrCopy(notifShareText); }}
+                  className="mt-2 px-4 py-1.5 text-[10px] tracking-widest border border-[#FFD700]/50 hover:border-[#FFD700] transition-colors"
+                  style={{ fontFamily: B, color: "#FFD700" }}
+                >
+                  📤 Pochwal się
+                </button>
+              )}
             </div>
           </motion.div>
         )}
