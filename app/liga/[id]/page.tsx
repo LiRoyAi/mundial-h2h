@@ -11,12 +11,34 @@ interface RankingEntry {
   points: number;
 }
 
+interface MemberVote {
+  nick: string;
+  vote: string | null;
+  pts: number | null;
+}
+
+interface TodayMatch {
+  id: string;
+  t1: { name: string; flag: string };
+  t2: { name: string; flag: string };
+  time: string;
+  result: string | null;
+  memberVotes: MemberVote[];
+}
+
+interface TodaySection {
+  matches: TodayMatch[];
+  todayPoints: { nick: string; pts: number }[];
+  bestOfDay: string | null;
+}
+
 interface League {
   id: string;
   name: string;
   owner: string;
   members: number;
   ranking: RankingEntry[];
+  todaySection: TodaySection;
 }
 
 type AuthState = "idle" | "checking" | "pin_register" | "pin_login" | "pin_claim";
@@ -307,6 +329,101 @@ export default function LeaguePage() {
             )
           )}
         </AnimatePresence>
+
+        {/* DZIŚ W LIDZE */}
+        {league.todaySection.matches.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
+            className="border border-[#FFD700]/20 bg-[#0a0a0a] rounded-sm overflow-hidden">
+
+            <div className="px-6 py-4 border-b border-[#111]">
+              <p className="text-xs tracking-[0.4em]" style={{ fontFamily: B, color: "#FFD700" }}>DZIŚ W LIDZE</p>
+            </div>
+
+            {/* Matches + member votes */}
+            {league.todaySection.matches.map((m) => (
+              <div key={m.id} className="border-b border-[#0f0f0f] last:border-b-0">
+                {/* Match header */}
+                <div className="px-6 pt-4 pb-2 flex items-center gap-2">
+                  <span className="text-lg">{m.t1.flag}</span>
+                  <span className="text-xs tracking-wide flex-1 truncate" style={{ fontFamily: B, color: "#aaa" }}>
+                    {m.t1.name} — {m.t2.name}
+                  </span>
+                  <span className="text-lg">{m.t2.flag}</span>
+                  <span className="text-[10px] tracking-widest ml-2 shrink-0" style={{ fontFamily: B, color: "#444" }}>
+                    {m.time}
+                  </span>
+                  {m.result && (
+                    <span className="text-sm tracking-widest ml-1 shrink-0 whitespace-nowrap" style={{ fontFamily: B, color: "#FFD700" }}>
+                      {m.result}
+                    </span>
+                  )}
+                </div>
+
+                {/* Member votes */}
+                <ul className="px-6 pb-3 space-y-1">
+                  {m.memberVotes.map((mv) => {
+                    const ptsColor = mv.pts === 3 ? "#22c55e" : mv.pts === 1 ? "#FFD700" : mv.pts === 0 ? "#444" : "#333";
+                    const ptsLabel = mv.pts === 3 ? "+3" : mv.pts === 1 ? "+1" : mv.pts === 0 ? "0" : null;
+                    return (
+                      <li key={mv.nick} className="flex items-center gap-2 text-[11px]">
+                        <a href={`/gracz/${encodeURIComponent(mv.nick)}`}
+                          className="w-24 truncate hover:underline shrink-0"
+                          style={{ fontFamily: B, color: mv.nick === nick ? "#FFD700" : "#666" }}>
+                          {mv.nick}
+                        </a>
+                        {mv.vote ? (
+                          <>
+                            <span style={{ fontFamily: B, color: "#555" }}>{mv.vote}</span>
+                            {m.result && (
+                              <>
+                                <span style={{ color: "#2a2a2a" }}>→</span>
+                                <span style={{ fontFamily: B, color: "#444" }}>{m.result}</span>
+                                <span className="ml-auto tracking-widest" style={{ fontFamily: B, color: ptsColor }}>
+                                  {ptsLabel !== null ? `${ptsLabel} PKT` : ""}
+                                </span>
+                              </>
+                            )}
+                          </>
+                        ) : (
+                          <span style={{ fontFamily: B, color: "#2a2a2a" }}>—</span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+
+            {/* Today points summary */}
+            {league.todaySection.todayPoints.length > 0 && (
+              <div className="border-t border-[#111] px-6 py-3">
+                <p className="text-[9px] tracking-[0.4em] mb-2" style={{ fontFamily: B, color: "#444" }}>PKT DZIŚ</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {league.todaySection.todayPoints.map((e) => (
+                    <span key={e.nick} className="text-xs tracking-wide" style={{ fontFamily: B, color: e.nick === league.todaySection.bestOfDay ? "#FFD700" : "#555" }}>
+                      {e.nick} +{e.pts}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Best of day */}
+            {league.todaySection.bestOfDay && (
+              <div className="border-t border-[#FFD700]/10 bg-[#0d0d00] px-6 py-4 text-center">
+                <p className="text-[9px] tracking-[0.4em] mb-1" style={{ fontFamily: B, color: "#555" }}>
+                  ⭐ NAJLEPSZY TYP DNIA
+                </p>
+                <a href={`/gracz/${encodeURIComponent(league.todaySection.bestOfDay)}`}
+                  className="text-xl tracking-widest hover:underline"
+                  style={{ fontFamily: B, color: "#FFD700" }}>
+                  {league.todaySection.bestOfDay}
+                </a>
+              </div>
+            )}
+
+          </motion.div>
+        )}
 
         {/* Ranking */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}
