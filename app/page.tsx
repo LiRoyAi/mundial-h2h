@@ -894,6 +894,7 @@ export default function MundialPage() {
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
   const [rankingTotal, setRankingTotal] = useState(0);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
+  const [showBeaters, setShowBeaters] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">("DZIŚ");
   const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
@@ -1488,6 +1489,68 @@ export default function MundialPage() {
           </div>
         </div>
       </section>
+
+      {/* ── KTO OGRAŁ LIROYA ─────────────────────────────────────────── */}
+      {ranking.length > 0 && (() => {
+        const liroy = ranking.find((e) => e.nick === "LiROY");
+        const liroyPts = liroy?.points ?? -1;
+        const beaters = ranking.filter((e) => e.points > liroyPts);
+        return (
+          <section className="px-6 pb-6 max-w-lg mx-auto">
+            <div className="border border-[#FFD700]/10 bg-[#0a0a0a] rounded-sm overflow-hidden">
+              <button
+                onClick={() => setShowBeaters((v) => !v)}
+                className="w-full px-6 py-4 flex items-center justify-between"
+              >
+                <p className="text-xs tracking-[0.35em]" style={{ fontFamily: B, color: "#FFD700" }}>
+                  🏆 KTO OGRAŁ LIROYA
+                </p>
+                <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+                  {beaters.length > 0 ? `${beaters.length} GRACZY ` : ""}{showBeaters ? "▲" : "▼"}
+                </span>
+              </button>
+
+              {showBeaters && (
+                beaters.length === 0 ? (
+                  <p className="px-6 pb-5 text-[11px] tracking-[0.25em]" style={{ fontFamily: B, color: "#444" }}>
+                    Nikt jeszcze nie ograł LiROY-a
+                  </p>
+                ) : (
+                  <ul className="divide-y divide-[#0f0f0f] border-t border-[#111]">
+                    {beaters.map((entry, i) => (
+                      <li key={entry.nick} className="flex items-center gap-4 px-6 py-3">
+                        <span className="w-6 text-center text-sm" style={{
+                          fontFamily: B,
+                          color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
+                        }}>{i + 1}</span>
+                        <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
+                          className="flex-1 text-sm tracking-wide hover:underline flex items-center gap-1.5 min-w-0"
+                          style={{ fontFamily: B, color: entry.nick === nick ? "#FFD700" : "#f5f5f5" }}>
+                          <span className="truncate">{entry.nick}</span>
+                          {entry.badges && entry.badges.slice(0, 2).map((b) => (
+                            <span key={b} className="text-xs shrink-0" title={b}>{BADGE_EMOJIS[b] ?? ""}</span>
+                          ))}
+                        </a>
+                        {entry.accuracy !== null && (
+                          <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+                            {entry.accuracy}%
+                          </span>
+                        )}
+                        <span className="text-sm" style={{ fontFamily: B, color: "#444" }}>
+                          {entry.points} pkt
+                        </span>
+                        <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+                          +{entry.points - liroyPts}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              )}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ── REMINDER ─────────────────────────────────────────────────── */}
       <section className="px-6 pb-16 max-w-lg mx-auto">
