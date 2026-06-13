@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import matchesData from "@/data/matches.json";
 
@@ -988,6 +988,9 @@ export default function MundialPage() {
   const [reminderError, setReminderError] = useState("");
   const [challengeRanking, setChallengeRanking] = useState<{ nick: string; wins: number }[]>([]);
   const [showChallengeRanking, setShowChallengeRanking] = useState(false);
+  const prevRankingRef = useRef<RankingEntry[]>([]);
+  const prevPositionsRef = useRef<Map<string, number>>(new Map());
+  const [rankingAnimations, setRankingAnimations] = useState<Map<string, { delta: number; epoch: number }>>(new Map());
 
   useEffect(() => {
     console.log("[hero] state — mounted:", mounted, "| nickSaved:", nickSaved, "| hero visible:", mounted && !nickSaved);
@@ -1000,7 +1003,47 @@ export default function MundialPage() {
       const res = await fetch(`/api/vote?${q}`);
       if (res.ok) {
         const data = await res.json();
-        setRanking(data.ranking ?? []);
+        const newRanking: RankingEntry[] = data.ranking ?? [];
+
+        // Compute position deltas against previous snapshot
+        const prevPos = prevPositionsRef.current;
+        if (prevPos.size > 0) {
+          const epoch = Date.now();
+          const animations = new Map<string, { delta: number; epoch: number }>();
+          newRanking.forEach((entry, i) => {
+            const oldPosition = prevPos.get(entry.nick);
+            if (oldPosition !== undefined && oldPosition !== i + 1) {
+              animations.set(entry.nick, { delta: oldPosition - (i + 1), epoch });
+            }
+          });
+          if (animations.size > 0) {
+            setRankingAnimations(animations);
+            setTimeout(() => setRankingAnimations(new Map()), 3500);
+
+            // Toast for logged-in user advancing
+            if (n) {
+              const userOldPos = prevPos.get(n);
+              const userNewIdx = newRanking.findIndex((e) => e.nick === n);
+              const userNewPos = userNewIdx >= 0 ? userNewIdx + 1 : null;
+              if (userOldPos && userNewPos && userNewPos < userOldPos) {
+                const jumpedOver = prevRankingRef.current[userNewPos - 1]?.nick ?? null;
+                const msg = jumpedOver
+                  ? `Awansujesz z #${userOldPos} na #${userNewPos} — przeskakujesz ${jumpedOver}!`
+                  : `Awansujesz z #${userOldPos} na #${userNewPos}!`;
+                setNotification(msg);
+                setTimeout(() => setNotification(""), 5000);
+              }
+            }
+          }
+        }
+
+        // Update snapshots
+        const newPosMap = new Map<string, number>();
+        newRanking.forEach((entry, i) => { newPosMap.set(entry.nick, i + 1); });
+        prevPositionsRef.current = newPosMap;
+        prevRankingRef.current = newRanking;
+
+        setRanking(newRanking);
         setRankingTotal(data.total ?? 0);
         setUserRank(data.userRank ?? null);
       }
@@ -1523,34 +1566,68 @@ export default function MundialPage() {
             </p>
           ) : (
             <ul className="divide-y divide-[#0f0f0f]">
-              {ranking.map((entry, i) => (
-                <motion.li key={entry.nick} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.02 }} className="flex items-center gap-4 px-6 py-3">
-                  <span className="w-6 text-center text-sm" style={{
-                    fontFamily: B,
-                    color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
-                  }}>{i + 1}</span>
-                  <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
-                    className="flex-1 text-sm tracking-wide hover:underline flex items-center gap-1.5 min-w-0"
-                    style={{
+              {ranking.map((entry, i) => {
+                const anim = rankingAnimations.get(entry.nick);
+                return (
+                  <motion.li
+                    key={entry.nick}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.02 }}
+                    className="flex items-center gap-4 px-6 py-3 relative overflow-hidden"
+                  >
+                    {/* Gold flash for upward movers */}
+                    {anim && anim.delta > 0 && (
+                      <motion.div
+                        key={`flash-${anim.epoch}`}
+                        className="absolute inset-0 pointer-events-none"
+                        initial={{ backgroundColor: "rgba(255,215,0,0.13)" }}
+                        animate={{ backgroundColor: "rgba(0,0,0,0)" }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                      />
+                    )}
+                    <span className="w-6 text-center text-sm relative" style={{
                       fontFamily: B,
-                      color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
-                    }}>
-                    <span className="truncate">{entry.nick}</span>
-                    {entry.badges && entry.badges.slice(0, 2).map((b) => (
-                      <span key={b} className="text-xs shrink-0" title={b}>{BADGE_EMOJIS[b] ?? ""}</span>
-                    ))}
-                  </a>
-                  {entry.accuracy !== null && (
-                    <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
-                      {entry.accuracy}%
+                      color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
+                    }}>{i + 1}</span>
+                    <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
+                      className="flex-1 text-sm tracking-wide hover:underline flex items-center gap-1.5 min-w-0 relative"
+                      style={{
+                        fontFamily: B,
+                        color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
+                      }}>
+                      <span className="truncate">{entry.nick}</span>
+                      {entry.badges && entry.badges.slice(0, 2).map((b) => (
+                        <span key={b} className="text-xs shrink-0" title={b}>{BADGE_EMOJIS[b] ?? ""}</span>
+                      ))}
+                    </a>
+                    {entry.accuracy !== null && (
+                      <span className="text-[10px] tracking-widest relative" style={{ fontFamily: B, color: "#333" }}>
+                        {entry.accuracy}%
+                      </span>
+                    )}
+                    <span className="text-sm relative" style={{ fontFamily: B, color: "#444" }}>
+                      {entry.points} pkt
                     </span>
-                  )}
-                  <span className="text-sm" style={{ fontFamily: B, color: "#444" }}>
-                    {entry.points} pkt
-                  </span>
-                </motion.li>
-              ))}
+                    {/* ▲/▼ position change indicator */}
+                    {anim && (
+                      <motion.span
+                        key={`delta-${anim.epoch}`}
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 0 }}
+                        transition={{ duration: 3, ease: "easeIn" }}
+                        className="text-[9px] tracking-widest shrink-0 relative"
+                        style={{
+                          fontFamily: B,
+                          color: anim.delta > 0 ? "#22c55e" : "#ef4444",
+                        }}
+                      >
+                        {anim.delta > 0 ? `▲+${anim.delta}` : `▼${Math.abs(anim.delta)}`}
+                      </motion.span>
+                    )}
+                  </motion.li>
+                );
+              })}
             </ul>
           )}
 
