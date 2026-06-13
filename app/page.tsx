@@ -887,6 +887,173 @@ function EpisodeModal({ match: initialMatch, allMatches, onClose }: {
   );
 }
 
+// ─── FlagsIntro ───────────────────────────────────────────────────────────────
+
+const INTRO_GROUPS: [string, string[]][] = [
+  ["A", ["🇲🇽","🇿🇦","🇰🇷","🇨🇿"]],
+  ["B", ["🇨🇦","🇧🇦","🇶🇦","🇨🇭"]],
+  ["C", ["🇧🇷","🇲🇦","🇭🇹","🏴󠁧󠁢󠁳󠁣󠁴󠁿"]],
+  ["D", ["🇺🇸","🇵🇾","🇦🇺","🇹🇷"]],
+  ["E", ["🇩🇪","🇨🇼","🇨🇮","🇪🇨"]],
+  ["F", ["🇳🇱","🇯🇵","🇸🇪","🇹🇳"]],
+  ["G", ["🇧🇪","🇪🇬","🇮🇷","🇳🇿"]],
+  ["H", ["🇪🇸","🇨🇻","🇸🇦","🇺🇾"]],
+  ["I", ["🇫🇷","🇸🇳","🇮🇶","🇳🇴"]],
+  ["J", ["🇦🇷","🇩🇿","🇦🇹","🇯🇴"]],
+  ["K", ["🇵🇹","🇨🇩","🇺🇿","🇨🇴"]],
+  ["L", ["🏴󠁧󠁢󠁥󠁮󠁧󠁿","🇭🇷","🇬🇭","🇵🇦"]],
+];
+
+interface IFlag { id: string; emoji: string; delay: number; sx: number; sy: number; wx: number; wy: number; cx: number; cy: number; }
+interface IGroup { label: string; gx: number; gy: number; }
+
+function FlagsIntro({ onDone }: { onDone: () => void }) {
+  const [phase, setPhase] = useState(0); // 0=init 1=fly 2=cluster 3=pulse 4=fade
+  const [flags, setFlags] = useState<IFlag[]>([]);
+  const [groups, setGroups] = useState<IGroup[]>([]);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const skip = useCallback(() => { timers.current.forEach(clearTimeout); onDone(); }, [onDone]);
+
+  useEffect(() => {
+    const W = window.innerWidth, H = window.innerHeight;
+    const COLS = 4;
+    const CW = Math.min(130, Math.floor((W - 32) / COLS));
+    const CH = Math.min(110, Math.floor((H - 80) / 3));
+    const GL = (W - COLS * CW) / 2;
+    const GT = (H - 3 * CH) / 2;
+    const FS = 14; // half of ~28px emoji
+
+    const gd: IGroup[] = INTRO_GROUPS.map(([label], gi) => ({
+      label,
+      gx: GL + (gi % COLS) * CW + CW / 2,
+      gy: GT + Math.floor(gi / COLS) * CH + CH / 2,
+    }));
+
+    const OFF = Math.min(20, Math.floor(CW * 0.16));
+    const fd: IFlag[] = [];
+    let idx = 0;
+
+    INTRO_GROUPS.forEach(([grp, emojis], gi) => {
+      const { gx, gy } = gd[gi];
+      emojis.forEach((emoji, fi) => {
+        const edge = idx % 4;
+        const r = Math.random();
+        const [sx, sy]: [number, number] =
+          edge === 0 ? [r * W, -50]
+          : edge === 1 ? [r * W, H + 50]
+          : edge === 2 ? [-50, r * H]
+          : [W + 50, r * H];
+        const offX = (fi % 2 === 0 ? -1 : 1) * OFF;
+        const offY = (fi < 2 ? -1 : 1) * OFF;
+        fd.push({
+          id: `${grp}-${fi}`, emoji,
+          delay: (idx / 48) * 0.38,
+          sx: sx - FS, sy: sy - FS,
+          wx: 40 + Math.random() * (W - 80) - FS,
+          wy: 40 + Math.random() * (H - 80) - FS,
+          cx: gx + offX - FS,
+          cy: gy + offY - FS,
+        });
+        idx++;
+      });
+    });
+
+    setGroups(gd);
+    setFlags(fd);
+
+    const ts = [
+      setTimeout(() => setPhase(1), 16),
+      setTimeout(() => setPhase(2), 850),
+      setTimeout(() => setPhase(3), 1680),
+      setTimeout(() => setPhase(4), 2100),
+      setTimeout(onDone, 2650),
+    ];
+    timers.current = ts;
+    return () => ts.forEach(clearTimeout);
+  }, [onDone]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 overflow-hidden"
+      style={{ zIndex: 9999, background: "rgba(0,0,0,0.95)", cursor: "pointer" }}
+      animate={{ opacity: phase === 4 ? 0 : 1 }}
+      transition={{ duration: 0.5 }}
+      onClick={skip}
+    >
+      {/* Flags */}
+      {phase >= 1 && flags.map((f) => (
+        <motion.div
+          key={f.id}
+          style={{ position: "absolute", fontSize: "1.75rem", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}
+          initial={{ x: f.sx, y: f.sy, opacity: 0 }}
+          animate={phase < 2 ? { x: f.wx, y: f.wy, opacity: 1 } : { x: f.cx, y: f.cy, opacity: 1 }}
+          transition={phase < 2
+            ? { duration: 0.45, delay: f.delay, ease: "easeOut" }
+            : { duration: 0.4, ease: [0.25, 0.8, 0.4, 1] as [number, number, number, number] }
+          }
+        >
+          {f.emoji}
+        </motion.div>
+      ))}
+
+      {/* Group labels (phase 2+) */}
+      {phase >= 2 && groups.map(({ label, gx, gy }) => (
+        <motion.div
+          key={`lbl-${label}`}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+          style={{
+            position: "absolute",
+            left: gx - 14,
+            top: gy + 30,
+            width: 28,
+            textAlign: "center",
+            fontFamily: B,
+            fontSize: "0.55rem",
+            letterSpacing: "0.25em",
+            color: "#FFD700",
+            pointerEvents: "none",
+          }}
+        >
+          {label}
+        </motion.div>
+      ))}
+
+      {/* Glow pulse (phase 3) */}
+      {phase === 3 && groups.map(({ label, gx, gy }) => (
+        <motion.div
+          key={`glow-${label}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.4, ease: "easeInOut", times: [0, 0.5, 1] }}
+          style={{
+            position: "absolute",
+            left: gx - 38,
+            top: gy - 38,
+            width: 76,
+            height: 76,
+            background: "radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%)",
+            boxShadow: "0 0 20px 4px rgba(255,215,0,0.4)",
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+
+      {/* Skip hint */}
+      <div style={{
+        position: "absolute", bottom: 24, left: 0, right: 0,
+        textAlign: "center", fontFamily: B, fontSize: "0.6rem",
+        letterSpacing: "0.4em", color: "rgba(255,255,255,0.18)",
+        pointerEvents: "none",
+      }}>
+        KLIKNIJ ABY POMINĄĆ
+      </div>
+    </motion.div>
+  );
+}
+
 // ─── Dashboard ───────────────────────────────────────────────────────────────
 
 function Dashboard({ nick, nickSaved, userRank, todayCount, goldenBalls }: {
@@ -1076,6 +1243,12 @@ export default function MundialPage() {
   const prevRankingRef = useRef<RankingEntry[]>([]);
   const prevPositionsRef = useRef<Map<string, number>>(new Map());
   const [rankingAnimations, setRankingAnimations] = useState<Map<string, { delta: number; epoch: number }>>(new Map());
+  const [showIntro, setShowIntro] = useState(false);
+
+  const handleIntroDone = useCallback(() => {
+    sessionStorage.setItem("flags_intro_seen", "1");
+    setShowIntro(false);
+  }, []);
 
   useEffect(() => {
     console.log("[hero] state — mounted:", mounted, "| nickSaved:", nickSaved, "| hero visible:", mounted && !nickSaved);
@@ -1170,6 +1343,7 @@ export default function MundialPage() {
         })
         .catch(() => {});
     } else {
+      if (!sessionStorage.getItem("flags_intro_seen")) setShowIntro(true);
       fetchRanking("");
     }
     fetch("/api/mundial/challenge")
@@ -1294,7 +1468,9 @@ export default function MundialPage() {
   const publishedCount = MATCHES.filter((m) => m.published).length;
 
   return (
-    <main style={{ background: "#000", minHeight: "100vh" }}>
+    <>
+      {showIntro && <FlagsIntro onDone={handleIntroDone} />}
+      <main style={{ background: "#000", minHeight: "100vh" }}>
 
       {/* ── HERO — guests only ───────────────────────────────────────── */}
       {mounted && !nickSaved && (
@@ -1949,6 +2125,7 @@ export default function MundialPage() {
           <EpisodeModal match={modalMatch} allMatches={MATCHES} onClose={() => setModalMatch(null)} />
         )}
       </AnimatePresence>
-    </main>
+      </main>
+    </>
   );
 }
