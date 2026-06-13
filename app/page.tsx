@@ -220,6 +220,8 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [matchResult, setMatchResult] = useState<string | null>(match.result ?? null);
+  const [communityDist, setCommunityDist] = useState<{ score: string; pct: number }[]>([]);
+  const [liroyPick, setLiroyPick] = useState<string | null>(null);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -239,6 +241,22 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
     if (stored) setVoted(true);
     fetchResults();
   }, [match.id, fetchResults]);
+
+  useEffect(() => {
+    if (isPast || matchResult) return;
+    fetch(`/api/mundial/votes/distribution?matchId=${match.id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.top3?.length) setCommunityDist(data.top3); })
+      .catch(() => {});
+  }, [match.id, isPast, matchResult]);
+
+  useEffect(() => {
+    if (isPast || matchResult) return;
+    fetch(`/api/mundial/liroy-pick?matchId=${match.id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.pick) setLiroyPick(data.pick); })
+      .catch(() => {});
+  }, [match.id, isPast, matchResult]);
 
   const totalVotes = Object.values(results).reduce((a, b) => a + b, 0);
   const getBarWidth = (key: string) =>
@@ -352,6 +370,44 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
               style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
               {loading ? "WYSYŁAM..." : "TYPUJ"}
             </motion.button>
+          </div>
+        )}
+
+        {!isPast && !matchResult && liroyPick && (
+          <div className="mt-5 flex items-center justify-center gap-2">
+            <span className="text-[10px] tracking-[0.25em]" style={{ fontFamily: B, color: "#555" }}>
+              ⚽ TYP LIROYA:
+            </span>
+            <span className="text-base tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+              {liroyPick}
+            </span>
+          </div>
+        )}
+
+        {!voted && !isPast && !matchResult && communityDist.length > 0 && (
+          <div className="mt-5">
+            <p className="text-[9px] tracking-[0.3em] mb-3 text-center" style={{ fontFamily: B, color: "#444" }}>
+              JAK TYPUJE SPOŁECZNOŚĆ
+            </p>
+            <div className="space-y-2">
+              {communityDist.map(({ score, pct }) => (
+                <div key={score} className="flex items-center gap-3">
+                  <span className="w-12 text-right text-sm" style={{ fontFamily: B, color: "#f5f5f5" }}>
+                    {score.replace("-", ":")}
+                  </span>
+                  <div className="flex-1 h-4 bg-[#111] rounded-sm overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${pct}%` }}
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      className="h-full"
+                      style={{ background: "rgba(255,215,0,0.3)" }}
+                    />
+                  </div>
+                  <span className="w-8 text-xs" style={{ fontFamily: B, color: "#555" }}>{pct}%</span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -761,7 +817,7 @@ export default function MundialPage() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">("DZIŚ");
   const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState(new Date(0)); // fixed sentinel avoids SSR/client mismatch
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
   const [authState, setAuthState] = useState<"idle" | "checking" | "pin_register" | "pin_login" | "pin_claim">("idle");
   const [pinInput, setPinInput] = useState("");
@@ -776,6 +832,10 @@ export default function MundialPage() {
   const [reminderSubmitting, setReminderSubmitting] = useState(false);
   const [reminderDone, setReminderDone] = useState(false);
   const [reminderError, setReminderError] = useState("");
+
+  useEffect(() => {
+    console.log("[hero] state — mounted:", mounted, "| nickSaved:", nickSaved, "| hero visible:", mounted && !nickSaved);
+  }, [mounted, nickSaved]);
 
   const fetchRanking = async (overrideNick?: string) => {
     try {
@@ -805,9 +865,11 @@ export default function MundialPage() {
     if (up.length > 0) setExpandedDates(new Set([cestDay(up[0].deadline)]));
 
     const stored = localStorage.getItem("mundial:nick");
+    console.log("[hero] localStorage 'mundial:nick':", stored);
     if (stored) {
       setNick(stored);
       setNickSaved(true);
+      console.log("[hero] setNickSaved(true) called");
       fetchRanking(stored);
       fetch(`/api/mundial/notification?nick=${encodeURIComponent(stored)}`)
         .then((r) => r.ok ? r.json() : null)
@@ -937,7 +999,8 @@ export default function MundialPage() {
   return (
     <main style={{ background: "#000", minHeight: "100vh" }}>
 
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
+      {/* ── HERO — guests only ───────────────────────────────────────── */}
+      {mounted && !nickSaved && (
       <section className="relative pt-20 pb-16 px-6 text-center overflow-hidden">
         <div className="absolute inset-0 opacity-[0.025]" style={{
           backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 2px,#FFD700 2px,#FFD700 3px)",
@@ -987,9 +1050,10 @@ export default function MundialPage() {
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-10 h-px w-40" style={{ background: "#FFD700", transformOrigin: "center" }} />
       </section>
+      )}
 
       {/* ── NICK ─────────────────────────────────────────────────────── */}
-      <section className="px-6 pb-10 max-w-lg mx-auto">
+      {mounted && <section className="px-6 pb-10 max-w-lg mx-auto">
         <AnimatePresence mode="wait">
           {nickSaved ? (
             <motion.div key="saved" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
@@ -1112,9 +1176,9 @@ export default function MundialPage() {
             ✅ Dokładny wynik = 3 pkt &nbsp;·&nbsp; ⚽ Trafiony zwycięzca = 1 pkt &nbsp;·&nbsp; ❌ Pudło = 0 pkt
           </p>
         </div>
-      </section>
+      </section>}
 
-      <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} />
+      {mounted && <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} />}
 
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">

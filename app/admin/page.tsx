@@ -40,6 +40,50 @@ export default function AdminPage() {
   const [submitting, setSubmitting] = useState<Record<string, boolean>>({});
   const [messages, setMessages] = useState<Record<string, string>>({});
 
+  const [picks, setPicks] = useState<Record<string, string | null>>({});
+  const [pickInputs, setPickInputs] = useState<Record<string, { g1: string; g2: string }>>({});
+  const [pickSubmitting, setPickSubmitting] = useState<Record<string, boolean>>({});
+  const [pickMessages, setPickMessages] = useState<Record<string, string>>({});
+
+  const fetchPicks = useCallback(async () => {
+    const entries = await Promise.all(
+      MATCHES.map(async (m) => {
+        try {
+          const res = await fetch(`/api/mundial/liroy-pick?matchId=${m.id}`);
+          if (res.ok) { const d = await res.json(); return [m.id, d.pick ?? null] as const; }
+        } catch { /* ignore */ }
+        return [m.id, null] as const;
+      })
+    );
+    setPicks(Object.fromEntries(entries));
+  }, []);
+
+  const submitPick = async (matchId: string) => {
+    const s = pickInputs[matchId];
+    if (!s) return;
+    const g1 = parseInt(s.g1, 10);
+    const g2 = parseInt(s.g2, 10);
+    if (isNaN(g1) || isNaN(g2)) { setPickMessages((p) => ({ ...p, [matchId]: "Enter valid scores." })); return; }
+    setPickSubmitting((p) => ({ ...p, [matchId]: true }));
+    setPickMessages((p) => ({ ...p, [matchId]: "" }));
+    try {
+      const res = await fetch("/api/mundial/liroy-pick", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId, pick: `${g1}:${g2}`, adminKey: key }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPickMessages((p) => ({ ...p, [matchId]: data.error ?? "Error." }));
+      } else {
+        setPickMessages((p) => ({ ...p, [matchId]: `✓ ${g1}:${g2} saved.` }));
+        setPicks((p) => ({ ...p, [matchId]: `${g1}:${g2}` }));
+      }
+    } finally {
+      setPickSubmitting((p) => ({ ...p, [matchId]: false }));
+    }
+  };
+
   const fetchResults = useCallback(async (adminKey: string) => {
     setLoading(true);
     try {
@@ -125,8 +169,8 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (authed) fetchResults(key);
-  }, [authed, key, fetchResults]);
+    if (authed) { fetchResults(key); fetchPicks(); }
+  }, [authed, key, fetchResults, fetchPicks]);
 
   if (!authed) {
     return (
@@ -247,6 +291,71 @@ export default function AdminPage() {
           </section>
         );
       })}
+      {/* ── Liroy Pick ─────────────────────────────────────────────── */}
+      <section style={{ marginBottom: 32 }}>
+        <h2 style={{ fontSize: 13, borderBottom: "1px solid #ccc", paddingBottom: 4, marginBottom: 8 }}>
+          ⚽ Liroy Pick
+        </h2>
+        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr style={{ textAlign: "left", color: "#666" }}>
+              <th style={{ padding: "4px 8px", width: 90 }}>ID</th>
+              <th style={{ padding: "4px 8px" }}>Match</th>
+              <th style={{ padding: "4px 8px", width: 100 }}>Current</th>
+              <th style={{ padding: "4px 8px", width: 200 }}>Set pick</th>
+              <th style={{ padding: "4px 8px" }}>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows
+              .filter((m) => m.status !== "result-set")
+              .map((m) => {
+                const s = pickInputs[m.id] ?? { g1: "", g2: "" };
+                const busy = pickSubmitting[m.id] ?? false;
+                const current = picks[m.id] ?? null;
+                return (
+                  <tr key={m.id} style={{ borderTop: "1px solid #eee" }}>
+                    <td style={{ padding: "6px 8px", color: "#888" }}>{m.id}</td>
+                    <td style={{ padding: "6px 8px" }}>
+                      {m.t1.flag} {m.t1.name} — {m.t2.name} {m.t2.flag}
+                    </td>
+                    <td style={{ padding: "6px 8px", fontWeight: "bold", color: current ? "#b8860b" : "#ccc" }}>
+                      {current ?? "—"}
+                    </td>
+                    <td style={{ padding: "6px 8px" }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                        <input
+                          type="number" min={0} max={99}
+                          value={s.g1}
+                          onChange={(e) => setPickInputs((p) => ({ ...p, [m.id]: { ...s, g1: e.target.value } }))}
+                          style={{ width: 44, padding: "2px 4px", textAlign: "center" }}
+                          placeholder="0"
+                        />
+                        <span>:</span>
+                        <input
+                          type="number" min={0} max={99}
+                          value={s.g2}
+                          onChange={(e) => setPickInputs((p) => ({ ...p, [m.id]: { ...s, g2: e.target.value } }))}
+                          style={{ width: 44, padding: "2px 4px", textAlign: "center" }}
+                          placeholder="0"
+                        />
+                        <button
+                          onClick={() => submitPick(m.id)}
+                          disabled={busy || s.g1 === "" || s.g2 === ""}
+                          style={{ padding: "2px 10px", cursor: "pointer" }}>
+                          {busy ? "…" : current ? "Update" : "Set"}
+                        </button>
+                      </span>
+                    </td>
+                    <td style={{ padding: "6px 8px", color: pickMessages[m.id]?.startsWith("✓") ? "green" : "red" }}>
+                      {pickMessages[m.id] ?? ""}
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </section>
     </main>
   );
 }
