@@ -60,27 +60,19 @@ export default function AdminPage() {
 
   const submitPick = async (matchId: string) => {
     const s = pickInputs[matchId];
-    console.log("[liroy-pick] submitPick called", { matchId, pickInputsEntry: s, keySet: !!key, keyLength: key.length });
-    if (!s) {
-      console.warn("[liroy-pick] early return — pickInputs[matchId] is undefined");
-      return;
-    }
+    if (!s) return;
     const g1 = parseInt(s.g1, 10);
     const g2 = parseInt(s.g2, 10);
-    console.log("[liroy-pick] parsed scores", { g1, g2, raw: `${s.g1}:${s.g2}` });
     if (isNaN(g1) || isNaN(g2)) { setPickMessages((p) => ({ ...p, [matchId]: "Enter valid scores." })); return; }
     setPickSubmitting((p) => ({ ...p, [matchId]: true }));
     setPickMessages((p) => ({ ...p, [matchId]: "" }));
-    const payload = { matchId, pick: `${g1}:${g2}`, adminKey: key };
-    console.log("[liroy-pick] sending POST", { ...payload, adminKey: key ? `${key.slice(0, 2)}***` : "(empty)" });
     try {
       const res = await fetch("/api/mundial/liroy-pick", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ matchId, pick: `${g1}:${g2}`, adminKey: key }),
       });
       const data = await res.json();
-      console.log("[liroy-pick] response", { status: res.status, ok: res.ok, data });
       if (!res.ok) {
         setPickMessages((p) => ({ ...p, [matchId]: data.error ?? "Error." }));
       } else {
