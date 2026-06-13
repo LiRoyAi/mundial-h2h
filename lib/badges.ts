@@ -4,7 +4,7 @@ import matchesData from "@/data/matches.json";
 interface MatchInfo { id: string; deadline: string }
 const MATCHES = matchesData.matches as MatchInfo[];
 
-export type BadgeId = "snajper" | "hot_streak" | "perfect_day" | "underdog" | "pierwsza_krew";
+export type BadgeId = "snajper" | "hot_streak" | "perfect_day" | "underdog" | "pierwsza_krew" | "comeback_king";
 
 function parseScore(s: string): [number, number] | null {
   const parts = s.replace("-", ":").split(":").map(Number);
@@ -116,6 +116,28 @@ export async function calculateAndSaveBadges(redis: Redis, nick: string): Promis
 
   // pierwsza_krew: registered when ≤10 players had signed up
   if (regSeq !== null && regSeq <= 10) badges.add("pierwsza_krew");
+
+  // comeback_king: 0 pts on all voted+resolved matches on day X, then 3+ pts on day X+1
+  const pointsByDay = new Map<string, number>();
+  for (const m of MATCHES) {
+    if (!results.has(m.id)) continue;
+    if (!playerVotes.has(m.id)) continue;
+    const day = cestDay(m.deadline);
+    pointsByDay.set(day, (pointsByDay.get(day) ?? 0) + (matchPoints.get(m.id) ?? 0));
+  }
+  const days = [...pointsByDay.keys()].sort();
+  outer: for (let i = 0; i < days.length - 1; i++) {
+    const day1 = days[i];
+    // find next calendar day in the sorted list
+    const d = new Date(day1 + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() + 1);
+    const expected = d.toISOString().slice(0, 10);
+    if (days[i + 1] !== expected) continue;
+    if (pointsByDay.get(day1) === 0 && (pointsByDay.get(expected) ?? 0) >= 3) {
+      badges.add("comeback_king");
+      break outer;
+    }
+  }
 
   const earned = [...badges];
   await redis.set(`badge:${nick}`, JSON.stringify(earned));

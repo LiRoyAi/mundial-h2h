@@ -42,6 +42,7 @@ const BADGE_EMOJIS: Record<string, string> = {
   perfect_day: "⭐",
   underdog: "😈",
   pierwsza_krew: "🩸",
+  comeback_king: "👑",
 };
 
 interface UserRank {

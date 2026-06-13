@@ -35,11 +35,12 @@ interface PlayerData {
 }
 
 const BADGE_DEFS: { id: string; emoji: string; label: string }[] = [
-  { id: "snajper",      emoji: "🎯", label: "SNAJPER"       },
-  { id: "hot_streak",   emoji: "🔥", label: "HOT STREAK"    },
-  { id: "perfect_day",  emoji: "⭐", label: "PERFECT DAY"   },
-  { id: "underdog",     emoji: "😈", label: "UNDERDOG"      },
-  { id: "pierwsza_krew",emoji: "🩸", label: "PIERWSZA KREW" },
+  { id: "snajper",       emoji: "🎯", label: "SNAJPER"        },
+  { id: "hot_streak",    emoji: "🔥", label: "HOT STREAK"     },
+  { id: "perfect_day",   emoji: "⭐", label: "PERFECT DAY"    },
+  { id: "underdog",      emoji: "😈", label: "UNDERDOG"       },
+  { id: "pierwsza_krew", emoji: "🩸", label: "PIERWSZA KREW"  },
+  { id: "comeback_king", emoji: "👑", label: "COMEBACK KING"  },
 ];
 
 function getDna(votes: VoteEntry[], badges: string[], votedCount: number): string {
