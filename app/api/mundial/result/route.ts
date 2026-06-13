@@ -19,6 +19,22 @@ function winner(g1: number, g2: number): "t1" | "t2" | "draw" {
   return "draw";
 }
 
+export async function GET(request: NextRequest) {
+  const adminKey = new URL(request.url).searchParams.get("adminKey");
+  if (adminKey !== process.env.ADMIN_KEY) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const resultKeys = await redis.keys("result:*");
+  const results: Record<string, string> = {};
+  if (resultKeys.length > 0) {
+    const values = await redis.mget<(string | null)[]>(...resultKeys);
+    resultKeys.forEach((k, i) => {
+      if (values[i]) results[k.replace("result:", "")] = values[i]!;
+    });
+  }
+  return Response.json({ results });
+}
+
 export async function POST(request: NextRequest) {
   let body: { matchId?: string; result?: string; adminKey?: string };
   try {
