@@ -255,6 +255,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [aiBrief, setAiBrief] = useState<string | null>(null);
   const [aiBriefLoading, setAiBriefLoading] = useState(false);
   const [showAiBrief, setShowAiBrief] = useState(false);
+  const [inputFlash, setInputFlash] = useState(false);
+  const [cardFlash, setCardFlash] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -327,6 +329,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const handleVote = async () => {
     if (!nick.trim()) { setError("Wpisz nick przed typowaniem!"); return; }
     setError(""); setLoading(true);
+    setInputFlash(true);
+    setTimeout(() => setInputFlash(false), 500);
     try {
       const scoreStr = `${score1}-${score2}`;
 
@@ -358,6 +362,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
       setVoted(true);
       setJustVoted(true);
       localStorage.setItem(`voted:${match.id}`, scoreStr);
+      setCardFlash(true);
+      setTimeout(() => setCardFlash(false), 300);
       onFirstVote?.();
     } catch { setError("Błąd połączenia. Spróbuj ponownie."); }
     finally { setLoading(false); }
@@ -404,6 +410,18 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
         style={{ fontFamily: B, background: "#FFD700", color: "#000" }}>
         GRUPA {match.group}
       </div>
+      <AnimatePresence>
+        {cardFlash && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none z-10"
+            initial={{ opacity: 0.35 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ background: "#FFD700" }}
+          />
+        )}
+      </AnimatePresence>
       <div className="pt-10 pb-6 px-4">
         <p className="text-center text-[11px] tracking-widest mb-6"
           style={{ fontFamily: B, color: "#FFD700" }}>
@@ -430,7 +448,14 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
                       {matchResult}
                     </span>
                   </div>
-                  <PtsBadge pts={calcPts(myVote, matchResult, goldenBallUsed)} />
+                  <motion.div
+                    key={`pts-${matchResult}`}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 22, delay: 0.1 }}
+                  >
+                    <PtsBadge pts={calcPts(myVote, matchResult, goldenBallUsed)} />
+                  </motion.div>
                 </>
               ) : (
                 <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "2.5rem", color: "#FFD700" }}>
@@ -444,11 +469,15 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
               {myVote ?? "?"}
             </div>
           ) : !isPast ? (
-            <div className="flex items-center gap-3">
+            <motion.div
+              className="flex items-center gap-3"
+              animate={{ boxShadow: inputFlash ? "0 0 20px rgba(255,215,0,0.5)" : "0 0 0px rgba(255,215,0,0)" }}
+              transition={{ duration: 0.25 }}
+            >
               <ScorePicker value={score1} onChange={setScore1} />
               <span style={{ fontFamily: B, fontSize: "2rem", color: "#FFD700" }}>:</span>
               <ScorePicker value={score2} onChange={setScore2} />
-            </div>
+            </motion.div>
           ) : (
             <div className="text-center px-4" style={{ fontFamily: B, fontSize: "1.4rem", color: "#333" }}>⏰</div>
           )}
@@ -499,7 +528,10 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
               </div>
             )}
             <div className="flex justify-center mt-4">
-              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.87 }}
+                transition={{ type: "spring", stiffness: 500, damping: 14 }}
                 onClick={handleVote} disabled={loading}
                 className="px-10 py-3 text-black text-sm tracking-[0.2em] disabled:opacity-50"
                 style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
