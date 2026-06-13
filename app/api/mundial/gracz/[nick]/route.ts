@@ -141,6 +141,10 @@ export async function GET(
     else break;
   }
 
+  const storedBest = (await redis.get<number>(`best_streak:${nick}`)) ?? 0;
+  const bestStreak = Math.max(streak, storedBest);
+  if (streak > storedBest) await redis.set(`best_streak:${nick}`, streak);
+
   const badges = await calculateAndSaveBadges(redis, nick);
 
   return Response.json({
@@ -150,6 +154,7 @@ export async function GET(
     globalTotal,
     accuracy,
     streak,
+    bestStreak,
     bestDay,
     favoriteScore,
     missedCount,

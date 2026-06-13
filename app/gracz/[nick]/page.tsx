@@ -25,6 +25,7 @@ interface PlayerData {
   globalTotal: number;
   accuracy: number | null;
   streak: number;
+  bestStreak: number;
   bestDay: number;
   favoriteScore: string | null;
   missedCount: number;
@@ -142,14 +143,14 @@ export default function PlayerPage() {
 
       <section className="px-6 pb-6 max-w-lg mx-auto">
 
-        {/* Stats grid */}
+        {/* Stats grid — row 1: primary */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
           className="grid grid-cols-4 gap-2 mb-2">
           {[
-            { label: "PUNKTY", value: String(data.totalPoints) },
+            { label: "PUNKTY",  value: String(data.totalPoints) },
             { label: "RANKING", value: data.globalTotal > 0 ? `#${data.globalRank}` : "—" },
             { label: "CELNOŚĆ", value: data.accuracy !== null ? `${data.accuracy}%` : "—" },
-            { label: "SERIA", value: data.streak > 0 ? `${data.streak}d` : "—" },
+            { label: "SERIA",   value: data.streak > 0 ? `${data.streak}d` : "—" },
           ].map(({ label, value }) => (
             <div key={label} className="border border-[#FFD700]/15 bg-[#0a0a0a] px-2 py-4 text-center rounded-sm">
               <p className="text-[7px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>{label}</p>
@@ -158,12 +159,33 @@ export default function PlayerPage() {
           ))}
         </motion.div>
 
+        {/* Stats grid — row 2: outcome counts */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.13 }}
+          className="grid grid-cols-4 gap-2 mb-2">
+          {(() => {
+            const resolved = data.votes.filter((v) => v.result !== null);
+            return [
+              { label: "DOKŁADNE",      value: String(resolved.filter((v) => v.pts === 3).length) },
+              { label: "ZWYCIĘZCY",     value: String(resolved.filter((v) => v.pts === 1).length) },
+              { label: "PUDŁA",         value: String(resolved.filter((v) => v.pts === 0).length) },
+              { label: "ZŁ. PIŁKI UŻYTE", value: String(data.votes.filter((v) => v.goldenBall).length) },
+            ];
+          })().map(({ label, value }) => (
+            <div key={label} className="border border-[#FFD700]/15 bg-[#0a0a0a] px-2 py-4 text-center rounded-sm">
+              <p className="text-[7px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>{label}</p>
+              <p className="leading-none" style={{ fontFamily: B, fontSize: "1.5rem", color: "#FFD700" }}>{value}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Stats grid — row 3: secondary */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}
-          className="grid grid-cols-3 gap-2 mb-4">
+          className="grid grid-cols-4 gap-2 mb-4">
           {[
-            { label: "NAJLEPSZY WYNIK", value: data.bestDay > 0 ? `${data.bestDay} PKT` : "—" },
-            { label: "ULUBIONY WYNIK", value: data.favoriteScore ?? "—" },
-            { label: "MECZE BEZ TYPU", value: String(data.missedCount) },
+            { label: "NAJLEPSZY WYNIK",  value: data.bestDay > 0 ? `${data.bestDay} PKT` : "—" },
+            { label: "NAJLEPSZY STREAK", value: data.bestStreak > 0 ? `${data.bestStreak}d` : "—" },
+            { label: "ULUBIONY WYNIK",   value: data.favoriteScore ?? "—" },
+            { label: "MECZE BEZ TYPU",   value: String(data.missedCount) },
           ].map(({ label, value }) => (
             <div key={label} className="border border-[#FFD700]/10 bg-[#0a0a0a] px-2 py-4 text-center rounded-sm">
               <p className="text-[7px] tracking-widest mb-1" style={{ fontFamily: B, color: "#333" }}>{label}</p>
