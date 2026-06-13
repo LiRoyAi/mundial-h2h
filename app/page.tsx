@@ -863,6 +863,10 @@ export default function MundialPage() {
         setAuthState("idle");
         setPinInput("");
         fetchRanking(pendingNick);
+        fetch(`/api/mundial/notification?nick=${encodeURIComponent(pendingNick)}`)
+          .then((r) => r.ok ? r.json() : null)
+          .then((data) => { if (data?.showOnboarding) setShowOnboarding(true); })
+          .catch(() => {});
       } else {
         const data = await res.json();
         setPinError(res.status === 401 ? "Błędny PIN. Spróbuj ponownie." : (data.error ?? "Błąd. Spróbuj ponownie."));
