@@ -46,11 +46,11 @@ function winner(g1: number, g2: number): "t1" | "t2" | "draw" {
 }
 
 export function buildVoteSummaries(
-  matches: { id: string }[],
+  matches: { id: string; deadline: string }[],
   voteValues: (string | null)[],
   resultValues: (string | null)[]
 ): VoteSummary[] {
-  const summaries: VoteSummary[] = [];
+  const items: (VoteSummary & { deadline: string })[] = [];
   for (let i = 0; i < matches.length; i++) {
     const raw = voteValues[i];
     if (!raw) continue;
@@ -66,7 +66,10 @@ export function buildVoteSummaries(
         else pts = 0;
       }
     }
-    summaries.push({ myVote, pts });
+    items.push({ myVote, pts, deadline: matches[i].deadline });
   }
-  return summaries;
+  // Sort newest-first to match the gracz API's vote order, ensuring
+  // tie-breaking in getDna's frequency map is identical to the frontend.
+  items.sort((a, b) => new Date(b.deadline).getTime() - new Date(a.deadline).getTime());
+  return items.map(({ myVote, pts }) => ({ myVote, pts }));
 }

@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 import matchesData from "@/data/matches.json";
 import { buildVoteSummaries, getDna } from "@/lib/dna";
 
-const MATCHES = matchesData.matches as { id: string }[];
+const MATCHES = matchesData.matches as { id: string; deadline: string }[];
 
 export async function generateMetadata({
   params,

@@ -5,7 +5,7 @@ import matchesData from "@/data/matches.json";
 
 export const dynamic = "force-dynamic";
 
-const MATCHES = matchesData.matches as { id: string }[];
+const MATCHES = matchesData.matches as { id: string; deadline: string }[];
 
 const BADGE_EMOJIS: Record<string, string> = {
   snajper: "🎯",
@@ -43,7 +43,8 @@ export async function GET(
   let badges: string[] = [];
   try { if (badgeRaw) badges = JSON.parse(badgeRaw); } catch { /* */ }
 
-  const dna = getDna(buildVoteSummaries(MATCHES, voteValues, resultValues), badges);
+  const summaries = buildVoteSummaries(MATCHES, voteValues, resultValues);
+  const dna = getDna(summaries, badges);
   const points = pts ?? 0;
   const badgeEmojis = badges.map((b) => BADGE_EMOJIS[b]).filter(Boolean).join("  ");
   const nickFontSize = nick.length < 10 ? 100 : nick.length < 16 ? 76 : 56;
