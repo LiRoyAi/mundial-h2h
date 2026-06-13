@@ -230,13 +230,15 @@ function PtsBadge({ pts }: { pts: number }) {
 
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
-function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse }: {
+function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, firstLeagueId }: {
   match: Match; nick: string; onFirstVote?: () => void;
   goldenBalls?: number | null; onGoldenBallUse?: () => void;
+  firstLeagueId?: string | null;
 }) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [voted, setVoted] = useState(false);
+  const [justVoted, setJustVoted] = useState(false);
   const [results, setResults] = useState<Results>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -337,6 +339,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse }: {
       const data = await res.json();
       setResults(data.results ?? {});
       setVoted(true);
+      setJustVoted(true);
       localStorage.setItem(`voted:${match.id}`, scoreStr);
       onFirstVote?.();
     } catch { setError("Błąd połączenia. Spróbuj ponownie."); }
@@ -346,6 +349,17 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse }: {
   const handleBrag = () => {
     const vote = localStorage.getItem(`voted:${match.id}`);
     void shareOrCopy(`Trafiłem wynik meczu ${match.t1.name} – ${match.t2.name}: ${vote} ⚽\nmundial.liroy.pl`);
+  };
+
+  const handleShareVote = () => {
+    const vote = myVote?.replace("-", ":") ?? `${score1}:${score2}`;
+    const lines = [
+      `Typuję ${match.t1.name} ${vote} ${match.t2.name} ⚽`,
+      ...(goldenBallActive || goldenBallUsed ? ["🌟 Z ZŁOTĄ PIŁKĄ!"] : []),
+      "Gram w H2H Archive — mundial.liroy.pl",
+      ...(firstLeagueId ? [`Dołącz do mojej ligi: mundial.liroy.pl/liga/${firstLeagueId}`] : []),
+    ];
+    void shareOrCopy(lines.join("\n"));
   };
 
   const handleChallenge = async (side: "with" | "against") => {
@@ -581,6 +595,19 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse }: {
               style={{ fontFamily: B, color: "#FFD700" }}>
               🟡 ZŁOTA PIŁKA UŻYTA
             </span>
+          </div>
+        )}
+
+        {justVoted && !isPast && !matchResult && (
+          <div className="mt-3 flex justify-center">
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              onClick={handleShareVote}
+              className="px-6 py-2 text-[10px] tracking-widest border border-[#FFD700]/40 hover:border-[#FFD700]/80 transition-colors"
+              style={{ fontFamily: B, color: "#FFD700" }}>
+              📤 UDOSTĘPNIJ TYP
+            </motion.button>
           </div>
         )}
 
@@ -1240,6 +1267,7 @@ export default function MundialPage() {
   const [challengeRanking, setChallengeRanking] = useState<{ nick: string; wins: number }[]>([]);
   const [showChallengeRanking, setShowChallengeRanking] = useState(false);
   const [goldenBalls, setGoldenBalls] = useState<number | null>(null);
+  const [firstLeagueId, setFirstLeagueId] = useState<string | null>(null);
   const prevRankingRef = useRef<RankingEntry[]>([]);
   const prevPositionsRef = useRef<Map<string, number>>(new Map());
   const [rankingAnimations, setRankingAnimations] = useState<Map<string, { delta: number; epoch: number }>>(new Map());
@@ -1332,6 +1360,10 @@ export default function MundialPage() {
         .then((r) => (r.ok ? r.json() : null))
         .then((data) => { if (data?.remaining !== undefined) setGoldenBalls(data.remaining); })
         .catch(() => {});
+      fetch(`/api/mundial/leagues?nick=${encodeURIComponent(stored)}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => { if (data?.id) setFirstLeagueId(data.id); })
+        .catch(() => {});
       fetch(`/api/mundial/notification?nick=${encodeURIComponent(stored)}`)
         .then((r) => r.ok ? r.json() : null)
         .then((data) => {
@@ -1400,6 +1432,10 @@ export default function MundialPage() {
         fetch(`/api/mundial/golden-ball?nick=${encodeURIComponent(pendingNick)}`)
           .then((r) => (r.ok ? r.json() : null))
           .then((data) => { if (data?.remaining !== undefined) setGoldenBalls(data.remaining); })
+          .catch(() => {});
+        fetch(`/api/mundial/leagues?nick=${encodeURIComponent(pendingNick)}`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((data) => { if (data?.id) setFirstLeagueId(data.id); })
           .catch(() => {});
         fetch(`/api/mundial/notification?nick=${encodeURIComponent(pendingNick)}`)
           .then((r) => r.ok ? r.json() : null)
@@ -1711,7 +1747,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...todayUpcoming, ...active].map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />
               ))
             )}
           </div>
@@ -1751,7 +1787,7 @@ export default function MundialPage() {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden">
                         <div className="space-y-4 px-4 pt-2 pb-4">
-                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />)}
+                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />)}
                         </div>
                       </motion.div>
                     )}
@@ -1771,7 +1807,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...finished].reverse().map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} firstLeagueId={firstLeagueId} />
               ))
             )}
           </div>

@@ -34,5 +34,24 @@ export async function POST(request: NextRequest) {
   }
 
   await redis.set(`liroy_pick:${matchId}`, pick);
-  return Response.json({ ok: true, matchId, pick });
+
+  // Auto-cast LiROY's personal vote if not already set
+  const voteKey = `vote:${matchId}:LiROY`;
+  const alreadyVoted = await redis.exists(voteKey);
+  if (!alreadyVoted) {
+    await Promise.all([
+      redis.incr(`votes:${matchId}:${pick}`),
+      redis.incr(`ranking:LiROY`),
+      redis.set(voteKey, pick),
+      redis.set(`onboarded:LiROY`, "1", { ex: 30 * 24 * 3600 }),
+      redis.set(`golden_balls:LiROY`, 3, { nx: true }),
+    ]);
+    const alreadyReg = await redis.exists(`registered_seq:LiROY`);
+    if (!alreadyReg) {
+      const seq = await redis.incr("player_registration_count");
+      await redis.set(`registered_seq:LiROY`, seq);
+    }
+  }
+
+  return Response.json({ ok: true, matchId, pick, autoVoted: !alreadyVoted });
 }
