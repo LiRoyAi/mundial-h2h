@@ -24,6 +24,9 @@ interface PlayerData {
   globalTotal: number;
   accuracy: number | null;
   streak: number;
+  bestDay: number;
+  favoriteScore: string | null;
+  missedCount: number;
   votedCount: number;
   votes: VoteEntry[];
 }
@@ -102,7 +105,7 @@ export default function PlayerPage() {
 
         {/* Stats grid */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-          className="grid grid-cols-4 gap-2 mb-6">
+          className="grid grid-cols-4 gap-2 mb-2">
           {[
             { label: "PUNKTY", value: String(data.totalPoints) },
             { label: "RANKING", value: data.globalTotal > 0 ? `#${data.globalRank}` : "—" },
@@ -112,6 +115,20 @@ export default function PlayerPage() {
             <div key={label} className="border border-[#FFD700]/15 bg-[#0a0a0a] px-2 py-4 text-center rounded-sm">
               <p className="text-[7px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>{label}</p>
               <p className="leading-none" style={{ fontFamily: B, fontSize: "1.5rem", color: "#FFD700" }}>{value}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}
+          className="grid grid-cols-3 gap-2 mb-6">
+          {[
+            { label: "NAJLEPSZY WYNIK", value: data.bestDay > 0 ? `${data.bestDay} PKT` : "—" },
+            { label: "ULUBIONY WYNIK", value: data.favoriteScore ?? "—" },
+            { label: "MECZE BEZ TYPU", value: String(data.missedCount) },
+          ].map(({ label, value }) => (
+            <div key={label} className="border border-[#FFD700]/10 bg-[#0a0a0a] px-2 py-4 text-center rounded-sm">
+              <p className="text-[7px] tracking-widest mb-1" style={{ fontFamily: B, color: "#333" }}>{label}</p>
+              <p className="leading-none" style={{ fontFamily: B, fontSize: "1.4rem", color: "#888" }}>{value}</p>
             </div>
           ))}
         </motion.div>

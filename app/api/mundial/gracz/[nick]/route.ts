@@ -59,6 +59,9 @@ export async function GET(
   let resolvedCount = 0;
   let correctCount = 0;
   const votedDays = new Set<string>();
+  const dayPoints: Record<string, number> = {};
+  const scoreFreq: Record<string, number> = {};
+  const now = Date.now();
 
   for (let i = 0; i < MATCHES.length; i++) {
     const match = MATCHES[i];
@@ -67,7 +70,9 @@ export async function GET(
 
     const myVote = raw.replace("-", ":");
     const result = resultValues[i] ?? null;
-    votedDays.add(cestDateKey(match.deadline));
+    const day = cestDateKey(match.deadline);
+    votedDays.add(day);
+    scoreFreq[myVote] = (scoreFreq[myVote] ?? 0) + 1;
 
     let pts: number | null = null;
     if (result) {
@@ -80,6 +85,7 @@ export async function GET(
         totalPoints += pts;
         resolvedCount++;
         if (pts > 0) correctCount++;
+        dayPoints[day] = (dayPoints[day] ?? 0) + pts;
       }
     }
 
@@ -94,6 +100,10 @@ export async function GET(
       pts,
     });
   }
+
+  const bestDay = Object.values(dayPoints).length > 0 ? Math.max(...Object.values(dayPoints)) : 0;
+  const favoriteScore = Object.entries(scoreFreq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const missedCount = MATCHES.filter((m, i) => new Date(m.deadline).getTime() < now && !voteValues[i]).length;
 
   votes.sort((a, b) => new Date(b.deadline).getTime() - new Date(a.deadline).getTime());
 
@@ -113,7 +123,6 @@ export async function GET(
   const accuracy = resolvedCount > 0 ? Math.round((correctCount / resolvedCount) * 100) : null;
 
   // Streak: consecutive past match-days (newest first) with ≥1 vote
-  const now = Date.now();
   const passedDays = [
     ...new Set(
       MATCHES.filter((m) => new Date(m.deadline).getTime() < now).map((m) => cestDateKey(m.deadline))
@@ -135,6 +144,9 @@ export async function GET(
     globalTotal,
     accuracy,
     streak,
+    bestDay,
+    favoriteScore,
+    missedCount,
     votedCount: votes.length,
     votes,
   });

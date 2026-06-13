@@ -758,16 +758,9 @@ export default function MundialPage() {
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
   const [rankingTotal, setRankingTotal] = useState(0);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
-  const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">(() => {
-    const { todayUpcoming, active, upcoming } = categorize(MATCHES, new Date());
-    if (todayUpcoming.length > 0 || active.length > 0) return "DZIŚ";
-    if (upcoming.length > 0) return "NADCHODZĄCE";
-    return "ZAKOŃCZONE";
-  });
-  const [expandedDates, setExpandedDates] = useState<Set<string>>(() => {
-    const { upcoming } = categorize(MATCHES, new Date());
-    return upcoming.length > 0 ? new Set([cestDay(upcoming[0].deadline)]) : new Set();
-  });
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">("DZIŚ");
+  const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
   const [now, setNow] = useState(() => new Date());
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
   const [authState, setAuthState] = useState<"idle" | "checking" | "pin_register" | "pin_login" | "pin_claim">("idle");
@@ -799,6 +792,18 @@ export default function MundialPage() {
   };
 
   useEffect(() => {
+    // Resolve time-dependent state after hydration to avoid SSR mismatch.
+    // The page is statically pre-rendered at deploy time; new Date() in initializers
+    // would differ between build time and visit time → hydration error → state reset.
+    setMounted(true);
+    const currentNow = new Date();
+    setNow(currentNow);
+    const { todayUpcoming: td, active: ac, upcoming: up } = categorize(MATCHES, currentNow);
+    if (!(td.length > 0 || ac.length > 0)) {
+      setActiveTab(up.length > 0 ? "NADCHODZĄCE" : "ZAKOŃCZONE");
+    }
+    if (up.length > 0) setExpandedDates(new Set([cestDay(up[0].deadline)]));
+
     const stored = localStorage.getItem("mundial:nick");
     if (stored) {
       setNick(stored);
@@ -865,8 +870,15 @@ export default function MundialPage() {
         fetchRanking(pendingNick);
         fetch(`/api/mundial/notification?nick=${encodeURIComponent(pendingNick)}`)
           .then((r) => r.ok ? r.json() : null)
-          .then((data) => { if (data?.showOnboarding) setShowOnboarding(true); })
-          .catch(() => {});
+          .then((data) => {
+            console.log("[onboarding] notification response:", data);
+            console.log("[onboarding] showOnboarding value:", data?.showOnboarding);
+            if (data?.showOnboarding) {
+              console.log("[onboarding] setting showOnboarding to true");
+              setShowOnboarding(true);
+            }
+          })
+          .catch((err) => { console.log("[onboarding] notification fetch error:", err); });
       } else {
         const data = await res.json();
         setPinError(res.status === 401 ? "Błędny PIN. Spróbuj ponownie." : (data.error ?? "Błąd. Spróbuj ponownie."));
@@ -1107,6 +1119,7 @@ export default function MundialPage() {
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
 
+        {mounted ? (<>
         {/* Onboarding banner */}
         <AnimatePresence>
           {showOnboarding && (
@@ -1226,7 +1239,7 @@ export default function MundialPage() {
             )}
           </div>
         )}
-
+        </>) : null}
       </section>
 
       {/* ── TRACKER ──────────────────────────────────────────────────── */}
