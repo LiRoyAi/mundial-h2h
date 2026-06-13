@@ -207,24 +207,55 @@ export default function PlayerPage() {
         </motion.div>
 
         {/* Badges */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}
-          className="flex flex-wrap gap-2 mb-6">
-          {BADGE_DEFS.map(({ id, emoji, label }) => {
-            const earned = data.badges.includes(id);
-            return (
-              <span key={id} className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] tracking-widest"
-                style={{
-                  fontFamily: B,
-                  background: earned ? "rgba(255,215,0,0.08)" : "#0a0a0a",
-                  border: `1px solid ${earned ? "rgba(255,215,0,0.35)" : "#1a1a1a"}`,
-                  color: earned ? "#FFD700" : "#333",
-                }}>
-                <span style={{ opacity: earned ? 1 : 0.25 }}>{emoji}</span>
-                {label}
-              </span>
-            );
-          })}
-        </motion.div>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {(() => {
+            let earnedIdx = 0;
+            return BADGE_DEFS.map(({ id, emoji, label }) => {
+              const earned = data.badges.includes(id);
+              if (earned) {
+                const idx = earnedIdx++;
+                return (
+                  <motion.span
+                    key={id}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      boxShadow: [
+                        "0 0 0px rgba(255,215,0,0)",
+                        "0 0 12px rgba(255,215,0,0.65)",
+                        "0 0 0px rgba(255,215,0,0)",
+                      ],
+                    }}
+                    transition={{
+                      opacity: { duration: 0.2, delay: 0.2 + idx * 0.1 },
+                      scale: { type: "spring", stiffness: 320, damping: 22, delay: 0.2 + idx * 0.1 },
+                      boxShadow: { delay: 0.2 + idx * 0.1 + 0.45, duration: 0.75, times: [0, 0.45, 1] },
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] tracking-widest"
+                    style={{ fontFamily: B, background: "rgba(255,215,0,0.08)", border: "1px solid rgba(255,215,0,0.35)", color: "#FFD700" }}
+                  >
+                    <span>{emoji}</span>
+                    {label}
+                  </motion.span>
+                );
+              }
+              return (
+                <motion.span
+                  key={id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.3 }}
+                  transition={{ duration: 0.5, delay: 0.45 }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] tracking-widest"
+                  style={{ fontFamily: B, background: "#0a0a0a", border: "1px solid #1a1a1a", color: "#333" }}
+                >
+                  <span style={{ opacity: 0.25 }}>{emoji}</span>
+                  {label}
+                </motion.span>
+              );
+            });
+          })()}
+        </div>
 
         {/* Vote history */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
