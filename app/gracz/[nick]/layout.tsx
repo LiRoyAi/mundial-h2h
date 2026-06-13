@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Redis } from "@upstash/redis";
 import matchesData from "@/data/matches.json";
-import { calcDna } from "@/lib/dna";
+import { buildVoteSummaries, getDna } from "@/lib/dna";
 
 const MATCHES = matchesData.matches as { id: string }[];
 
@@ -36,7 +36,7 @@ export async function generateMetadata({
     let badges: string[] = [];
     try { if (badgeRaw) badges = JSON.parse(badgeRaw); } catch { /* */ }
 
-    const dna = calcDna(voteValues, resultValues, badges);
+    const dna = getDna(buildVoteSummaries(MATCHES, voteValues, resultValues), badges);
     const points = pts ?? 0;
     const rankStr = rank > 0 ? `#${rank}` : "?";
 

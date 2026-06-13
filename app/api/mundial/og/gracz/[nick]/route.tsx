@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { Redis } from "@upstash/redis";
-import { calcDna } from "@/lib/dna";
+import { buildVoteSummaries, getDna } from "@/lib/dna";
 import matchesData from "@/data/matches.json";
 
 export const dynamic = "force-dynamic";
@@ -43,7 +43,7 @@ export async function GET(
   let badges: string[] = [];
   try { if (badgeRaw) badges = JSON.parse(badgeRaw); } catch { /* */ }
 
-  const dna = calcDna(voteValues, resultValues, badges);
+  const dna = getDna(buildVoteSummaries(MATCHES, voteValues, resultValues), badges);
   const points = pts ?? 0;
   const badgeEmojis = badges.map((b) => BADGE_EMOJIS[b]).filter(Boolean).join("  ");
   const nickFontSize = nick.length < 10 ? 100 : nick.length < 16 ? 76 : 56;
@@ -86,7 +86,7 @@ export async function GET(
           fontSize: 13, fontWeight: "bold", letterSpacing: "0.5em", color: "#FFD700",
           display: "flex",
         }}>
-          FIFA WORLD CUP 2026™
+          H2H ARCHIVE
         </div>
 
         {/* GRACZ label */}
