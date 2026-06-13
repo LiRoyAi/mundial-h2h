@@ -177,6 +177,27 @@ function ScorePicker({ value, onChange }: { value: number; onChange: (v: number)
   );
 }
 
+// ─── Points helpers ───────────────────────────────────────────────────────────
+
+function calcPts(myVote: string, result: string): number {
+  const norm = myVote.replace("-", ":");
+  const [v1, v2] = norm.split(":").map(Number);
+  const [r1, r2] = result.split(":").map(Number);
+  if ([v1, v2, r1, r2].some(isNaN)) return 0;
+  if (v1 === r1 && v2 === r2) return 3;
+  const sign = (a: number, b: number) => (a > b ? 1 : a < b ? -1 : 0);
+  if (sign(v1, v2) === sign(r1, r2)) return 1;
+  return 0;
+}
+
+function PtsBadge({ pts }: { pts: number }) {
+  if (pts === 3)
+    return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#22c55e" }}>+3 PKT ✓</span>;
+  if (pts === 1)
+    return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>+1 PKT</span>;
+  return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#555" }}>0 PKT</span>;
+}
+
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
 function MatchCard({ match, nick }: { match: Match; nick: string }) {
@@ -260,7 +281,28 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
             </span>
           </div>
 
-          {voted ? (
+          {matchResult ? (
+            <div className="text-center px-2 flex flex-col items-center gap-1">
+              {voted && myVote ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "1.3rem", color: "#555" }}>
+                      {myVote.replace("-", ":")}
+                    </span>
+                    <span style={{ fontFamily: B, fontSize: "1rem", color: "#333" }}>→</span>
+                    <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "2.2rem", color: "#FFD700" }}>
+                      {matchResult}
+                    </span>
+                  </div>
+                  <PtsBadge pts={calcPts(myVote, matchResult)} />
+                </>
+              ) : (
+                <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "2.5rem", color: "#FFD700" }}>
+                  {matchResult}
+                </span>
+              )}
+            </div>
+          ) : voted ? (
             <div className="text-center px-4"
               style={{ fontFamily: B, fontSize: "2.5rem", color: "#FFD700", letterSpacing: "0.05em" }}>
               {myVote ?? "?"}
@@ -284,7 +326,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
         </div>
 
         {error && <p className="text-center text-red-500 text-xs mt-4 tracking-wide">{error}</p>}
-        {isPast && !voted && (
+        {isPast && !voted && !matchResult && (
           <p className="text-center text-xs mt-6 tracking-widest" style={{ fontFamily: B, color: "#333" }}>
             ⏰ Typowanie zamknięte
           </p>
@@ -322,13 +364,6 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {matchResult && (
-          <div className="mt-3 py-3 text-center border border-[#FFD700]/25 rounded-sm">
-            <p className="text-[9px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>WYNIK MECZU</p>
-            <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "1.6rem", color: "#FFD700" }}>{matchResult}</span>
-          </div>
-        )}
 
         {matchResult && voted && myVote?.replace("-", ":") === matchResult && (
           <div className="mt-3 flex justify-center">
