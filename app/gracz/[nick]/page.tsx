@@ -40,6 +40,35 @@ const BADGE_DEFS: { id: string; emoji: string; label: string }[] = [
   { id: "pierwsza_krew",emoji: "🩸", label: "PIERWSZA KREW" },
 ];
 
+function getDna(votes: VoteEntry[], badges: string[], votedCount: number): string {
+  if (votes.length === 0) return "Typowy typujący";
+
+  const parsed = votes.map((v) => {
+    const parts = v.myVote.split(":").map(Number);
+    return parts.length === 2 && !parts.some(isNaN) ? { g1: parts[0], g2: parts[1] } : null;
+  }).filter((x): x is { g1: number; g2: number } => x !== null);
+
+  const avgGoals = parsed.length > 0
+    ? parsed.reduce((s, p) => s + p.g1 + p.g2, 0) / parsed.length
+    : 0;
+
+  const resolved = votes.filter((v) => v.pts !== null);
+  const exactCount = resolved.filter((v) => v.pts === 3).length;
+  const exactRate = resolved.length > 0 ? exactCount / resolved.length : 0;
+
+  const freq: Record<string, number> = {};
+  for (const v of votes) freq[v.myVote] = (freq[v.myVote] ?? 0) + 1;
+  const topVote = Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "";
+
+  if (avgGoals > 3.0) return "Ryzykant ofensywny";
+  if (topVote === "1:0" || topVote === "0:1") return "Beton 1:0";
+  if (exactRate > 0.5) return "Snajper dokładnych wyników";
+  if (badges.includes("underdog")) return "Król underdogów";
+  if (avgGoals < 1.5) return "Zimny analityk";
+  if (votedCount > 15) return "Mundialowy wariat";
+  return "Typowy typujący";
+}
+
 function toLocalDate(deadline: string) {
   const d = new Date(new Date(deadline).getTime() + 2 * 3600_000);
   const day = d.getUTCDate();
@@ -140,6 +169,17 @@ export default function PlayerPage() {
               <p className="leading-none" style={{ fontFamily: B, fontSize: "1.4rem", color: "#888" }}>{value}</p>
             </div>
           ))}
+        </motion.div>
+
+        {/* DNA */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.18 }}
+          className="mb-3 px-4 py-3 rounded-sm flex items-center gap-2"
+          style={{ background: "rgba(255,215,0,0.04)", border: "1px solid rgba(255,215,0,0.12)" }}>
+          <span className="text-base">🧬</span>
+          <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#555" }}>DNA GRACZA:</span>
+          <span className="text-[11px] tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+            {getDna(data.votes, data.badges, data.votedCount)}
+          </span>
         </motion.div>
 
         {/* Badges */}
