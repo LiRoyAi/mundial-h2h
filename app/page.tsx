@@ -252,6 +252,9 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [challengeLoading, setChallengeLoading] = useState(false);
   const [goldenBallActive, setGoldenBallActive] = useState(false);
   const [goldenBallUsed, setGoldenBallUsed] = useState(false);
+  const [aiBrief, setAiBrief] = useState<string | null>(null);
+  const [aiBriefLoading, setAiBriefLoading] = useState(false);
+  const [showAiBrief, setShowAiBrief] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -724,6 +727,58 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
                       )}
                     </div>
                   )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+        {match.h2h && !matchResult && (
+          <div className="mt-2 border-t border-[#111] pt-2">
+            <button
+              onClick={async () => {
+                if (aiBrief) { setShowAiBrief((v) => !v); return; }
+                setShowAiBrief(true);
+                setAiBriefLoading(true);
+                try {
+                  const r = await fetch(`/api/mundial/ai-brief?matchId=${match.id}`);
+                  if (r.ok) { const d = await r.json(); setAiBrief(d.brief ?? null); }
+                } catch { /* ignore */ } finally { setAiBriefLoading(false); }
+              }}
+              className="w-full flex items-center justify-between py-1.5"
+            >
+              <span className="text-[9px] tracking-[0.3em]" style={{ fontFamily: B, color: showAiBrief ? "#FFD700" : "#444" }}>
+                🤖 AI ANALIZA
+              </span>
+              <span className="text-[9px]" style={{ fontFamily: B, color: "#333" }}>
+                {showAiBrief ? "▲" : "▼"}
+              </span>
+            </button>
+            <AnimatePresence>
+              {showAiBrief && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }} className="overflow-hidden"
+                >
+                  <div className="pb-3">
+                    {aiBriefLoading ? (
+                      <div className="flex justify-center py-3">
+                        <div className="w-4 h-4 border border-[#FFD700]/30 border-t-[#FFD700] rounded-full animate-spin" />
+                      </div>
+                    ) : aiBrief ? (
+                      <>
+                        <p className="text-[10px] leading-relaxed italic" style={{ fontFamily: B, color: "#FFD700" }}>
+                          {aiBrief}
+                        </p>
+                        <p className="text-[8px] tracking-widest mt-2" style={{ fontFamily: B, color: "#333" }}>
+                          powered by AI
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-[9px] tracking-widest text-center" style={{ fontFamily: B, color: "#444" }}>
+                        BŁĄD GENEROWANIA
+                      </p>
+                    )}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
