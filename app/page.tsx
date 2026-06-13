@@ -212,7 +212,7 @@ function PtsBadge({ pts }: { pts: number }) {
 
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
-function MatchCard({ match, nick }: { match: Match; nick: string }) {
+function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; onFirstVote?: () => void }) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [voted, setVoted] = useState(false);
@@ -260,6 +260,7 @@ function MatchCard({ match, nick }: { match: Match; nick: string }) {
       setResults(data.results ?? {});
       setVoted(true);
       localStorage.setItem(`voted:${match.id}`, scoreStr);
+      onFirstVote?.();
     } catch { setError("Błąd połączenia. Spróbuj ponownie."); }
     finally { setLoading(false); }
   };
@@ -775,6 +776,7 @@ export default function MundialPage() {
   const [pendingNick, setPendingNick] = useState("");
 
   const [notification, setNotification] = useState("");
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const [reminderChecked, setReminderChecked] = useState(false);
   const [reminderEmail, setReminderEmail] = useState("");
@@ -809,6 +811,7 @@ export default function MundialPage() {
             setNotification(data.message);
             setTimeout(() => setNotification(""), 6000);
           }
+          if (data?.showOnboarding) setShowOnboarding(true);
         })
         .catch(() => {});
     } else {
@@ -1100,6 +1103,32 @@ export default function MundialPage() {
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
 
+        {/* Onboarding banner */}
+        <AnimatePresence>
+          {showOnboarding && (
+            <motion.div
+              key="onboarding"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4 }}
+              className="mb-6 border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-5 rounded-sm text-center">
+              <p className="text-xs tracking-[0.4em] mb-1" style={{ fontFamily: B, color: "#FFD700" }}>
+                WITAJ W GRZE!
+              </p>
+              <p className="text-[11px] tracking-wide leading-relaxed mb-3" style={{ fontFamily: B, color: "#888" }}>
+                Wytypuj swój pierwszy mecz poniżej.
+              </p>
+              <motion.span
+                animate={{ y: [0, 6, 0] }}
+                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                style={{ display: "inline-block", fontFamily: B, color: "#FFD700", fontSize: "1.2rem" }}>
+                ↓
+              </motion.span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Tab bar */}
         <div className="flex mb-6 border border-[#FFD700]/15 overflow-hidden rounded-sm">
           {(["DZIŚ", "NADCHODZĄCE", "ZAKOŃCZONE"] as const).map((tab, ti) => (
@@ -1128,7 +1157,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...todayUpcoming, ...active].map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />
               ))
             )}
           </div>
@@ -1168,7 +1197,7 @@ export default function MundialPage() {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden">
                         <div className="space-y-4 px-4 pt-2 pb-4">
-                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
+                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />)}
                         </div>
                       </motion.div>
                     )}
@@ -1188,7 +1217,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...finished].reverse().map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />
               ))
             )}
           </div>
