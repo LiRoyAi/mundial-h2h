@@ -29,6 +29,7 @@ interface Match {
 interface RankingEntry {
   nick: string;
   points: number;
+  accuracy: number | null;
 }
 
 interface UserRank {
@@ -1172,7 +1173,7 @@ export default function MundialPage() {
       </section>
 
       {/* ── RANKING ──────────────────────────────────────────────────── */}
-      <section className="px-6 pb-24 max-w-lg mx-auto">
+      <section id="ranking" className="px-6 pb-24 max-w-lg mx-auto">
         <div className="border border-[#FFD700]/15 bg-[#0a0a0a] rounded-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-[#111] flex items-center justify-between">
             <p className="text-xs tracking-[0.4em]" style={{ fontFamily: B, color: "#FFD700" }}>
@@ -1204,6 +1205,11 @@ export default function MundialPage() {
                       fontFamily: B,
                       color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
                     }}>{entry.nick}</a>
+                  {entry.accuracy !== null && (
+                    <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+                      {entry.accuracy}%
+                    </span>
+                  )}
                   <span className="text-sm" style={{ fontFamily: B, color: "#444" }}>
                     {entry.points} pkt
                   </span>

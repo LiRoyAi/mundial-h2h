@@ -170,10 +170,14 @@ export default function PlayerPage() {
         </motion.div>
 
         {/* Back */}
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex justify-center gap-6">
+          <a href="/#ranking" className="text-[10px] tracking-widest hover:text-[#FFD700] transition-colors"
+            style={{ fontFamily: B, color: "#555" }}>
+            ← WRÓĆ DO RANKINGU
+          </a>
           <a href="/" className="text-[10px] tracking-widest hover:text-[#FFD700] transition-colors"
             style={{ fontFamily: B, color: "#333" }}>
-            ← WRÓĆ DO TYPOWANIA
+            TYPOWANIE
           </a>
         </div>
 

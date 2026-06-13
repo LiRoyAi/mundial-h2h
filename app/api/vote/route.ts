@@ -77,11 +77,54 @@ export async function GET(request: NextRequest) {
 
   const result = matchId ? await redis.get<string>(`result:${matchId}`) : null;
 
+  // Compute accuracy for top-50 players
+  const top50 = ranking.slice(0, 50);
+  const accuracyMap: Record<string, number | null> = {};
+
+  const resultKeys = await redis.keys("result:*");
+  if (resultKeys.length > 0 && top50.length > 0) {
+    const resultValues = await redis.mget<(string | null)[]>(...resultKeys);
+    const resolved: { matchId: string; result: string }[] = [];
+    resultKeys.forEach((k, i) => {
+      if (resultValues[i]) resolved.push({ matchId: k.replace("result:", ""), result: resultValues[i]! });
+    });
+
+    if (resolved.length > 0) {
+      const voteKeys: string[] = [];
+      for (const entry of top50) {
+        for (const { matchId: mid } of resolved) {
+          voteKeys.push(`vote:${mid}:${entry.nick}`);
+        }
+      }
+      const voteValues = await redis.mget<(string | null)[]>(...voteKeys);
+
+      const sign = (a: number, b: number) => (a > b ? 1 : a < b ? -1 : 0);
+      let ki = 0;
+      for (const entry of top50) {
+        let resolvedCount = 0;
+        let correctCount = 0;
+        for (const { result: res } of resolved) {
+          const voted = voteValues[ki++];
+          if (!voted) continue;
+          const [v1, v2] = voted.replace("-", ":").split(":").map(Number);
+          const [r1, r2] = res.split(":").map(Number);
+          if ([v1, v2, r1, r2].some(isNaN)) continue;
+          resolvedCount++;
+          if (v1 === r1 && v2 === r2) correctCount++;
+          else if (sign(v1, v2) === sign(r1, r2)) correctCount++;
+        }
+        accuracyMap[entry.nick] = resolvedCount > 0
+          ? Math.round((correctCount / resolvedCount) * 100)
+          : null;
+      }
+    }
+  }
+
   return Response.json({
     matchId,
     results,
     result: result ?? null,
-    ranking: ranking.slice(0, 50),
+    ranking: top50.map((e) => ({ ...e, accuracy: accuracyMap[e.nick] ?? null })),
     total,
     userRank,
   });
