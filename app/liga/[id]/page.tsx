@@ -39,6 +39,7 @@ interface TodaySection {
   matches: TodayMatch[];
   todayPoints: { nick: string; pts: number }[];
   bestOfDay: string | null;
+  goldenBallMiss: { nick: string } | null;
 }
 
 interface League {
@@ -483,6 +484,40 @@ export default function LeaguePage() {
                   style={{ fontFamily: B, color: "#FFD700" }}>
                   {league.todaySection.bestOfDay}
                 </a>
+              </div>
+            )}
+
+            {/* Biggest gain of day */}
+            {league.todaySection.todayPoints.length > 0 && (
+              <div className="border-t border-[#FFD700]/10 bg-[#0d0d00] px-6 py-4 text-center">
+                <p className="text-[9px] tracking-[0.4em] mb-1" style={{ fontFamily: B, color: "#555" }}>
+                  📈 NAJWIĘKSZY AWANS DNIA
+                </p>
+                <a href={`/gracz/${encodeURIComponent(league.todaySection.todayPoints[0].nick)}`}
+                  className="text-xl tracking-widest hover:underline block"
+                  style={{ fontFamily: B, color: "#FFD700" }}>
+                  {league.todaySection.todayPoints[0].nick}
+                </a>
+                <p className="text-[10px] tracking-widest mt-1" style={{ fontFamily: B, color: "#888" }}>
+                  +{league.todaySection.todayPoints[0].pts} PKT DZIŚ
+                </p>
+              </div>
+            )}
+
+            {/* Golden ball miss */}
+            {league.todaySection.goldenBallMiss && (
+              <div className="border-t border-[#333]/60 bg-[#0d0000] px-6 py-4 text-center">
+                <p className="text-[9px] tracking-[0.4em] mb-1" style={{ fontFamily: B, color: "#555" }}>
+                  📉 NAJWIĘKSZA WPADKA DNIA
+                </p>
+                <a href={`/gracz/${encodeURIComponent(league.todaySection.goldenBallMiss.nick)}`}
+                  className="text-xl tracking-widest hover:underline block"
+                  style={{ fontFamily: B, color: "#ef4444" }}>
+                  {league.todaySection.goldenBallMiss.nick}
+                </a>
+                <p className="text-[10px] tracking-widest mt-1" style={{ fontFamily: B, color: "#666" }}>
+                  Złota Piłka nie trafiła
+                </p>
               </div>
             )}
 

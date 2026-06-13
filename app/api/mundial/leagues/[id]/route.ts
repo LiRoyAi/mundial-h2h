@@ -78,21 +78,25 @@ export async function GET(
     matches: TodayMatch[];
     todayPoints: { nick: string; pts: number }[];
     bestOfDay: string | null;
-  } = { matches: [], todayPoints: [], bestOfDay: null };
+    goldenBallMiss: { nick: string } | null;
+  } = { matches: [], todayPoints: [], bestOfDay: null, goldenBallMiss: null };
 
   if (todayMatches.length > 0 && members.length > 0) {
     // Bulk fetch results + all member votes in parallel
     const resultKeys = todayMatches.map((m) => `result:${m.id}`);
     const voteKeys: string[] = [];
+    const gbKeys: string[] = [];
     for (const m of todayMatches) {
       for (const nick of members) {
         voteKeys.push(`vote:${m.id}:${nick}`);
+        gbKeys.push(`golden_ball_used:${m.id}:${nick}`);
       }
     }
 
-    const [resultValues, voteValues] = await Promise.all([
+    const [resultValues, voteValues, gbValues] = await Promise.all([
       redis.mget<(string | null)[]>(...resultKeys),
       redis.mget<(string | null)[]>(...voteKeys),
+      redis.mget<(string | null)[]>(...gbKeys),
     ]);
 
     const resultMap: Record<string, string | null> = {};
@@ -105,6 +109,16 @@ export async function GET(
       voteMap[m.id] = {};
       for (const nick of members) {
         voteMap[m.id][nick] = voteValues[vi++] ?? null;
+      }
+    }
+
+    // golden_ball_used map [matchId][nick]
+    const gbUsedMap: Record<string, Record<string, boolean>> = {};
+    let gbIdx = 0;
+    for (const m of todayMatches) {
+      gbUsedMap[m.id] = {};
+      for (const nick of members) {
+        gbUsedMap[m.id][nick] = !!gbValues[gbIdx++];
       }
     }
 
@@ -151,6 +165,21 @@ export async function GET(
 
     if (todaySection.todayPoints.length > 0) {
       todaySection.bestOfDay = todaySection.todayPoints[0].nick;
+    }
+
+    // Find first league member who used a golden ball today and missed (-1)
+    outer: for (const m of todayMatches) {
+      const result = resultMap[m.id];
+      if (!result) continue;
+      for (const nick of members) {
+        if (gbUsedMap[m.id][nick]) {
+          const vote = voteMap[m.id][nick];
+          if (vote && calcPts(vote, result) === 0) {
+            todaySection.goldenBallMiss = { nick };
+            break outer;
+          }
+        }
+      }
     }
   }
 
