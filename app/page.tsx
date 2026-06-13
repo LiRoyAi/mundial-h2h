@@ -73,6 +73,17 @@ function isMatchToday(deadline: string, now: Date = new Date()): boolean {
     d.getUTCDate() === n.getUTCDate();
 }
 
+function cestDay(deadline: string): string {
+  const d = new Date(new Date(deadline).getTime() + 2 * 3600_000);
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+}
+
+function formatGroupDate(key: string): string {
+  const parts = key.split("-").map(Number);
+  const months = ["STY", "LUT", "MAR", "KWI", "MAJ", "CZE", "LIP", "SIE", "WRZ", "PAŹ", "LIS", "GRU"];
+  return `${parts[2]} ${months[parts[1] - 1]}`;
+}
+
 function categorize(matches: Match[], now: Date) {
   const active: Match[] = [];
   const todayUpcoming: Match[] = [];
@@ -746,8 +757,16 @@ export default function MundialPage() {
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
   const [rankingTotal, setRankingTotal] = useState(0);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
-  const [finishedOpen, setFinishedOpen] = useState(false);
-  const [showAllUpcoming, setShowAllUpcoming] = useState(false);
+  const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">(() => {
+    const { todayUpcoming, active, upcoming } = categorize(MATCHES, new Date());
+    if (todayUpcoming.length > 0 || active.length > 0) return "DZIŚ";
+    if (upcoming.length > 0) return "NADCHODZĄCE";
+    return "ZAKOŃCZONE";
+  });
+  const [expandedDates, setExpandedDates] = useState<Set<string>>(() => {
+    const { upcoming } = categorize(MATCHES, new Date());
+    return upcoming.length > 0 ? new Set([cestDay(upcoming[0].deadline)]) : new Set();
+  });
   const [now, setNow] = useState(() => new Date());
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
   const [authState, setAuthState] = useState<"idle" | "checking" | "pin_register" | "pin_login" | "pin_claim">("idle");
@@ -875,6 +894,18 @@ export default function MundialPage() {
   };
 
   const { active, todayUpcoming, upcoming, finished } = useMemo(() => categorize(MATCHES, now), [now]);
+
+  const upcomingByDate = useMemo(() => {
+    const map = new Map<string, Match[]>();
+    for (const m of upcoming) {
+      const key = cestDay(m.deadline);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(m);
+    }
+    return [...map.entries()]
+      .map(([key, matches]) => ({ key, label: formatGroupDate(key), matches }))
+      .sort((a, b) => a.key.localeCompare(b.key));
+  }, [upcoming]);
 
   const nextMatch = useMemo(() => {
     return MATCHES.filter((m) => new Date(m.deadline) > now)
@@ -1068,72 +1099,101 @@ export default function MundialPage() {
 
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
-        {todayUpcoming.length > 0 && (
-          <div className="mb-12 border border-[#FFD700]/60 rounded-sm p-4">
-            <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
-              ⚽ MECZE DZIŚ
-            </p>
-            <div className="space-y-6">
-              {todayUpcoming.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
-            </div>
-          </div>
-        )}
 
-        {active.length > 0 && (
-          <div className="mb-12">
-            <p className="text-xs tracking-[0.4em] mb-6 text-center" style={{ fontFamily: B, color: "#FFD700" }}>
-              TYPUJ TERAZ
-            </p>
-            <div className="space-y-6">
-              {active.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
-            </div>
-          </div>
-        )}
+        {/* Tab bar */}
+        <div className="flex mb-6 border border-[#FFD700]/15 overflow-hidden rounded-sm">
+          {(["DZIŚ", "NADCHODZĄCE", "ZAKOŃCZONE"] as const).map((tab, ti) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="flex-1 text-[10px] tracking-widest transition-colors"
+              style={{
+                fontFamily: B,
+                minHeight: "44px",
+                background: activeTab === tab ? "#FFD700" : "#0a0a0a",
+                color: activeTab === tab ? "#000" : "#444",
+                borderRight: ti < 2 ? "1px solid rgba(255,215,0,0.1)" : undefined,
+              }}>
+              {tab}
+            </button>
+          ))}
+        </div>
 
-        {upcoming.length > 0 && (
-          <div className="mb-12">
-            <p className="text-xs tracking-[0.4em] mb-6 text-center"
-              style={{ fontFamily: B, color: active.length > 0 ? "#444" : "#FFD700" }}>
-              NADCHODZĄCE ({upcoming.length})
-            </p>
-            <div className="space-y-6">
-              {(showAllUpcoming ? upcoming : upcoming.slice(0, 8)).map((m) =>
+        {/* DZIŚ */}
+        {activeTab === "DZIŚ" && (
+          <div className="space-y-6">
+            {todayUpcoming.length === 0 && active.length === 0 ? (
+              <p className="text-center py-12 text-xs tracking-widest" style={{ fontFamily: B, color: "#2a2a2a" }}>
+                BRAK MECZY DZIŚ
+              </p>
+            ) : (
+              [...todayUpcoming, ...active].map((m) => (
                 <MatchCard key={m.id} match={m} nick={nick} />
-              )}
-            </div>
-            {upcoming.length > 8 && (
-              <div className="mt-4 text-center">
-                <button onClick={() => setShowAllUpcoming((v) => !v)}
-                  className="px-6 py-2 text-[10px] tracking-widest border border-[#FFD700]/20 hover:border-[#FFD700]/50 transition-colors"
-                  style={{ fontFamily: B, color: "#555" }}>
-                  {showAllUpcoming ? "ZWIŃ ▲" : `POKAŻ WIĘCEJ (${upcoming.length - 8}) ▼`}
-                </button>
-              </div>
+              ))
             )}
           </div>
         )}
 
-        {finished.length > 0 && (
-          <div className="mb-4">
-            <button onClick={() => setFinishedOpen((v) => !v)}
-              className="w-full flex items-center justify-between mb-4 hover:opacity-70 transition-opacity">
-              <span className="text-xs tracking-[0.4em]" style={{ fontFamily: B, color: "#2a2a2a" }}>
-                ZAKOŃCZONE ({finished.length})
-              </span>
-              <span style={{ fontFamily: B, color: "#2a2a2a", fontSize: "0.6rem" }}>
-                {finishedOpen ? "▲ ZWIŃ" : "▼ ROZWIŃ"}
-              </span>
-            </button>
-            <AnimatePresence>
-              {finishedOpen && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }} className="space-y-6 overflow-hidden">
-                  {finished.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
-                </motion.div>
-              )}
-            </AnimatePresence>
+        {/* NADCHODZĄCE */}
+        {activeTab === "NADCHODZĄCE" && (
+          <div className="space-y-2">
+            {upcomingByDate.length === 0 ? (
+              <p className="text-center py-12 text-xs tracking-widest" style={{ fontFamily: B, color: "#2a2a2a" }}>
+                BRAK NADCHODZĄCYCH MECZY
+              </p>
+            ) : upcomingByDate.map(({ key, label, matches }) => {
+              const isOpen = expandedDates.has(key);
+              return (
+                <div key={key} className="border border-[#FFD700]/10 rounded-sm overflow-hidden">
+                  <button
+                    onClick={() => setExpandedDates((prev) => {
+                      const next = new Set(prev);
+                      next.has(key) ? next.delete(key) : next.add(key);
+                      return next;
+                    })}
+                    className="w-full flex items-center justify-between px-6 hover:bg-[#111] transition-colors"
+                    style={{ minHeight: "44px" }}>
+                    <span className="text-xs tracking-[0.3em]" style={{ fontFamily: B, color: isOpen ? "#FFD700" : "#555" }}>
+                      {label}
+                    </span>
+                    <span className="text-[9px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+                      {matches.length} {isOpen ? "▲" : "▼"}
+                    </span>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden">
+                        <div className="space-y-4 px-4 pt-2 pb-4">
+                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} />)}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         )}
+
+        {/* ZAKOŃCZONE */}
+        {activeTab === "ZAKOŃCZONE" && (
+          <div className="space-y-6">
+            {finished.length === 0 ? (
+              <p className="text-center py-12 text-xs tracking-widest" style={{ fontFamily: B, color: "#2a2a2a" }}>
+                BRAK ZAKOŃCZONYCH MECZY
+              </p>
+            ) : (
+              [...finished].reverse().map((m) => (
+                <MatchCard key={m.id} match={m} nick={nick} />
+              ))
+            )}
+          </div>
+        )}
+
       </section>
 
       {/* ── TRACKER ──────────────────────────────────────────────────── */}
