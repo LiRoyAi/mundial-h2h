@@ -203,28 +203,37 @@ function ScorePicker({ value, onChange }: { value: number; onChange: (v: number)
 
 // ─── Points helpers ───────────────────────────────────────────────────────────
 
-function calcPts(myVote: string, result: string): number {
+function calcPts(myVote: string, result: string, hasJoker = false): number {
   const norm = myVote.replace("-", ":");
   const [v1, v2] = norm.split(":").map(Number);
   const [r1, r2] = result.split(":").map(Number);
   if ([v1, v2, r1, r2].some(isNaN)) return 0;
-  if (v1 === r1 && v2 === r2) return 3;
+  if (v1 === r1 && v2 === r2) return hasJoker ? 6 : 3;
   const sign = (a: number, b: number) => (a > b ? 1 : a < b ? -1 : 0);
-  if (sign(v1, v2) === sign(r1, r2)) return 1;
-  return 0;
+  if (sign(v1, v2) === sign(r1, r2)) return hasJoker ? 2 : 1;
+  return hasJoker ? -1 : 0;
 }
 
 function PtsBadge({ pts }: { pts: number }) {
+  if (pts === 6)
+    return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#22c55e" }}>+6 PKT ⭐</span>;
   if (pts === 3)
     return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#22c55e" }}>+3 PKT ✓</span>;
+  if (pts === 2)
+    return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>+2 PKT ⭐</span>;
   if (pts === 1)
     return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>+1 PKT</span>;
+  if (pts === -1)
+    return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#ef4444" }}>-1 PKT 😬</span>;
   return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#555" }}>0 PKT</span>;
 }
 
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
-function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; onFirstVote?: () => void }) {
+function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse }: {
+  match: Match; nick: string; onFirstVote?: () => void;
+  goldenBalls?: number | null; onGoldenBallUse?: () => void;
+}) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [voted, setVoted] = useState(false);
@@ -237,6 +246,8 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   const [showH2H, setShowH2H] = useState(false);
   const [challengeSide, setChallengeSide] = useState<"with" | "against" | null>(null);
   const [challengeLoading, setChallengeLoading] = useState(false);
+  const [goldenBallActive, setGoldenBallActive] = useState(false);
+  const [goldenBallUsed, setGoldenBallUsed] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -274,6 +285,14 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   }, [voted, match.id, nick]);
 
   useEffect(() => {
+    if (!voted || !nick) return;
+    fetch(`/api/mundial/golden-ball?nick=${encodeURIComponent(nick)}&matchId=${match.id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.used) setGoldenBallUsed(true); })
+      .catch(() => {});
+  }, [voted, nick, match.id]);
+
+  useEffect(() => {
     if (isPast || matchResult) return;
     fetch(`/api/mundial/liroy-pick?matchId=${match.id}`)
       .then((r) => (r.ok ? r.json() : null))
@@ -291,6 +310,24 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
     setError(""); setLoading(true);
     try {
       const scoreStr = `${score1}-${score2}`;
+
+      if (goldenBallActive) {
+        const gbRes = await fetch("/api/mundial/golden-ball/use", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ matchId: match.id, nick }),
+        });
+        if (!gbRes.ok) {
+          const gbData = await gbRes.json();
+          if (gbData.error === "no_balls_left") {
+            setError("Brak Złotych Piłek!"); setGoldenBallActive(false); return;
+          }
+        } else {
+          setGoldenBallUsed(true);
+          onGoldenBallUse?.();
+        }
+      }
+
       const res = await fetch("/api/vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -330,7 +367,7 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-      className="relative border border-[#FFD700]/20 bg-[#0a0a0a] rounded-sm overflow-hidden"
+      className={`relative border bg-[#0a0a0a] rounded-sm overflow-hidden transition-colors ${goldenBallActive ? "border-[#FFD700]" : "border-[#FFD700]/20"}`}
     >
       <div className="absolute top-0 left-0 px-3 py-1 text-xs tracking-widest"
         style={{ fontFamily: B, background: "#FFD700", color: "#000" }}>
@@ -362,7 +399,7 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
                       {matchResult}
                     </span>
                   </div>
-                  <PtsBadge pts={calcPts(myVote, matchResult)} />
+                  <PtsBadge pts={calcPts(myVote, matchResult, goldenBallUsed)} />
                 </>
               ) : (
                 <span className="whitespace-nowrap" style={{ fontFamily: B, fontSize: "2.5rem", color: "#FFD700" }}>
@@ -400,14 +437,45 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
           </p>
         )}
         {!isPast && !voted && (
-          <div className="flex justify-center mt-6">
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-              onClick={handleVote} disabled={loading}
-              className="px-10 py-3 text-black text-sm tracking-[0.2em] disabled:opacity-50"
-              style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
-              {loading ? "WYSYŁAM..." : "TYPUJ"}
-            </motion.button>
-          </div>
+          <>
+            {nick && goldenBalls !== null && goldenBalls !== undefined && (
+              <div className="mt-5">
+                <p className="text-center text-[9px] tracking-[0.25em] mb-2" style={{ fontFamily: B, color: "#555" }}>
+                  ⚽ ZŁOTA PIŁKA ({goldenBalls} {goldenBalls === 1 ? "pozostała" : "pozostałe"})
+                </p>
+                {goldenBalls > 0 && (
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => setGoldenBallActive((v) => !v)}
+                      className="px-4 py-1.5 text-[9px] tracking-widest border transition-colors"
+                      style={{
+                        fontFamily: B,
+                        borderColor: goldenBallActive ? "#FFD700" : "rgba(255,215,0,0.3)",
+                        color: goldenBallActive ? "#FFD700" : "#555",
+                        background: goldenBallActive ? "rgba(255,215,0,0.07)" : "transparent",
+                      }}
+                    >
+                      {goldenBallActive ? "⭐ AKTYWNA — KLIKNIJ ABY ANULOWAĆ" : "UŻYJ ZŁOTEJ PIŁKI"}
+                    </button>
+                  </div>
+                )}
+                {goldenBallActive && (
+                  <p className="text-center text-[9px] tracking-[0.15em] mt-2 leading-relaxed"
+                    style={{ fontFamily: B, color: "#FFD700" }}>
+                    Ryzyko! Dokładny wynik = +6 pkt, zwycięzca = +2 pkt, pudło = -1 pkt
+                  </p>
+                )}
+              </div>
+            )}
+            <div className="flex justify-center mt-4">
+              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+                onClick={handleVote} disabled={loading}
+                className="px-10 py-3 text-black text-sm tracking-[0.2em] disabled:opacity-50"
+                style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
+                {loading ? "WYSYŁAM..." : goldenBallActive ? "⭐ TYPUJ Z ZŁOTĄ PIŁKĄ" : "TYPUJ"}
+              </motion.button>
+            </div>
+          </>
         )}
 
         {!isPast && !matchResult && liroyPick && (
@@ -506,6 +574,15 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
             </motion.div>
           )}
         </AnimatePresence>
+
+        {voted && goldenBallUsed && (
+          <div className="mt-3 flex justify-center">
+            <span className="text-[9px] tracking-widest px-3 py-1.5 border border-[#FFD700]/50"
+              style={{ fontFamily: B, color: "#FFD700" }}>
+              🟡 ZŁOTA PIŁKA UŻYTA
+            </span>
+          </div>
+        )}
 
         {matchResult && voted && myVote?.replace("-", ":") === matchResult && (
           <div className="mt-3 flex justify-center">
@@ -812,11 +889,12 @@ function EpisodeModal({ match: initialMatch, allMatches, onClose }: {
 
 // ─── Dashboard ───────────────────────────────────────────────────────────────
 
-function Dashboard({ nick, nickSaved, userRank, todayCount }: {
+function Dashboard({ nick, nickSaved, userRank, todayCount, goldenBalls }: {
   nick: string;
   nickSaved: boolean;
   userRank: UserRank | null;
   todayCount: number;
+  goldenBalls: number | null;
 }) {
   const [myLeague, setMyLeague] = useState<{ id: string; name: string; rank: number } | null>(null);
   const [showCreate, setShowCreate] = useState(false);
@@ -864,7 +942,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount }: {
     <section className="px-6 pb-6 max-w-lg mx-auto">
       {/* Stats tiles */}
       {nickSaved && (
-        <div className="grid grid-cols-3 gap-2 mb-3">
+        <div className="grid grid-cols-2 gap-2 mb-3">
           <div className="border border-[#FFD700]/15 bg-[#0a0a0a] px-3 py-4 text-center rounded-sm">
             <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>PUNKTY</p>
             <p style={{ fontFamily: B, fontSize: "1.8rem", color: "#FFD700", lineHeight: 1 }}>
@@ -895,6 +973,12 @@ function Dashboard({ nick, nickSaved, userRank, todayCount }: {
             ) : (
               <p style={{ fontFamily: B, fontSize: "1.8rem", color: "#2a2a2a", lineHeight: 1 }}>—</p>
             )}
+          </div>
+          <div className="border border-[#FFD700]/15 bg-[#0a0a0a] px-3 py-4 text-center rounded-sm">
+            <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#444" }}>ZŁOTE PIŁKI</p>
+            <p style={{ fontFamily: B, fontSize: "1.8rem", color: goldenBalls === 0 ? "#2a2a2a" : "#FFD700", lineHeight: 1 }}>
+              {goldenBalls !== null ? `${goldenBalls}/3` : "—"}
+            </p>
           </div>
         </div>
       )}
@@ -988,6 +1072,7 @@ export default function MundialPage() {
   const [reminderError, setReminderError] = useState("");
   const [challengeRanking, setChallengeRanking] = useState<{ nick: string; wins: number }[]>([]);
   const [showChallengeRanking, setShowChallengeRanking] = useState(false);
+  const [goldenBalls, setGoldenBalls] = useState<number | null>(null);
   const prevRankingRef = useRef<RankingEntry[]>([]);
   const prevPositionsRef = useRef<Map<string, number>>(new Map());
   const [rankingAnimations, setRankingAnimations] = useState<Map<string, { delta: number; epoch: number }>>(new Map());
@@ -1070,6 +1155,10 @@ export default function MundialPage() {
       setNickSaved(true);
       console.log("[hero] setNickSaved(true) called");
       fetchRanking(stored);
+      fetch(`/api/mundial/golden-ball?nick=${encodeURIComponent(stored)}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => { if (data?.remaining !== undefined) setGoldenBalls(data.remaining); })
+        .catch(() => {});
       fetch(`/api/mundial/notification?nick=${encodeURIComponent(stored)}`)
         .then((r) => r.ok ? r.json() : null)
         .then((data) => {
@@ -1134,6 +1223,10 @@ export default function MundialPage() {
         setAuthState("idle");
         setPinInput("");
         fetchRanking(pendingNick);
+        fetch(`/api/mundial/golden-ball?nick=${encodeURIComponent(pendingNick)}`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((data) => { if (data?.remaining !== undefined) setGoldenBalls(data.remaining); })
+          .catch(() => {});
         fetch(`/api/mundial/notification?nick=${encodeURIComponent(pendingNick)}`)
           .then((r) => r.ok ? r.json() : null)
           .then((data) => {
@@ -1382,7 +1475,7 @@ export default function MundialPage() {
         </div>
       </section>}
 
-      {mounted && <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} />}
+      {mounted && <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} goldenBalls={goldenBalls} />}
 
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
@@ -1442,7 +1535,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...todayUpcoming, ...active].map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />
               ))
             )}
           </div>
@@ -1482,7 +1575,7 @@ export default function MundialPage() {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden">
                         <div className="space-y-4 px-4 pt-2 pb-4">
-                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />)}
+                          {matches.map((m) => <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />)}
                         </div>
                       </motion.div>
                     )}
@@ -1502,7 +1595,7 @@ export default function MundialPage() {
               </p>
             ) : (
               [...finished].reverse().map((m) => (
-                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} />
+                <MatchCard key={m.id} match={m} nick={nick} onFirstVote={() => setShowOnboarding(false)} goldenBalls={goldenBalls} onGoldenBallUse={() => setGoldenBalls((n) => n !== null ? Math.max(0, n - 1) : null)} />
               ))
             )}
           </div>

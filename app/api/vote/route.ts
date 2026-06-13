@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     redis.incr(nickKey),
     redis.set(voteKey, score),
     redis.set(`onboarded:${nick}`, "1", { ex: 30 * 24 * 3600 }),
+    redis.set(`golden_balls:${nick}`, 3, { nx: true }),
   ]);
 
   // Track registration order for pierwsza_krew badge

@@ -78,20 +78,27 @@ export async function POST(request: NextRequest) {
     const vParsed = parseScore(voted.replace("-", ":"));
     if (!vParsed) continue;
 
+    const hasJoker = !!(await redis.exists(`golden_ball_used:${matchId}:${nick}`));
+
     let pts = 0;
     if (vParsed.g1 === g1 && vParsed.g2 === g2) {
-      pts = 3;
+      pts = hasJoker ? 6 : 3;
     } else if (winner(vParsed.g1, vParsed.g2) === actualWinner) {
-      pts = 1;
+      pts = hasJoker ? 2 : 1;
+    } else if (hasJoker) {
+      pts = -1;
     }
-    if (pts > 0) {
+    if (pts !== 0) {
       pointOps.push(redis.incrby(`ranking:${nick}`, pts));
     }
 
     const msg =
+      pts === 6 ? "+6 pkt — Złota Piłka! Dokładny wynik ⭐" :
       pts === 3 ? "+3 pkt — trafiłeś dokładny wynik ✅" :
+      pts === 2 ? "+2 pkt — Złota Piłka! Trafiony zwycięzca ⭐" :
       pts === 1 ? "+1 pkt — trafiony zwycięzca" :
-                  "pudło — 0 pkt, następnym razem";
+      pts === -1 ? "-1 pkt — pudło z Złotą Piłką 😬" :
+                   "pudło — 0 pkt, następnym razem";
     notifOps.push(redis.set(`notification:${nick}`, msg, { ex: 7 * 24 * 3600 }));
   }
 
