@@ -1,1 +1,2609 @@
-{"matches":[{"id":"mex-rsa","group":"A","t1":{"name":"Meksyk","flag":"🇲🇽"},"t2":{"name":"RPA","flag":"🇿🇦"},"date":"11 czerwca 2026","time":"21:00","deadline":"2026-06-11T19:00:00Z","youtube_pl":"https://youtube.com/shorts/_uSMvHw6ZCk","youtube_en":null,"tiktok_url":null,"published":true,"result":null},{"id":"kor-cze","group":"A","t1":{"name":"Korea Południowa","flag":"🇰🇷"},"t2":{"name":"Czechy","flag":"🇨🇿"},"date":"12 czerwca 2026","time":"04:00","deadline":"2026-06-12T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"can-bih","group":"B","t1":{"name":"Kanada","flag":"🇨🇦"},"t2":{"name":"Bośnia i Hercegowina","flag":"🇧🇦"},"date":"12 czerwca 2026","time":"21:00","deadline":"2026-06-12T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"usa-par","group":"D","t1":{"name":"USA","flag":"🇺🇸"},"t2":{"name":"Paragwaj","flag":"🇵🇾"},"date":"13 czerwca 2026","time":"03:00","deadline":"2026-06-13T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"qat-sui","group":"B","t1":{"name":"Katar","flag":"🇶🇦"},"t2":{"name":"Szwajcaria","flag":"🇨🇭"},"date":"13 czerwca 2026","time":"21:00","deadline":"2026-06-13T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"bra-mar","group":"C","t1":{"name":"Brazylia","flag":"🇧🇷"},"t2":{"name":"Maroko","flag":"🇲🇦"},"date":"14 czerwca 2026","time":"00:00","deadline":"2026-06-13T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"hai-sco","group":"C","t1":{"name":"Haiti","flag":"🇭🇹"},"t2":{"name":"Szkocja","flag":"🏴󠁧󠁢󠁳󠁣󠁴󠁿"},"date":"14 czerwca 2026","time":"03:00","deadline":"2026-06-14T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"aus-tur","group":"D","t1":{"name":"Australia","flag":"🇦🇺"},"t2":{"name":"Turcja","flag":"🇹🇷"},"date":"14 czerwca 2026","time":"06:00","deadline":"2026-06-14T04:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ger-cuw","group":"E","t1":{"name":"Niemcy","flag":"🇩🇪"},"t2":{"name":"Curaçao","flag":"🇨🇼"},"date":"14 czerwca 2026","time":"19:00","deadline":"2026-06-14T17:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ned-jpn","group":"F","t1":{"name":"Holandia","flag":"🇳🇱"},"t2":{"name":"Japonia","flag":"🇯🇵"},"date":"14 czerwca 2026","time":"22:00","deadline":"2026-06-14T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"civ-ecu","group":"E","t1":{"name":"Wybrzeże Kości Słoniowej","flag":"🇨🇮"},"t2":{"name":"Ekwador","flag":"🇪🇨"},"date":"15 czerwca 2026","time":"01:00","deadline":"2026-06-14T23:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"swe-tun","group":"F","t1":{"name":"Szwecja","flag":"🇸🇪"},"t2":{"name":"Tunezja","flag":"🇹🇳"},"date":"15 czerwca 2026","time":"04:00","deadline":"2026-06-15T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"esp-cpv","group":"H","t1":{"name":"Hiszpania","flag":"🇪🇸"},"t2":{"name":"Rep. Zielonego Przylądka","flag":"🇨🇻"},"date":"15 czerwca 2026","time":"18:00","deadline":"2026-06-15T16:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"bel-egy","group":"G","t1":{"name":"Belgia","flag":"🇧🇪"},"t2":{"name":"Egipt","flag":"🇪🇬"},"date":"15 czerwca 2026","time":"21:00","deadline":"2026-06-15T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ksa-uru","group":"H","t1":{"name":"Arabia Saudyjska","flag":"🇸🇦"},"t2":{"name":"Urugwaj","flag":"🇺🇾"},"date":"16 czerwca 2026","time":"00:00","deadline":"2026-06-15T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"irn-nzl","group":"G","t1":{"name":"Iran","flag":"🇮🇷"},"t2":{"name":"Nowa Zelandia","flag":"🇳🇿"},"date":"16 czerwca 2026","time":"03:00","deadline":"2026-06-16T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"fra-sen","group":"I","t1":{"name":"Francja","flag":"🇫🇷"},"t2":{"name":"Senegal","flag":"🇸🇳"},"date":"16 czerwca 2026","time":"21:00","deadline":"2026-06-16T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"irq-nor","group":"I","t1":{"name":"Irak","flag":"🇮🇶"},"t2":{"name":"Norwegia","flag":"🇳🇴"},"date":"17 czerwca 2026","time":"00:00","deadline":"2026-06-16T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"arg-alg","group":"J","t1":{"name":"Argentyna","flag":"🇦🇷"},"t2":{"name":"Algieria","flag":"🇩🇿"},"date":"17 czerwca 2026","time":"03:00","deadline":"2026-06-17T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"aut-jor","group":"J","t1":{"name":"Austria","flag":"🇦🇹"},"t2":{"name":"Jordania","flag":"🇯🇴"},"date":"17 czerwca 2026","time":"06:00","deadline":"2026-06-17T04:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"por-cod","group":"K","t1":{"name":"Portugalia","flag":"🇵🇹"},"t2":{"name":"DR Konga","flag":"🇨🇩"},"date":"17 czerwca 2026","time":"19:00","deadline":"2026-06-17T17:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"eng-cro","group":"L","t1":{"name":"Anglia","flag":"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},"t2":{"name":"Chorwacja","flag":"🇭🇷"},"date":"17 czerwca 2026","time":"22:00","deadline":"2026-06-17T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"gha-pan","group":"L","t1":{"name":"Ghana","flag":"🇬🇭"},"t2":{"name":"Panama","flag":"🇵🇦"},"date":"18 czerwca 2026","time":"01:00","deadline":"2026-06-17T23:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"uzb-col","group":"K","t1":{"name":"Uzbekistan","flag":"🇺🇿"},"t2":{"name":"Kolumbia","flag":"🇨🇴"},"date":"18 czerwca 2026","time":"04:00","deadline":"2026-06-18T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"cze-rsa","group":"A","t1":{"name":"Czechy","flag":"🇨🇿"},"t2":{"name":"RPA","flag":"🇿🇦"},"date":"18 czerwca 2026","time":"18:00","deadline":"2026-06-18T16:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"sui-bih","group":"B","t1":{"name":"Szwajcaria","flag":"🇨🇭"},"t2":{"name":"Bośnia i Hercegowina","flag":"🇧🇦"},"date":"18 czerwca 2026","time":"21:00","deadline":"2026-06-18T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"can-qat","group":"B","t1":{"name":"Kanada","flag":"🇨🇦"},"t2":{"name":"Katar","flag":"🇶🇦"},"date":"19 czerwca 2026","time":"00:00","deadline":"2026-06-18T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"mex-kor","group":"A","t1":{"name":"Meksyk","flag":"🇲🇽"},"t2":{"name":"Korea Południowa","flag":"🇰🇷"},"date":"19 czerwca 2026","time":"03:00","deadline":"2026-06-19T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"usa-aus","group":"D","t1":{"name":"USA","flag":"🇺🇸"},"t2":{"name":"Australia","flag":"🇦🇺"},"date":"19 czerwca 2026","time":"21:00","deadline":"2026-06-19T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"sco-mar","group":"C","t1":{"name":"Szkocja","flag":"🏴󠁧󠁢󠁳󠁣󠁴󠁿"},"t2":{"name":"Maroko","flag":"🇲🇦"},"date":"20 czerwca 2026","time":"00:00","deadline":"2026-06-19T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"bra-hai","group":"C","t1":{"name":"Brazylia","flag":"🇧🇷"},"t2":{"name":"Haiti","flag":"🇭🇹"},"date":"20 czerwca 2026","time":"03:00","deadline":"2026-06-20T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"tur-par","group":"D","t1":{"name":"Turcja","flag":"🇹🇷"},"t2":{"name":"Paragwaj","flag":"🇵🇾"},"date":"20 czerwca 2026","time":"05:00","deadline":"2026-06-20T03:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ned-swe","group":"F","t1":{"name":"Holandia","flag":"🇳🇱"},"t2":{"name":"Szwecja","flag":"🇸🇪"},"date":"20 czerwca 2026","time":"19:00","deadline":"2026-06-20T17:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ger-civ","group":"E","t1":{"name":"Niemcy","flag":"🇩🇪"},"t2":{"name":"Wybrzeże Kości Słoniowej","flag":"🇨🇮"},"date":"20 czerwca 2026","time":"22:00","deadline":"2026-06-20T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ecu-cuw","group":"E","t1":{"name":"Ekwador","flag":"🇪🇨"},"t2":{"name":"Curaçao","flag":"🇨🇼"},"date":"21 czerwca 2026","time":"02:00","deadline":"2026-06-21T00:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"tun-jpn","group":"F","t1":{"name":"Tunezja","flag":"🇹🇳"},"t2":{"name":"Japonia","flag":"🇯🇵"},"date":"21 czerwca 2026","time":"06:00","deadline":"2026-06-21T04:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"esp-ksa","group":"H","t1":{"name":"Hiszpania","flag":"🇪🇸"},"t2":{"name":"Arabia Saudyjska","flag":"🇸🇦"},"date":"21 czerwca 2026","time":"18:00","deadline":"2026-06-21T16:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"bel-irn","group":"G","t1":{"name":"Belgia","flag":"🇧🇪"},"t2":{"name":"Iran","flag":"🇮🇷"},"date":"21 czerwca 2026","time":"21:00","deadline":"2026-06-21T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"uru-cpv","group":"H","t1":{"name":"Urugwaj","flag":"🇺🇾"},"t2":{"name":"Rep. Zielonego Przylądka","flag":"🇨🇻"},"date":"22 czerwca 2026","time":"00:00","deadline":"2026-06-21T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"nzl-egy","group":"G","t1":{"name":"Nowa Zelandia","flag":"🇳🇿"},"t2":{"name":"Egipt","flag":"🇪🇬"},"date":"22 czerwca 2026","time":"03:00","deadline":"2026-06-22T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"arg-aut","group":"J","t1":{"name":"Argentyna","flag":"🇦🇷"},"t2":{"name":"Austria","flag":"🇦🇹"},"date":"22 czerwca 2026","time":"19:00","deadline":"2026-06-22T17:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"fra-irq","group":"I","t1":{"name":"Francja","flag":"🇫🇷"},"t2":{"name":"Irak","flag":"🇮🇶"},"date":"22 czerwca 2026","time":"23:00","deadline":"2026-06-22T21:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"nor-sen","group":"I","t1":{"name":"Norwegia","flag":"🇳🇴"},"t2":{"name":"Senegal","flag":"🇸🇳"},"date":"23 czerwca 2026","time":"02:00","deadline":"2026-06-23T00:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"jor-alg","group":"J","t1":{"name":"Jordania","flag":"🇯🇴"},"t2":{"name":"Algieria","flag":"🇩🇿"},"date":"23 czerwca 2026","time":"05:00","deadline":"2026-06-23T03:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"por-uzb","group":"K","t1":{"name":"Portugalia","flag":"🇵🇹"},"t2":{"name":"Uzbekistan","flag":"🇺🇿"},"date":"23 czerwca 2026","time":"19:00","deadline":"2026-06-23T17:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"eng-gha","group":"L","t1":{"name":"Anglia","flag":"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},"t2":{"name":"Ghana","flag":"🇬🇭"},"date":"23 czerwca 2026","time":"22:00","deadline":"2026-06-23T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"pan-cro","group":"L","t1":{"name":"Panama","flag":"🇵🇦"},"t2":{"name":"Chorwacja","flag":"🇭🇷"},"date":"24 czerwca 2026","time":"01:00","deadline":"2026-06-23T23:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"col-cod","group":"K","t1":{"name":"Kolumbia","flag":"🇨🇴"},"t2":{"name":"DR Konga","flag":"🇨🇩"},"date":"24 czerwca 2026","time":"04:00","deadline":"2026-06-24T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"sui-can","group":"B","t1":{"name":"Szwajcaria","flag":"🇨🇭"},"t2":{"name":"Kanada","flag":"🇨🇦"},"date":"24 czerwca 2026","time":"21:00","deadline":"2026-06-24T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"bih-qat","group":"B","t1":{"name":"Bośnia i Hercegowina","flag":"🇧🇦"},"t2":{"name":"Katar","flag":"🇶🇦"},"date":"24 czerwca 2026","time":"21:00","deadline":"2026-06-24T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"mar-hai","group":"C","t1":{"name":"Maroko","flag":"🇲🇦"},"t2":{"name":"Haiti","flag":"🇭🇹"},"date":"25 czerwca 2026","time":"00:00","deadline":"2026-06-24T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"sco-bra","group":"C","t1":{"name":"Szkocja","flag":"🏴󠁧󠁢󠁳󠁣󠁴󠁿"},"t2":{"name":"Brazylia","flag":"🇧🇷"},"date":"25 czerwca 2026","time":"00:00","deadline":"2026-06-24T22:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"rsa-kor","group":"A","t1":{"name":"RPA","flag":"🇿🇦"},"t2":{"name":"Korea Południowa","flag":"🇰🇷"},"date":"25 czerwca 2026","time":"03:00","deadline":"2026-06-25T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"mex-cze","group":"A","t1":{"name":"Czechy","flag":"🇨🇿"},"t2":{"name":"Meksyk","flag":"🇲🇽"},"date":"25 czerwca 2026","time":"03:00","deadline":"2026-06-25T01:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"cuw-civ","group":"E","t1":{"name":"Curaçao","flag":"🇨🇼"},"t2":{"name":"Wybrzeże Kości Słoniowej","flag":"🇨🇮"},"date":"25 czerwca 2026","time":"22:00","deadline":"2026-06-25T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"ecu-ger","group":"E","t1":{"name":"Ekwador","flag":"🇪🇨"},"t2":{"name":"Niemcy","flag":"🇩🇪"},"date":"25 czerwca 2026","time":"22:00","deadline":"2026-06-25T20:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"jpn-swe","group":"F","t1":{"name":"Japonia","flag":"🇯🇵"},"t2":{"name":"Szwecja","flag":"🇸🇪"},"date":"26 czerwca 2026","time":"01:00","deadline":"2026-06-25T23:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"tun-ned","group":"F","t1":{"name":"Tunezja","flag":"🇹🇳"},"t2":{"name":"Holandia","flag":"🇳🇱"},"date":"26 czerwca 2026","time":"01:00","deadline":"2026-06-25T23:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"par-aus","group":"D","t1":{"name":"Paragwaj","flag":"🇵🇾"},"t2":{"name":"Australia","flag":"🇦🇺"},"date":"26 czerwca 2026","time":"04:00","deadline":"2026-06-26T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"tur-usa","group":"D","t1":{"name":"Turcja","flag":"🇹🇷"},"t2":{"name":"USA","flag":"🇺🇸"},"date":"26 czerwca 2026","time":"04:00","deadline":"2026-06-26T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"nor-fra","group":"I","t1":{"name":"Norwegia","flag":"🇳🇴"},"t2":{"name":"Francja","flag":"🇫🇷"},"date":"26 czerwca 2026","time":"21:00","deadline":"2026-06-26T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"sen-irq","group":"I","t1":{"name":"Senegal","flag":"🇸🇳"},"t2":{"name":"Irak","flag":"🇮🇶"},"date":"26 czerwca 2026","time":"21:00","deadline":"2026-06-26T19:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"cpv-ksa","group":"H","t1":{"name":"Rep. Zielonego Przylądka","flag":"🇨🇻"},"t2":{"name":"Arabia Saudyjska","flag":"🇸🇦"},"date":"27 czerwca 2026","time":"02:00","deadline":"2026-06-27T00:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"uru-esp","group":"H","t1":{"name":"Urugwaj","flag":"🇺🇾"},"t2":{"name":"Hiszpania","flag":"🇪🇸"},"date":"27 czerwca 2026","time":"02:00","deadline":"2026-06-27T00:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"egy-irn","group":"G","t1":{"name":"Egipt","flag":"🇪🇬"},"t2":{"name":"Iran","flag":"🇮🇷"},"date":"27 czerwca 2026","time":"05:00","deadline":"2026-06-27T03:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"nzl-bel","group":"G","t1":{"name":"Nowa Zelandia","flag":"🇳🇿"},"t2":{"name":"Belgia","flag":"🇧🇪"},"date":"27 czerwca 2026","time":"05:00","deadline":"2026-06-27T03:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"cro-gha","group":"L","t1":{"name":"Chorwacja","flag":"🇭🇷"},"t2":{"name":"Ghana","flag":"🇬🇭"},"date":"27 czerwca 2026","time":"23:00","deadline":"2026-06-27T21:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"pan-eng","group":"L","t1":{"name":"Panama","flag":"🇵🇦"},"t2":{"name":"Anglia","flag":"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},"date":"27 czerwca 2026","time":"23:00","deadline":"2026-06-27T21:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"cod-uzb","group":"K","t1":{"name":"DR Konga","flag":"🇨🇩"},"t2":{"name":"Uzbekistan","flag":"🇺🇿"},"date":"28 czerwca 2026","time":"01:30","deadline":"2026-06-27T23:30:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"col-por","group":"K","t1":{"name":"Kolumbia","flag":"🇨🇴"},"t2":{"name":"Portugalia","flag":"🇵🇹"},"date":"28 czerwca 2026","time":"01:30","deadline":"2026-06-27T23:30:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"alg-aut","group":"J","t1":{"name":"Algieria","flag":"🇩🇿"},"t2":{"name":"Austria","flag":"🇦🇹"},"date":"28 czerwca 2026","time":"04:00","deadline":"2026-06-28T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null},{"id":"jor-arg","group":"J","t1":{"name":"Jordania","flag":"🇯🇴"},"t2":{"name":"Argentyna","flag":"🇦🇷"},"date":"28 czerwca 2026","time":"04:00","deadline":"2026-06-28T02:00:00Z","youtube_pl":null,"youtube_en":null,"tiktok_url":null,"published":false,"result":null}]}
+{
+  "matches": [
+    {
+      "id": "mex-rsa",
+      "group": "A",
+      "t1": {
+        "name": "Meksyk",
+        "flag": "🇲🇽"
+      },
+      "t2": {
+        "name": "RPA",
+        "flag": "🇿🇦"
+      },
+      "date": "11 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-11T19:00:00Z",
+      "youtube_pl": "https://youtube.com/shorts/_uSMvHw6ZCk",
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": true,
+      "result": null,
+      "h2h": {
+        "total_matches": 4,
+        "team1_wins": 2,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 10,
+        "goals_team2": 5,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1993,
+            "score": "4:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          },
+          {
+            "year": 2000,
+            "score": "4:2",
+            "competition": "US Cup",
+            "winner": "team1"
+          },
+          {
+            "year": 2005,
+            "score": "2:1",
+            "competition": "Gold Cup",
+            "winner": "team2"
+          },
+          {
+            "year": 2010,
+            "score": "1:1",
+            "competition": "Otwarcie MŚ 2010",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "kor-cze",
+      "group": "A",
+      "t1": {
+        "name": "Korea Południowa",
+        "flag": "🇰🇷"
+      },
+      "t2": {
+        "name": "Czechy",
+        "flag": "🇨🇿"
+      },
+      "date": "12 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-12T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 6,
+        "team1_wins": 1,
+        "team2_wins": 2,
+        "draws": 3,
+        "goals_team1": 6,
+        "goals_team2": 10,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1987,
+            "score": "3:2",
+            "competition": "Merdeka Tournament — CZECHOSŁOWACJA",
+            "winner": "team2"
+          },
+          {
+            "year": 1988,
+            "score": "0:0",
+            "competition": "President's Cup — CZECHOSŁOWACJA",
+            "winner": "draw"
+          },
+          {
+            "year": 1989,
+            "score": "0:0",
+            "competition": "President's Cup — CZECHOSŁOWACJA",
+            "winner": "draw"
+          },
+          {
+            "year": 1998,
+            "score": "2:2",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          },
+          {
+            "year": 2001,
+            "score": "5:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          },
+          {
+            "year": 2016,
+            "score": "1:2",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "can-bih",
+      "group": "B",
+      "t1": {
+        "name": "Kanada",
+        "flag": "🇨🇦"
+      },
+      "t2": {
+        "name": "Bośnia i Hercegowina",
+        "flag": "🇧🇦"
+      },
+      "date": "12 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-12T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "usa-par",
+      "group": "D",
+      "t1": {
+        "name": "USA",
+        "flag": "🇺🇸"
+      },
+      "t2": {
+        "name": "Paragwaj",
+        "flag": "🇵🇾"
+      },
+      "date": "13 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-13T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 9,
+        "team1_wins": 6,
+        "team2_wins": 2,
+        "draws": 1,
+        "goals_team1": 21,
+        "goals_team2": 12,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1930,
+            "score": "3:0",
+            "competition": "MŚ 1930 – faza grupowa",
+            "winner": "team1"
+          },
+          {
+            "year": 2025,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "qat-sui",
+      "group": "B",
+      "t1": {
+        "name": "Katar",
+        "flag": "🇶🇦"
+      },
+      "t2": {
+        "name": "Szwajcaria",
+        "flag": "🇨🇭"
+      },
+      "date": "13 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-13T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 1,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 1,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2018,
+            "score": "1:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bra-mar",
+      "group": "C",
+      "t1": {
+        "name": "Brazylia",
+        "flag": "🇧🇷"
+      },
+      "t2": {
+        "name": "Maroko",
+        "flag": "🇲🇦"
+      },
+      "date": "14 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-13T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 2,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 6,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1998,
+            "score": "3:0",
+            "competition": "MŚ 1998 – faza grupowa",
+            "winner": "team1"
+          },
+          {
+            "year": 2023,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hai-sco",
+      "group": "C",
+      "t1": {
+        "name": "Haiti",
+        "flag": "🇭🇹"
+      },
+      "t2": {
+        "name": "Szkocja",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+      },
+      "date": "14 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-14T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "aus-tur",
+      "group": "D",
+      "t1": {
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "t2": {
+        "name": "Turcja",
+        "flag": "🇹🇷"
+      },
+      "date": "14 czerwca 2026",
+      "time": "06:00",
+      "deadline": "2026-06-14T04:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 2,
+        "team1_wins": 0,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 7,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2004,
+            "score": "5:0",
+            "competition": "Turniej 4 narodów (mecz 1)",
+            "winner": "team2"
+          },
+          {
+            "year": 2004,
+            "score": "2:0",
+            "competition": "Turniej 4 narodów (mecz 2)",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ger-cuw",
+      "group": "E",
+      "t1": {
+        "name": "Niemcy",
+        "flag": "🇩🇪"
+      },
+      "t2": {
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "date": "14 czerwca 2026",
+      "time": "19:00",
+      "deadline": "2026-06-14T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "ned-jpn",
+      "group": "F",
+      "t1": {
+        "name": "Holandia",
+        "flag": "🇳🇱"
+      },
+      "t2": {
+        "name": "Japonia",
+        "flag": "🇯🇵"
+      },
+      "date": "14 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-14T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 4,
+        "team1_wins": 2,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 9,
+        "goals_team2": 6,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2013,
+            "score": "2:2",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "civ-ecu",
+      "group": "E",
+      "t1": {
+        "name": "Wybrzeże Kości Słoniowej",
+        "flag": "🇨🇮"
+      },
+      "t2": {
+        "name": "Ekwador",
+        "flag": "🇪🇨"
+      },
+      "date": "15 czerwca 2026",
+      "time": "01:00",
+      "deadline": "2026-06-14T23:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "swe-tun",
+      "group": "F",
+      "t1": {
+        "name": "Szwecja",
+        "flag": "🇸🇪"
+      },
+      "t2": {
+        "name": "Tunezja",
+        "flag": "🇹🇳"
+      },
+      "date": "15 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-15T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 4,
+        "team1_wins": 2,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 6,
+        "goals_team2": 4,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2003,
+            "score": "1:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "esp-cpv",
+      "group": "H",
+      "t1": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "t2": {
+        "name": "Rep. Zielonego Przylądka",
+        "flag": "🇨🇻"
+      },
+      "date": "15 czerwca 2026",
+      "time": "18:00",
+      "deadline": "2026-06-15T16:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "bel-egy",
+      "group": "G",
+      "t1": {
+        "name": "Belgia",
+        "flag": "🇧🇪"
+      },
+      "t2": {
+        "name": "Egipt",
+        "flag": "🇪🇬"
+      },
+      "date": "15 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-15T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 4,
+        "team1_wins": 1,
+        "team2_wins": 3,
+        "draws": 0,
+        "goals_team1": 5,
+        "goals_team2": 9,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2022,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ksa-uru",
+      "group": "H",
+      "t1": {
+        "name": "Arabia Saudyjska",
+        "flag": "🇸🇦"
+      },
+      "t2": {
+        "name": "Urugwaj",
+        "flag": "🇺🇾"
+      },
+      "date": "16 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-15T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 1,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 2,
+        "goals_team2": 4,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2018,
+            "score": "1:0",
+            "competition": "MŚ 2018 – faza grupowa",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "irn-nzl",
+      "group": "G",
+      "t1": {
+        "name": "Iran",
+        "flag": "🇮🇷"
+      },
+      "t2": {
+        "name": "Nowa Zelandia",
+        "flag": "🇳🇿"
+      },
+      "date": "16 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-16T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 2,
+        "team1_wins": 2,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 5,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2003,
+            "score": "3:0",
+            "competition": "AFC–OFC Challenge Cup",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fra-sen",
+      "group": "I",
+      "t1": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "t2": {
+        "name": "Senegal",
+        "flag": "🇸🇳"
+      },
+      "date": "16 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-16T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 1,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2002,
+            "score": "1:0",
+            "competition": "MŚ 2002 – faza grupowa (otwarcie)",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "irq-nor",
+      "group": "I",
+      "t1": {
+        "name": "Irak",
+        "flag": "🇮🇶"
+      },
+      "t2": {
+        "name": "Norwegia",
+        "flag": "🇳🇴"
+      },
+      "date": "17 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-16T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "arg-alg",
+      "group": "J",
+      "t1": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "t2": {
+        "name": "Algieria",
+        "flag": "🇩🇿"
+      },
+      "date": "17 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-17T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 1,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 4,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2007,
+            "score": "4:3",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "aut-jor",
+      "group": "J",
+      "t1": {
+        "name": "Austria",
+        "flag": "🇦🇹"
+      },
+      "t2": {
+        "name": "Jordania",
+        "flag": "🇯🇴"
+      },
+      "date": "17 czerwca 2026",
+      "time": "06:00",
+      "deadline": "2026-06-17T04:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "por-cod",
+      "group": "K",
+      "t1": {
+        "name": "Portugalia",
+        "flag": "🇵🇹"
+      },
+      "t2": {
+        "name": "DR Konga",
+        "flag": "🇨🇩"
+      },
+      "date": "17 czerwca 2026",
+      "time": "19:00",
+      "deadline": "2026-06-17T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "eng-cro",
+      "group": "L",
+      "t1": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "t2": {
+        "name": "Chorwacja",
+        "flag": "🇭🇷"
+      },
+      "date": "17 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-17T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 11,
+        "team1_wins": 6,
+        "team2_wins": 3,
+        "draws": 2,
+        "goals_team1": 21,
+        "goals_team2": 14,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2018,
+            "score": "2:1",
+            "competition": "MŚ 2018 – półfinał",
+            "winner": "team2"
+          },
+          {
+            "year": 2021,
+            "score": "1:0",
+            "competition": "Euro 2020 – faza grupowa",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gha-pan",
+      "group": "L",
+      "t1": {
+        "name": "Ghana",
+        "flag": "🇬🇭"
+      },
+      "t2": {
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "date": "18 czerwca 2026",
+      "time": "01:00",
+      "deadline": "2026-06-17T23:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "uzb-col",
+      "group": "K",
+      "t1": {
+        "name": "Uzbekistan",
+        "flag": "🇺🇿"
+      },
+      "t2": {
+        "name": "Kolumbia",
+        "flag": "🇨🇴"
+      },
+      "date": "18 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-18T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "cze-rsa",
+      "group": "A",
+      "t1": {
+        "name": "Czechy",
+        "flag": "🇨🇿"
+      },
+      "t2": {
+        "name": "RPA",
+        "flag": "🇿🇦"
+      },
+      "date": "18 czerwca 2026",
+      "time": "18:00",
+      "deadline": "2026-06-18T16:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 1,
+        "goals_team1": 2,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1997,
+            "score": "2:2",
+            "competition": "Puchar Konfederacji 1997",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sui-bih",
+      "group": "B",
+      "t1": {
+        "name": "Szwajcaria",
+        "flag": "🇨🇭"
+      },
+      "t2": {
+        "name": "Bośnia i Hercegowina",
+        "flag": "🇧🇦"
+      },
+      "date": "18 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-18T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2016,
+            "score": "2:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "can-qat",
+      "group": "B",
+      "t1": {
+        "name": "Kanada",
+        "flag": "🇨🇦"
+      },
+      "t2": {
+        "name": "Katar",
+        "flag": "🇶🇦"
+      },
+      "date": "19 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-18T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 1,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 2,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2022,
+            "score": "2:0",
+            "competition": "MŚ 2022 – faza grupowa",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mex-kor",
+      "group": "A",
+      "t1": {
+        "name": "Meksyk",
+        "flag": "🇲🇽"
+      },
+      "t2": {
+        "name": "Korea Południowa",
+        "flag": "🇰🇷"
+      },
+      "date": "19 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-19T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 15,
+        "team1_wins": 9,
+        "team2_wins": 2,
+        "draws": 4,
+        "goals_team1": 36,
+        "goals_team2": 16,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1998,
+            "score": "3:1",
+            "competition": "MŚ 1998 – faza grupowa",
+            "winner": "team1"
+          },
+          {
+            "year": 2018,
+            "score": "2:1",
+            "competition": "MŚ 2018 – faza grupowa",
+            "winner": "team1"
+          },
+          {
+            "year": 2025,
+            "score": "2:2",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "usa-aus",
+      "group": "D",
+      "t1": {
+        "name": "USA",
+        "flag": "🇺🇸"
+      },
+      "t2": {
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "date": "19 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-19T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 4,
+        "team1_wins": 3,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 9,
+        "goals_team2": 4,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2025,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sco-mar",
+      "group": "C",
+      "t1": {
+        "name": "Szkocja",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+      },
+      "t2": {
+        "name": "Maroko",
+        "flag": "🇲🇦"
+      },
+      "date": "20 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-19T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1998,
+            "score": "3:0",
+            "competition": "MŚ 1998 – faza grupowa",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bra-hai",
+      "group": "C",
+      "t1": {
+        "name": "Brazylia",
+        "flag": "🇧🇷"
+      },
+      "t2": {
+        "name": "Haiti",
+        "flag": "🇭🇹"
+      },
+      "date": "20 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-20T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 3,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 15,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2016,
+            "score": "7:1",
+            "competition": "Copa América Centenario – faza grupowa",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "tur-par",
+      "group": "D",
+      "t1": {
+        "name": "Turcja",
+        "flag": "🇹🇷"
+      },
+      "t2": {
+        "name": "Paragwaj",
+        "flag": "🇵🇾"
+      },
+      "date": "20 czerwca 2026",
+      "time": "05:00",
+      "deadline": "2026-06-20T03:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 1,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1995,
+            "score": "0:0",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ned-swe",
+      "group": "F",
+      "t1": {
+        "name": "Holandia",
+        "flag": "🇳🇱"
+      },
+      "t2": {
+        "name": "Szwecja",
+        "flag": "🇸🇪"
+      },
+      "date": "20 czerwca 2026",
+      "time": "19:00",
+      "deadline": "2026-06-20T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 20,
+        "team1_wins": 12,
+        "team2_wins": 4,
+        "draws": 4,
+        "goals_team1": 46,
+        "goals_team2": 22,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1974,
+            "score": "0:0",
+            "competition": "MŚ 1974 – faza grupowa (II runda)",
+            "winner": "draw"
+          },
+          {
+            "year": 2017,
+            "score": "2:0",
+            "competition": "Eliminacje MŚ 2018",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ger-civ",
+      "group": "E",
+      "t1": {
+        "name": "Niemcy",
+        "flag": "🇩🇪"
+      },
+      "t2": {
+        "name": "Wybrzeże Kości Słoniowej",
+        "flag": "🇨🇮"
+      },
+      "date": "20 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-20T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 1,
+        "goals_team1": 2,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2009,
+            "score": "2:2",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecu-cuw",
+      "group": "E",
+      "t1": {
+        "name": "Ekwador",
+        "flag": "🇪🇨"
+      },
+      "t2": {
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "date": "21 czerwca 2026",
+      "time": "02:00",
+      "deadline": "2026-06-21T00:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "tun-jpn",
+      "group": "F",
+      "t1": {
+        "name": "Tunezja",
+        "flag": "🇹🇳"
+      },
+      "t2": {
+        "name": "Japonia",
+        "flag": "🇯🇵"
+      },
+      "date": "21 czerwca 2026",
+      "time": "06:00",
+      "deadline": "2026-06-21T04:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 6,
+        "team1_wins": 1,
+        "team2_wins": 4,
+        "draws": 1,
+        "goals_team1": 5,
+        "goals_team2": 13,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2002,
+            "score": "2:0",
+            "competition": "MŚ 2002 – faza grupowa",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "esp-ksa",
+      "group": "H",
+      "t1": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "t2": {
+        "name": "Arabia Saudyjska",
+        "flag": "🇸🇦"
+      },
+      "date": "21 czerwca 2026",
+      "time": "18:00",
+      "deadline": "2026-06-21T16:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 3,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 8,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2006,
+            "score": "1:0",
+            "competition": "MŚ 2006 – faza grupowa",
+            "winner": "team1"
+          },
+          {
+            "year": 2012,
+            "score": "5:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bel-irn",
+      "group": "G",
+      "t1": {
+        "name": "Belgia",
+        "flag": "🇧🇪"
+      },
+      "t2": {
+        "name": "Iran",
+        "flag": "🇮🇷"
+      },
+      "date": "21 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-21T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "uru-cpv",
+      "group": "H",
+      "t1": {
+        "name": "Urugwaj",
+        "flag": "🇺🇾"
+      },
+      "t2": {
+        "name": "Rep. Zielonego Przylądka",
+        "flag": "🇨🇻"
+      },
+      "date": "22 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-21T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "nzl-egy",
+      "group": "G",
+      "t1": {
+        "name": "Nowa Zelandia",
+        "flag": "🇳🇿"
+      },
+      "t2": {
+        "name": "Egipt",
+        "flag": "🇪🇬"
+      },
+      "date": "22 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-22T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 1,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 3,
+        "goals_team2": 4,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2024,
+            "score": "1:0",
+            "competition": "FIFA Series 2024",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arg-aut",
+      "group": "J",
+      "t1": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "t2": {
+        "name": "Austria",
+        "flag": "🇦🇹"
+      },
+      "date": "22 czerwca 2026",
+      "time": "19:00",
+      "deadline": "2026-06-22T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 1,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 5,
+        "goals_team2": 4,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1990,
+            "score": "1:1",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fra-irq",
+      "group": "I",
+      "t1": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "t2": {
+        "name": "Irak",
+        "flag": "🇮🇶"
+      },
+      "date": "22 czerwca 2026",
+      "time": "23:00",
+      "deadline": "2026-06-22T21:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "nor-sen",
+      "group": "I",
+      "t1": {
+        "name": "Norwegia",
+        "flag": "🇳🇴"
+      },
+      "t2": {
+        "name": "Senegal",
+        "flag": "🇸🇳"
+      },
+      "date": "23 czerwca 2026",
+      "time": "02:00",
+      "deadline": "2026-06-23T00:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 1,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2006,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jor-alg",
+      "group": "J",
+      "t1": {
+        "name": "Jordania",
+        "flag": "🇯🇴"
+      },
+      "t2": {
+        "name": "Algieria",
+        "flag": "🇩🇿"
+      },
+      "date": "23 czerwca 2026",
+      "time": "05:00",
+      "deadline": "2026-06-23T03:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 3,
+        "team1_wins": 1,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 3,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2004,
+            "score": "1:1",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "por-uzb",
+      "group": "K",
+      "t1": {
+        "name": "Portugalia",
+        "flag": "🇵🇹"
+      },
+      "t2": {
+        "name": "Uzbekistan",
+        "flag": "🇺🇿"
+      },
+      "date": "23 czerwca 2026",
+      "time": "19:00",
+      "deadline": "2026-06-23T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "eng-gha",
+      "group": "L",
+      "t1": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "t2": {
+        "name": "Ghana",
+        "flag": "🇬🇭"
+      },
+      "date": "23 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-23T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 1,
+        "goals_team1": 1,
+        "goals_team2": 1,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2011,
+            "score": "1:1",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pan-cro",
+      "group": "L",
+      "t1": {
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "t2": {
+        "name": "Chorwacja",
+        "flag": "🇭🇷"
+      },
+      "date": "24 czerwca 2026",
+      "time": "01:00",
+      "deadline": "2026-06-23T23:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "col-cod",
+      "group": "K",
+      "t1": {
+        "name": "Kolumbia",
+        "flag": "🇨🇴"
+      },
+      "t2": {
+        "name": "DR Konga",
+        "flag": "🇨🇩"
+      },
+      "date": "24 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-24T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "sui-can",
+      "group": "B",
+      "t1": {
+        "name": "Szwajcaria",
+        "flag": "🇨🇭"
+      },
+      "t2": {
+        "name": "Kanada",
+        "flag": "🇨🇦"
+      },
+      "date": "24 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-24T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 1,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2002,
+            "score": "3:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bih-qat",
+      "group": "B",
+      "t1": {
+        "name": "Bośnia i Hercegowina",
+        "flag": "🇧🇦"
+      },
+      "t2": {
+        "name": "Katar",
+        "flag": "🇶🇦"
+      },
+      "date": "24 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-24T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 2,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 1,
+        "goals_team1": 1,
+        "goals_team2": 3,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2000,
+            "score": "2:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          },
+          {
+            "year": 2010,
+            "score": "1:1",
+            "competition": "Mecz towarzyski",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mar-hai",
+      "group": "C",
+      "t1": {
+        "name": "Maroko",
+        "flag": "🇲🇦"
+      },
+      "t2": {
+        "name": "Haiti",
+        "flag": "🇭🇹"
+      },
+      "date": "25 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-24T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "sco-bra",
+      "group": "C",
+      "t1": {
+        "name": "Szkocja",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+      },
+      "t2": {
+        "name": "Brazylia",
+        "flag": "🇧🇷"
+      },
+      "date": "25 czerwca 2026",
+      "time": "00:00",
+      "deadline": "2026-06-24T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 10,
+        "team1_wins": 1,
+        "team2_wins": 7,
+        "draws": 2,
+        "goals_team1": 9,
+        "goals_team2": 22,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1974,
+            "score": "0:0",
+            "competition": "MŚ 1974 – faza grupowa",
+            "winner": "draw"
+          },
+          {
+            "year": 1982,
+            "score": "4:1",
+            "competition": "MŚ 1982 – faza grupowa",
+            "winner": "team2"
+          },
+          {
+            "year": 1990,
+            "score": "1:0",
+            "competition": "MŚ 1990 – faza grupowa",
+            "winner": "team2"
+          },
+          {
+            "year": 1998,
+            "score": "2:1",
+            "competition": "MŚ 1998 – faza grupowa",
+            "winner": "team2"
+          },
+          {
+            "year": 2011,
+            "score": "2:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rsa-kor",
+      "group": "A",
+      "t1": {
+        "name": "RPA",
+        "flag": "🇿🇦"
+      },
+      "t2": {
+        "name": "Korea Południowa",
+        "flag": "🇰🇷"
+      },
+      "date": "25 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-25T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "mex-cze",
+      "group": "A",
+      "t1": {
+        "name": "Czechy",
+        "flag": "🇨🇿"
+      },
+      "t2": {
+        "name": "Meksyk",
+        "flag": "🇲🇽"
+      },
+      "date": "25 czerwca 2026",
+      "time": "03:00",
+      "deadline": "2026-06-25T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 1,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2000,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cuw-civ",
+      "group": "E",
+      "t1": {
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "t2": {
+        "name": "Wybrzeże Kości Słoniowej",
+        "flag": "🇨🇮"
+      },
+      "date": "25 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-25T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "ecu-ger",
+      "group": "E",
+      "t1": {
+        "name": "Ekwador",
+        "flag": "🇪🇨"
+      },
+      "t2": {
+        "name": "Niemcy",
+        "flag": "🇩🇪"
+      },
+      "date": "25 czerwca 2026",
+      "time": "22:00",
+      "deadline": "2026-06-25T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 2,
+        "team1_wins": 0,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 2,
+        "goals_team2": 7,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2006,
+            "score": "3:0",
+            "competition": "MŚ 2006 – faza grupowa",
+            "winner": "team2"
+          },
+          {
+            "year": 2013,
+            "score": "4:2",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jpn-swe",
+      "group": "F",
+      "t1": {
+        "name": "Japonia",
+        "flag": "🇯🇵"
+      },
+      "t2": {
+        "name": "Szwecja",
+        "flag": "🇸🇪"
+      },
+      "date": "26 czerwca 2026",
+      "time": "01:00",
+      "deadline": "2026-06-25T23:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": []
+      }
+    },
+    {
+      "id": "tun-ned",
+      "group": "F",
+      "t1": {
+        "name": "Tunezja",
+        "flag": "🇹🇳"
+      },
+      "t2": {
+        "name": "Holandia",
+        "flag": "🇳🇱"
+      },
+      "date": "26 czerwca 2026",
+      "time": "01:00",
+      "deadline": "2026-06-25T23:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": false,
+        "matches": []
+      }
+    },
+    {
+      "id": "par-aus",
+      "group": "D",
+      "t1": {
+        "name": "Paragwaj",
+        "flag": "🇵🇾"
+      },
+      "t2": {
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "date": "26 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-26T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 5,
+        "team1_wins": 3,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 9,
+        "goals_team2": 6,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2010,
+            "score": "1:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "tur-usa",
+      "group": "D",
+      "t1": {
+        "name": "Turcja",
+        "flag": "🇹🇷"
+      },
+      "t2": {
+        "name": "USA",
+        "flag": "🇺🇸"
+      },
+      "date": "26 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-26T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 5,
+        "team1_wins": 3,
+        "team2_wins": 2,
+        "draws": 0,
+        "goals_team1": 11,
+        "goals_team2": 8,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2025,
+            "score": "2:1",
+            "competition": "Mecz towarzyski",
+            "winner": "team1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nor-fra",
+      "group": "I",
+      "t1": {
+        "name": "Norwegia",
+        "flag": "🇳🇴"
+      },
+      "t2": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "date": "26 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-26T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 16,
+        "team1_wins": 3,
+        "team2_wins": 11,
+        "draws": 2,
+        "goals_team1": 18,
+        "goals_team2": 38,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2014,
+            "score": "4:0",
+            "competition": "Mecz towarzyski",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sen-irq",
+      "group": "I",
+      "t1": {
+        "name": "Senegal",
+        "flag": "🇸🇳"
+      },
+      "t2": {
+        "name": "Irak",
+        "flag": "🇮🇶"
+      },
+      "date": "26 czerwca 2026",
+      "time": "21:00",
+      "deadline": "2026-06-26T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "cpv-ksa",
+      "group": "H",
+      "t1": {
+        "name": "Rep. Zielonego Przylądka",
+        "flag": "🇨🇻"
+      },
+      "t2": {
+        "name": "Arabia Saudyjska",
+        "flag": "🇸🇦"
+      },
+      "date": "27 czerwca 2026",
+      "time": "02:00",
+      "deadline": "2026-06-27T00:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "uru-esp",
+      "group": "H",
+      "t1": {
+        "name": "Urugwaj",
+        "flag": "🇺🇾"
+      },
+      "t2": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "date": "27 czerwca 2026",
+      "time": "02:00",
+      "deadline": "2026-06-27T00:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 10,
+        "team1_wins": 4,
+        "team2_wins": 4,
+        "draws": 2,
+        "goals_team1": 17,
+        "goals_team2": 18,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1950,
+            "score": "2:2",
+            "competition": "MŚ 1950 – faza grupowa",
+            "winner": "draw"
+          },
+          {
+            "year": 1990,
+            "score": "0:0",
+            "competition": "MŚ 1990 – faza grupowa",
+            "winner": "draw"
+          },
+          {
+            "year": 2013,
+            "score": "2:1",
+            "competition": "Puchar Konfederacji 2013",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "egy-irn",
+      "group": "G",
+      "t1": {
+        "name": "Egipt",
+        "flag": "🇪🇬"
+      },
+      "t2": {
+        "name": "Iran",
+        "flag": "🇮🇷"
+      },
+      "date": "27 czerwca 2026",
+      "time": "05:00",
+      "deadline": "2026-06-27T03:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 2,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 2,
+        "goals_team1": 2,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2000,
+            "score": "1:1",
+            "competition": "LG Cup 2000",
+            "winner": "draw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nzl-bel",
+      "group": "G",
+      "t1": {
+        "name": "Nowa Zelandia",
+        "flag": "🇳🇿"
+      },
+      "t2": {
+        "name": "Belgia",
+        "flag": "🇧🇪"
+      },
+      "date": "27 czerwca 2026",
+      "time": "05:00",
+      "deadline": "2026-06-27T03:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "cro-gha",
+      "group": "L",
+      "t1": {
+        "name": "Chorwacja",
+        "flag": "🇭🇷"
+      },
+      "t2": {
+        "name": "Ghana",
+        "flag": "🇬🇭"
+      },
+      "date": "27 czerwca 2026",
+      "time": "23:00",
+      "deadline": "2026-06-27T21:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "pan-eng",
+      "group": "L",
+      "t1": {
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "t2": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "date": "27 czerwca 2026",
+      "time": "23:00",
+      "deadline": "2026-06-27T21:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 1,
+        "goals_team2": 6,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 2018,
+            "score": "6:1",
+            "competition": "MŚ 2018 – faza grupowa",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cod-uzb",
+      "group": "K",
+      "t1": {
+        "name": "DR Konga",
+        "flag": "🇨🇩"
+      },
+      "t2": {
+        "name": "Uzbekistan",
+        "flag": "🇺🇿"
+      },
+      "date": "28 czerwca 2026",
+      "time": "01:30",
+      "deadline": "2026-06-27T23:30:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "col-por",
+      "group": "K",
+      "t1": {
+        "name": "Kolumbia",
+        "flag": "🇨🇴"
+      },
+      "t2": {
+        "name": "Portugalia",
+        "flag": "🇵🇹"
+      },
+      "date": "28 czerwca 2026",
+      "time": "01:30",
+      "deadline": "2026-06-27T23:30:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    },
+    {
+      "id": "alg-aut",
+      "group": "J",
+      "t1": {
+        "name": "Algieria",
+        "flag": "🇩🇿"
+      },
+      "t2": {
+        "name": "Austria",
+        "flag": "🇦🇹"
+      },
+      "date": "28 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-28T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 1,
+        "team1_wins": 0,
+        "team2_wins": 1,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 2,
+        "first_ever": false,
+        "matches": [
+          {
+            "year": 1982,
+            "score": "2:0",
+            "competition": "MŚ 1982 – faza grupowa",
+            "winner": "team2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jor-arg",
+      "group": "J",
+      "t1": {
+        "name": "Jordania",
+        "flag": "🇯🇴"
+      },
+      "t2": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "date": "28 czerwca 2026",
+      "time": "04:00",
+      "deadline": "2026-06-28T02:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": {
+        "total_matches": 0,
+        "team1_wins": 0,
+        "team2_wins": 0,
+        "draws": 0,
+        "goals_team1": 0,
+        "goals_team2": 0,
+        "first_ever": true,
+        "matches": []
+      }
+    }
+  ]
+}

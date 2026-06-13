@@ -18,11 +18,14 @@ interface Match {
   published: boolean;
   result?: string | null;
   h2h?: {
-    balance: string;
-    t1_wins: number;
+    total_matches: number;
+    team1_wins: number;
+    team2_wins: number;
     draws: number;
-    t2_wins: number;
-    key_fact: string;
+    goals_team1: number;
+    goals_team2: number;
+    first_ever: boolean;
+    matches: Array<{ year: number; score: string; competition: string; winner: string }>;
   };
 }
 
@@ -222,6 +225,7 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   const [matchResult, setMatchResult] = useState<string | null>(match.result ?? null);
   const [communityDist, setCommunityDist] = useState<{ score: string; pct: number }[]>([]);
   const [liroyPick, setLiroyPick] = useState<string | null>(null);
+  const [showH2H, setShowH2H] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -473,6 +477,71 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
             </div>
           </div>
         )}
+        {match.h2h && (
+          <div className="mt-4 border-t border-[#111] pt-1">
+            <button
+              onClick={() => setShowH2H((v) => !v)}
+              className="w-full flex items-center justify-between py-2"
+            >
+              <span className="text-[9px] tracking-[0.3em]" style={{ fontFamily: B, color: showH2H ? "#FFD700" : "#444" }}>
+                📊 HISTORIA STARĆ
+              </span>
+              <span className="text-[9px]" style={{ fontFamily: B, color: "#333" }}>
+                {match.h2h.total_matches > 0 ? `${match.h2h.total_matches} MECZY ` : ""}{showH2H ? "▲" : "▼"}
+              </span>
+            </button>
+            <AnimatePresence>
+              {showH2H && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }} className="overflow-hidden"
+                >
+                  {match.h2h.first_ever || match.h2h.total_matches === 0 ? (
+                    <p className="text-center py-3 text-[11px] tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+                      PIERWSZE STARCIE W HISTORII
+                    </p>
+                  ) : (
+                    <div className="pb-3 space-y-3">
+                      <p className="text-[10px] tracking-wide text-center leading-relaxed" style={{ fontFamily: B, color: "#888" }}>
+                        {match.h2h.team1_wins} zwycięstw {match.t1.name} · {match.h2h.draws} remisów · {match.h2h.team2_wins} zwycięstw {match.t2.name}
+                      </p>
+                      <p className="text-[9px] tracking-widest text-center" style={{ fontFamily: B, color: "#555" }}>
+                        Łącznie bramek: {match.h2h.goals_team1 + match.h2h.goals_team2}
+                      </p>
+                      <div className="flex h-1 overflow-hidden gap-px">
+                        {match.h2h.team1_wins > 0 && (
+                          <div className="h-full" style={{ flex: match.h2h.team1_wins, background: "#FFD700" }} />
+                        )}
+                        {match.h2h.draws > 0 && (
+                          <div className="h-full" style={{ flex: match.h2h.draws, background: "#333" }} />
+                        )}
+                        {match.h2h.team2_wins > 0 && (
+                          <div className="h-full" style={{ flex: match.h2h.team2_wins, background: "#555" }} />
+                        )}
+                      </div>
+                      {match.h2h.matches.length > 0 && (
+                        <div className="space-y-1.5">
+                          <p className="text-[8px] tracking-widest mb-1" style={{ fontFamily: B, color: "#333" }}>
+                            OSTATNIE SPOTKANIA
+                          </p>
+                          {[...match.h2h.matches].reverse().slice(0, 3).map((g, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <span className="text-[10px] w-9 shrink-0" style={{ fontFamily: B, color: "#555" }}>{g.year}</span>
+                              <span className="text-[10px] w-8 shrink-0 text-center" style={{ fontFamily: B, color: g.winner === "team1" ? "#FFD700" : g.winner === "team2" ? "#aaa" : "#666" }}>
+                                {g.score}
+                              </span>
+                              <span className="text-[9px] flex-1 truncate" style={{ fontFamily: B, color: "#333" }}>{g.competition}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -603,25 +672,27 @@ function EpisodeModal({ match: initialMatch, allMatches, onClose }: {
             <p className="text-[8px] tracking-widest mb-2" style={{ fontFamily: B, color: "#444" }}>
               HISTORIA STARĆ H2H
             </p>
-            <div className="flex items-center gap-3 flex-wrap">
-              <span style={{ fontFamily: B, color: "#FFD700", fontSize: "1.05rem" }}>
-                {current.h2h.balance}
-              </span>
-              <span className="text-[10px] tracking-wide" style={{ fontFamily: B, color: "#444" }}>
-                {current.h2h.key_fact}
-              </span>
-            </div>
-            {(current.h2h.t1_wins + current.h2h.draws + current.h2h.t2_wins) > 0 && (
+            {current.h2h.first_ever || current.h2h.total_matches === 0 ? (
+              <p className="text-xs tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+                PIERWSZE STARCIE W HISTORII
+              </p>
+            ) : (
               <>
-                <div className="flex h-1.5 mt-3 rounded-sm overflow-hidden gap-px">
-                  {current.h2h.t1_wins > 0 && (
-                    <div className="h-full" style={{ flex: current.h2h.t1_wins, background: "#FFD700" }} />
+                <p className="text-[10px] tracking-wide mb-2" style={{ fontFamily: B, color: "#888" }}>
+                  {current.h2h.team1_wins}–{current.h2h.draws}–{current.h2h.team2_wins}
+                  <span className="ml-2" style={{ color: "#555" }}>
+                    ({current.h2h.goals_team1}:{current.h2h.goals_team2} bramki)
+                  </span>
+                </p>
+                <div className="flex h-1.5 rounded-sm overflow-hidden gap-px">
+                  {current.h2h.team1_wins > 0 && (
+                    <div className="h-full" style={{ flex: current.h2h.team1_wins, background: "#FFD700" }} />
                   )}
                   {current.h2h.draws > 0 && (
                     <div className="h-full" style={{ flex: current.h2h.draws, background: "#333" }} />
                   )}
-                  {current.h2h.t2_wins > 0 && (
-                    <div className="h-full" style={{ flex: current.h2h.t2_wins, background: "#777" }} />
+                  {current.h2h.team2_wins > 0 && (
+                    <div className="h-full" style={{ flex: current.h2h.team2_wins, background: "#777" }} />
                   )}
                 </div>
                 <div className="flex justify-between mt-1">

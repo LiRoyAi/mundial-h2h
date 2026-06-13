@@ -1,0 +1,3099 @@
+[
+  {
+    "id": "mex-rsa",
+    "episode_number": 1,
+    "group": "A",
+    "team1": {
+      "name_pl": "Meksyk",
+      "name_en": "Mexico",
+      "flag": "🇲🇽",
+      "code": "MEX"
+    },
+    "team2": {
+      "name_pl": "RPA",
+      "name_en": "South Africa",
+      "flag": "🇿🇦",
+      "code": "RSA"
+    },
+    "history": {
+      "total_matches": 4,
+      "team1_wins": 2,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 10,
+      "goals_team2": 5
+    },
+    "matches": [
+      {
+        "year": 1993,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "4:0",
+        "winner": "team1",
+        "has_video": false,
+        "note_pl": "Zaginiony rozdział",
+        "note_en": "Lost chapter"
+      },
+      {
+        "year": 2000,
+        "competition_pl": "US Cup",
+        "competition_en": "US Cup",
+        "score": "4:2",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2005,
+        "competition_pl": "Gold Cup",
+        "competition_en": "Gold Cup",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2010,
+        "competition_pl": "Otwarcie MŚ 2010",
+        "competition_en": "2010 World Cup Opening",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": "Tshabalala 55' | Márquez 79'",
+        "note_en": "Tshabalala 55' | Márquez 79'"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Grali ze sobą tylko 4 razy. Jeden mecz praktycznie zniknął z internetu.",
+    "hook_en": "They only met 4 times. One match practically vanished from the internet.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "mex-kor",
+    "episode_number": 2,
+    "group": "A",
+    "team1": {
+      "name_pl": "Meksyk",
+      "name_en": "Mexico",
+      "flag": "🇲🇽",
+      "code": "MEX"
+    },
+    "team2": {
+      "name_pl": "Korea Południowa",
+      "name_en": "South Korea",
+      "flag": "🇰🇷",
+      "code": "KOR"
+    },
+    "history": {
+      "total_matches": 15,
+      "team1_wins": 9,
+      "team2_wins": 2,
+      "draws": 4,
+      "goals_team1": 36,
+      "goals_team2": 16
+    },
+    "matches": [
+      {
+        "year": 1998,
+        "competition_pl": "MŚ 1998 – faza grupowa",
+        "competition_en": "1998 World Cup – Group Stage",
+        "score": "3:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2018,
+        "competition_pl": "MŚ 2018 – faza grupowa",
+        "competition_en": "2018 World Cup – Group Stage",
+        "score": "2:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2025,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "15 meczów, oba mundialowe dla Meksyku. Korea Południowa szuka historycznej wygranej w 2026.",
+    "hook_en": "15 matches, both World Cup clashes for Mexico. South Korea seeks a historic win in 2026.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "mex-cze",
+    "episode_number": 3,
+    "group": "A",
+    "team1": {
+      "name_pl": "Meksyk",
+      "name_en": "Mexico",
+      "flag": "🇲🇽",
+      "code": "MEX"
+    },
+    "team2": {
+      "name_pl": "Czechy",
+      "name_en": "Czech Republic",
+      "flag": "🇨🇿",
+      "code": "CZE"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 1,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2000,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Tylko 1 mecz w historii i Czechy wygrały. Na MŚ 2026 Meksyk po rewanż.",
+    "hook_en": "Just 1 match in history and Czech Republic won. Mexico comes for revenge at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "rsa-kor",
+    "episode_number": 4,
+    "group": "A",
+    "team1": {
+      "name_pl": "RPA",
+      "name_en": "South Africa",
+      "flag": "🇿🇦",
+      "code": "RSA"
+    },
+    "team2": {
+      "name_pl": "Korea Południowa",
+      "name_en": "South Korea",
+      "flag": "🇰🇷",
+      "code": "KOR"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Nigdy wcześniej. Pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Never before. First ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "rsa-cze",
+    "episode_number": 5,
+    "group": "A",
+    "team1": {
+      "name_pl": "RPA",
+      "name_en": "South Africa",
+      "flag": "🇿🇦",
+      "code": "RSA"
+    },
+    "team2": {
+      "name_pl": "Czechy",
+      "name_en": "Czech Republic",
+      "flag": "🇨🇿",
+      "code": "CZE"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 1,
+      "goals_team1": 2,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 1997,
+        "competition_pl": "Puchar Konfederacji 1997",
+        "competition_en": "1997 Confederations Cup",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Jeden remis w 1997. Prawie 30 lat przerwy — teraz spotkają się na MŚ.",
+    "hook_en": "One draw in 1997. Almost 30 years apart — now they meet at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "kor-cze",
+    "episode_number": 6,
+    "group": "A",
+    "team1": {
+      "name_pl": "Korea Południowa",
+      "name_en": "South Korea",
+      "flag": "🇰🇷",
+      "code": "KOR"
+    },
+    "team2": {
+      "name_pl": "Czechy",
+      "name_en": "Czechia",
+      "flag": "🇨🇿",
+      "code": "CZE"
+    },
+    "history": {
+      "total_matches": 6,
+      "team1_wins": 1,
+      "team2_wins": 2,
+      "draws": 3,
+      "goals_team1": 6,
+      "goals_team2": 10,
+      "note_pl": "3 mecze z Czechosłowacją (1987-1989) + 3 mecze z Czechami (1998-2016)",
+      "note_en": "3 matches vs Czechoslovakia (1987-1989) + 3 matches vs Czech Republic (1998-2016)"
+    },
+    "matches": [
+      {
+        "year": 1987,
+        "competition_pl": "Merdeka Tournament — CZECHOSŁOWACJA",
+        "competition_en": "Merdeka Tournament — CZECHOSLOVAKIA",
+        "score": "3:2",
+        "winner": "team2",
+        "has_video": false,
+        "note_pl": "Czechosłowacja wygrała 3:2 — zanim powstały Czechy",
+        "note_en": "Czechoslovakia won 3:2 — before Czech Republic existed"
+      },
+      {
+        "year": 1988,
+        "competition_pl": "President's Cup — CZECHOSŁOWACJA",
+        "competition_en": "President's Cup — CZECHOSLOVAKIA",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": false,
+        "note_pl": "Remis 0:0",
+        "note_en": "Draw 0:0"
+      },
+      {
+        "year": 1989,
+        "competition_pl": "President's Cup — CZECHOSŁOWACJA",
+        "competition_en": "President's Cup — CZECHOSLOVAKIA",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": false,
+        "note_pl": "Remis 0:0 — ostatni mecz z Czechosłowacją",
+        "note_en": "Draw 0:0 — last match vs Czechoslovakia"
+      },
+      {
+        "year": 1998,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": false,
+        "note_pl": "Seul, Olympic Stadium — pierwszy mecz z Czechami",
+        "note_en": "Seoul, Olympic Stadium — first match vs Czech Republic"
+      },
+      {
+        "year": 2001,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "5:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Drnovice — hat-trick Baranka, gol Šmicera. Rozbicie.",
+        "note_en": "Drnovice — Barank hat-trick, Šmicer goal. A thrashing."
+      },
+      {
+        "year": 2016,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:2",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": "Praga, Eden Arena — Yoon Bit-garam, Suk Hyun-jun vs Suchý",
+        "note_en": "Prague, Eden Arena — Yoon Bit-garam, Suk Hyun-jun vs Suchý"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Oficjalnie 3 mecze jako Czechy. Ale ta rywalizacja zaczęła się jeszcze w latach 80. z Czechosłowacją. Razem 6 spotkań, jedna klęska 0:5 i jeden comeback.",
+    "hook_en": "Officially 3 matches as Czech Republic. But this rivalry started in the 80s with Czechoslovakia. 6 meetings total, one 5:0 thrashing and one comeback.",
+    "segment_note_pl": "PRZED CZECHAMI BYŁA CZECHOSŁOWACJA",
+    "segment_note_en": "BEFORE CZECHIA THERE WAS CZECHOSLOVAKIA",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "can-bih",
+    "episode_number": 7,
+    "group": "B",
+    "team1": {
+      "name_pl": "Kanada",
+      "name_en": "Canada",
+      "flag": "🇨🇦",
+      "code": "CAN"
+    },
+    "team2": {
+      "name_pl": "Bośnia i Hercegowina",
+      "name_en": "Bosnia and Herzegovina",
+      "flag": "🇧🇦",
+      "code": "BIH"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Prawdopodobnie pierwsze spotkanie w historii. Nowy rozdział na MŚ 2026.",
+    "hook_en": "Likely their first ever meeting. A new chapter at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "qat-sui",
+    "episode_number": 8,
+    "group": "B",
+    "team1": {
+      "name_pl": "Katar",
+      "name_en": "Qatar",
+      "flag": "🇶🇦",
+      "code": "QAT"
+    },
+    "team2": {
+      "name_pl": "Szwajcaria",
+      "name_en": "Switzerland",
+      "flag": "🇨🇭",
+      "code": "SUI"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 1,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 1,
+      "goals_team2": 0
+    },
+    "matches": [
+      {
+        "year": 2018,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Katar wygrał jedyne starcie 1:0 w 2018. Szwajcaria czeka na rewanż.",
+    "hook_en": "Qatar won the only clash 1:0 in 2018. Switzerland is waiting for revenge.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "can-qat",
+    "episode_number": 9,
+    "group": "B",
+    "team1": {
+      "name_pl": "Kanada",
+      "name_en": "Canada",
+      "flag": "🇨🇦",
+      "code": "CAN"
+    },
+    "team2": {
+      "name_pl": "Katar",
+      "name_en": "Qatar",
+      "flag": "🇶🇦",
+      "code": "QAT"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 1,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 2,
+      "goals_team2": 0
+    },
+    "matches": [
+      {
+        "year": 2022,
+        "competition_pl": "MŚ 2022 – faza grupowa",
+        "competition_en": "2022 World Cup – Group Stage",
+        "score": "2:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Kanada rozbiła Katar 2:0 na MŚ 2022. Rematch gospodarza z katem.",
+    "hook_en": "Canada demolished Qatar 2:0 at the 2022 World Cup. Rematch of host and executioner.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "sui-bih",
+    "episode_number": 10,
+    "group": "B",
+    "team1": {
+      "name_pl": "Szwajcaria",
+      "name_en": "Switzerland",
+      "flag": "🇨🇭",
+      "code": "SUI"
+    },
+    "team2": {
+      "name_pl": "Bośnia i Hercegowina",
+      "name_en": "Bosnia and Herzegovina",
+      "flag": "🇧🇦",
+      "code": "BIH"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2016,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Bośnia wygrała 2:0 w 2016. Szwajcaria szuka rewanżu na mundialu.",
+    "hook_en": "Bosnia won 2:0 in 2016. Switzerland seeks revenge at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "bih-qat",
+    "episode_number": 11,
+    "group": "B",
+    "team1": {
+      "name_pl": "Bośnia i Hercegowina",
+      "name_en": "Bosnia and Herzegovina",
+      "flag": "🇧🇦",
+      "code": "BIH"
+    },
+    "team2": {
+      "name_pl": "Katar",
+      "name_en": "Qatar",
+      "flag": "🇶🇦",
+      "code": "QAT"
+    },
+    "history": {
+      "total_matches": 2,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 1,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 2000,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": false,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2010,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Katar wygrał 2:0, potem remis 1:1. Bośnia bez wygranej — zmieni to MŚ 2026?",
+    "hook_en": "Qatar wins 2:0, then a 1:1 draw. Bosnia without a win — will the 2026 World Cup change that?",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "sui-can",
+    "episode_number": 12,
+    "group": "B",
+    "team1": {
+      "name_pl": "Szwajcaria",
+      "name_en": "Switzerland",
+      "flag": "🇨🇭",
+      "code": "SUI"
+    },
+    "team2": {
+      "name_pl": "Kanada",
+      "name_en": "Canada",
+      "flag": "🇨🇦",
+      "code": "CAN"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 1,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 2002,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "3:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Kanada wygrała 3:1 w 2002. Szwajcaria czeka na rewanż od 24 lat.",
+    "hook_en": "Canada won 3:1 in 2002. Switzerland has been waiting for revenge for 24 years.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "bra-mar",
+    "episode_number": 13,
+    "group": "C",
+    "team1": {
+      "name_pl": "Brazylia",
+      "name_en": "Brazil",
+      "flag": "🇧🇷",
+      "code": "BRA"
+    },
+    "team2": {
+      "name_pl": "Maroko",
+      "name_en": "Morocco",
+      "flag": "🇲🇦",
+      "code": "MAR"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 2,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 6,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 1998,
+        "competition_pl": "MŚ 1998 – faza grupowa",
+        "competition_en": "1998 World Cup – Group Stage",
+        "score": "3:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2023,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Historyczna wygrana Maroka z Brazylią",
+        "note_en": "Historic Morocco win over Brazil"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Brazylia dominowała przez lata. W 2023 Maroko odwróciło historię — 2:1.",
+    "hook_en": "Brazil dominated for years. In 2023, Morocco reversed history — 2:1.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "hai-sco",
+    "episode_number": 14,
+    "group": "C",
+    "team1": {
+      "name_pl": "Haiti",
+      "name_en": "Haiti",
+      "flag": "🇭🇹",
+      "code": "HAI"
+    },
+    "team2": {
+      "name_pl": "Szkocja",
+      "name_en": "Scotland",
+      "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+      "code": "SCO"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Nigdy wcześniej. Haiti kontra Szkocja — nowa historia na MŚ 2026.",
+    "hook_en": "Never before. Haiti vs Scotland — new history at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "sco-mar",
+    "episode_number": 15,
+    "group": "C",
+    "team1": {
+      "name_pl": "Szkocja",
+      "name_en": "Scotland",
+      "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+      "code": "SCO"
+    },
+    "team2": {
+      "name_pl": "Maroko",
+      "name_en": "Morocco",
+      "flag": "🇲🇦",
+      "code": "MAR"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 1998,
+        "competition_pl": "MŚ 1998 – faza grupowa",
+        "competition_en": "1998 World Cup – Group Stage",
+        "score": "3:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Maroko rozbiło Szkocję 3:0 w 1998. 28 lat bez rewanżu — oto szansa.",
+    "hook_en": "Morocco demolished Scotland 3:0 in 1998. 28 years without a rematch — here's the chance.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "bra-hai",
+    "episode_number": 16,
+    "group": "C",
+    "team1": {
+      "name_pl": "Brazylia",
+      "name_en": "Brazil",
+      "flag": "🇧🇷",
+      "code": "BRA"
+    },
+    "team2": {
+      "name_pl": "Haiti",
+      "name_en": "Haiti",
+      "flag": "🇭🇹",
+      "code": "HAI"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 3,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 15,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2016,
+        "competition_pl": "Copa América Centenario – faza grupowa",
+        "competition_en": "Copa América Centenario – Group Stage",
+        "score": "7:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": "Największa wygrana Brazylii z Haiti",
+        "note_en": "Brazil's biggest win over Haiti"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "7:1 ostatnio. Haiti nigdy nie wygrało z Brazylią. Czy MŚ 2026 to zmieni?",
+    "hook_en": "7:1 last time. Haiti has never beaten Brazil. Will the 2026 World Cup change that?",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "sco-bra",
+    "episode_number": 17,
+    "group": "C",
+    "team1": {
+      "name_pl": "Szkocja",
+      "name_en": "Scotland",
+      "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+      "code": "SCO"
+    },
+    "team2": {
+      "name_pl": "Brazylia",
+      "name_en": "Brazil",
+      "flag": "🇧🇷",
+      "code": "BRA"
+    },
+    "history": {
+      "total_matches": 10,
+      "team1_wins": 1,
+      "team2_wins": 7,
+      "draws": 2,
+      "goals_team1": 9,
+      "goals_team2": 22
+    },
+    "matches": [
+      {
+        "year": 1974,
+        "competition_pl": "MŚ 1974 – faza grupowa",
+        "competition_en": "1974 World Cup – Group Stage",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 1982,
+        "competition_pl": "MŚ 1982 – faza grupowa",
+        "competition_en": "1982 World Cup – Group Stage",
+        "score": "4:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 1990,
+        "competition_pl": "MŚ 1990 – faza grupowa",
+        "competition_en": "1990 World Cup – Group Stage",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 1998,
+        "competition_pl": "MŚ 1998 – faza grupowa",
+        "competition_en": "1998 World Cup – Group Stage",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2011,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "4 mundiale, 10 meczów. Brazylia dominuje — ale remis 0:0 z 1974 Szkocja pamięta do dziś.",
+    "hook_en": "4 World Cups, 10 matches. Brazil dominates — but Scotland still holds the 0:0 from 1974.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "mar-hai",
+    "episode_number": 18,
+    "group": "C",
+    "team1": {
+      "name_pl": "Maroko",
+      "name_en": "Morocco",
+      "flag": "🇲🇦",
+      "code": "MAR"
+    },
+    "team2": {
+      "name_pl": "Haiti",
+      "name_en": "Haiti",
+      "flag": "🇭🇹",
+      "code": "HAI"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Pierwsze spotkanie w historii. Dwie reprezentacje, które nigdy się nie zmierzyły.",
+    "hook_en": "First ever meeting. Two nations that have never faced each other.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "usa-par",
+    "episode_number": 19,
+    "group": "D",
+    "team1": {
+      "name_pl": "USA",
+      "name_en": "USA",
+      "flag": "🇺🇸",
+      "code": "USA"
+    },
+    "team2": {
+      "name_pl": "Paragwaj",
+      "name_en": "Paraguay",
+      "flag": "🇵🇾",
+      "code": "PAR"
+    },
+    "history": {
+      "total_matches": 9,
+      "team1_wins": 6,
+      "team2_wins": 2,
+      "draws": 1,
+      "goals_team1": 21,
+      "goals_team2": 12
+    },
+    "matches": [
+      {
+        "year": 1930,
+        "competition_pl": "MŚ 1930 – faza grupowa",
+        "competition_en": "1930 World Cup – Group Stage",
+        "score": "3:0",
+        "winner": "team1",
+        "has_video": false,
+        "note_pl": "Pierwszy mecz USA na mundialu",
+        "note_en": "USA's first ever World Cup match"
+      },
+      {
+        "year": 2025,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "USA wygrały pierwszy mecz na MŚ 1930. 96 lat później historia zatacza koło.",
+    "hook_en": "USA won their first ever World Cup match in 1930. 96 years later, history comes full circle.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "aus-tur",
+    "episode_number": 20,
+    "group": "D",
+    "team1": {
+      "name_pl": "Australia",
+      "name_en": "Australia",
+      "flag": "🇦🇺",
+      "code": "AUS"
+    },
+    "team2": {
+      "name_pl": "Turcja",
+      "name_en": "Turkey",
+      "flag": "🇹🇷",
+      "code": "TUR"
+    },
+    "history": {
+      "total_matches": 2,
+      "team1_wins": 0,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 7
+    },
+    "matches": [
+      {
+        "year": 2004,
+        "competition_pl": "Turniej 4 narodów (mecz 1)",
+        "competition_en": "4-Nations Tournament (match 1)",
+        "score": "5:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Bursa, maj 2004",
+        "note_en": "Bursa, May 2004"
+      },
+      {
+        "year": 2004,
+        "competition_pl": "Turniej 4 narodów (mecz 2)",
+        "competition_en": "4-Nations Tournament (match 2)",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Antalya, maj 2004",
+        "note_en": "Antalya, May 2004"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Turcja wygrała oba mecze w 2004, łącznie 7:0. Australia szuka pierwszej wygranej.",
+    "hook_en": "Turkey won both matches in 2004, 7:0 aggregate. Australia seeks their first ever win.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "usa-aus",
+    "episode_number": 21,
+    "group": "D",
+    "team1": {
+      "name_pl": "USA",
+      "name_en": "USA",
+      "flag": "🇺🇸",
+      "code": "USA"
+    },
+    "team2": {
+      "name_pl": "Australia",
+      "name_en": "Australia",
+      "flag": "🇦🇺",
+      "code": "AUS"
+    },
+    "history": {
+      "total_matches": 4,
+      "team1_wins": 3,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 9,
+      "goals_team2": 4
+    },
+    "matches": [
+      {
+        "year": 2025,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "USA dominuje. Na własnym mundialu presja będzie jeszcze większa.",
+    "hook_en": "USA dominates. At their home World Cup, the pressure will be even greater.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "tur-par",
+    "episode_number": 22,
+    "group": "D",
+    "team1": {
+      "name_pl": "Turcja",
+      "name_en": "Turkey",
+      "flag": "🇹🇷",
+      "code": "TUR"
+    },
+    "team2": {
+      "name_pl": "Paragwaj",
+      "name_en": "Paraguay",
+      "flag": "🇵🇾",
+      "code": "PAR"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 1,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [
+      {
+        "year": 1995,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": false,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Jeden mecz, jeden remis 0:0 w 1995. Czas na pierwsze prawdziwe rozstrzygnięcie.",
+    "hook_en": "One match, one 0:0 draw in 1995. Time for the first real winner.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "tur-usa",
+    "episode_number": 23,
+    "group": "D",
+    "team1": {
+      "name_pl": "Turcja",
+      "name_en": "Turkey",
+      "flag": "🇹🇷",
+      "code": "TUR"
+    },
+    "team2": {
+      "name_pl": "USA",
+      "name_en": "USA",
+      "flag": "🇺🇸",
+      "code": "USA"
+    },
+    "history": {
+      "total_matches": 5,
+      "team1_wins": 3,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 11,
+      "goals_team2": 8
+    },
+    "matches": [
+      {
+        "year": 2025,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Turcja wygrała ostatni mecz 2:1. USA odpowie na własnym mundialu.",
+    "hook_en": "Turkey won the last match 2:1. USA will respond at their home World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "par-aus",
+    "episode_number": 24,
+    "group": "D",
+    "team1": {
+      "name_pl": "Paragwaj",
+      "name_en": "Paraguay",
+      "flag": "🇵🇾",
+      "code": "PAR"
+    },
+    "team2": {
+      "name_pl": "Australia",
+      "name_en": "Australia",
+      "flag": "🇦🇺",
+      "code": "AUS"
+    },
+    "history": {
+      "total_matches": 5,
+      "team1_wins": 3,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 9,
+      "goals_team2": 6
+    },
+    "matches": [
+      {
+        "year": 2010,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Paragwaj prowadzi w historii, ale Australia wygrała ostatni mecz w 2010.",
+    "hook_en": "Paraguay leads in history, but Australia won the last match in 2010.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ger-cuw",
+    "episode_number": 25,
+    "group": "E",
+    "team1": {
+      "name_pl": "Niemcy",
+      "name_en": "Germany",
+      "flag": "🇩🇪",
+      "code": "GER"
+    },
+    "team2": {
+      "name_pl": "Curaçao",
+      "name_en": "Curaçao",
+      "flag": "🇨🇼",
+      "code": "CUW"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Niemcy kontra Curaçao — pierwsze spotkanie w historii na mundialu.",
+    "hook_en": "Germany vs Curaçao — first ever meeting, and it's at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "civ-ecu",
+    "episode_number": 26,
+    "group": "E",
+    "team1": {
+      "name_pl": "Wybrzeże Kości Słoniowej",
+      "name_en": "Ivory Coast",
+      "flag": "🇨🇮",
+      "code": "CIV"
+    },
+    "team2": {
+      "name_pl": "Ekwador",
+      "name_en": "Ecuador",
+      "flag": "🇪🇨",
+      "code": "ECU"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Wybrzeże Kości Słoniowej vs Ekwador — nigdy wcześniej. Afryka kontra Ameryka Południowa.",
+    "hook_en": "Ivory Coast vs Ecuador — never before. Africa vs South America.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ger-civ",
+    "episode_number": 27,
+    "group": "E",
+    "team1": {
+      "name_pl": "Niemcy",
+      "name_en": "Germany",
+      "flag": "🇩🇪",
+      "code": "GER"
+    },
+    "team2": {
+      "name_pl": "Wybrzeże Kości Słoniowej",
+      "name_en": "Ivory Coast",
+      "flag": "🇨🇮",
+      "code": "CIV"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 1,
+      "goals_team1": 2,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2009,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Remis 2:2 w 2009. Niemcy nigdy nie pokonały WKS. W grupie MŚ to się musi zmienić.",
+    "hook_en": "A 2:2 draw in 2009. Germany have never beaten Ivory Coast. In the World Cup group, something has to give.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ecu-cuw",
+    "episode_number": 28,
+    "group": "E",
+    "team1": {
+      "name_pl": "Ekwador",
+      "name_en": "Ecuador",
+      "flag": "🇪🇨",
+      "code": "ECU"
+    },
+    "team2": {
+      "name_pl": "Curaçao",
+      "name_en": "Curaçao",
+      "flag": "🇨🇼",
+      "code": "CUW"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Ekwador vs Curaçao — pierwsze spotkanie w historii.",
+    "hook_en": "Ecuador vs Curaçao — first ever meeting.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "cuw-civ",
+    "episode_number": 29,
+    "group": "E",
+    "team1": {
+      "name_pl": "Curaçao",
+      "name_en": "Curaçao",
+      "flag": "🇨🇼",
+      "code": "CUW"
+    },
+    "team2": {
+      "name_pl": "Wybrzeże Kości Słoniowej",
+      "name_en": "Ivory Coast",
+      "flag": "🇨🇮",
+      "code": "CIV"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Curaçao vs WKS — pierwsze spotkanie. Nowa karaibska siła na mundialu.",
+    "hook_en": "Curaçao vs Ivory Coast — first ever meeting. A new Caribbean force at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ecu-ger",
+    "episode_number": 30,
+    "group": "E",
+    "team1": {
+      "name_pl": "Ekwador",
+      "name_en": "Ecuador",
+      "flag": "🇪🇨",
+      "code": "ECU"
+    },
+    "team2": {
+      "name_pl": "Niemcy",
+      "name_en": "Germany",
+      "flag": "🇩🇪",
+      "code": "GER"
+    },
+    "history": {
+      "total_matches": 2,
+      "team1_wins": 0,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 2,
+      "goals_team2": 7
+    },
+    "matches": [
+      {
+        "year": 2006,
+        "competition_pl": "MŚ 2006 – faza grupowa",
+        "competition_en": "2006 World Cup – Group Stage",
+        "score": "3:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2013,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "4:2",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Niemcy wygrały oba mecze: 3:0 na MŚ 2006 i 4:2 w 2013. Ekwador wciąż czeka na pierwszą wygraną.",
+    "hook_en": "Germany won both: 3:0 at the 2006 World Cup and 4:2 in 2013. Ecuador still waiting for their first win.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ned-jpn",
+    "episode_number": 31,
+    "group": "F",
+    "team1": {
+      "name_pl": "Holandia",
+      "name_en": "Netherlands",
+      "flag": "🇳🇱",
+      "code": "NED"
+    },
+    "team2": {
+      "name_pl": "Japonia",
+      "name_en": "Japan",
+      "flag": "🇯🇵",
+      "code": "JPN"
+    },
+    "history": {
+      "total_matches": 4,
+      "team1_wins": 2,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 9,
+      "goals_team2": 6
+    },
+    "matches": [
+      {
+        "year": 2013,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Holandia prowadzi w historii, ale remis 2:2 w 2013 pokazał, że Japonia umie grać z najlepszymi.",
+    "hook_en": "Netherlands leads the head-to-head, but the 2:2 draw in 2013 showed Japan can play with the best.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "swe-tun",
+    "episode_number": 32,
+    "group": "F",
+    "team1": {
+      "name_pl": "Szwecja",
+      "name_en": "Sweden",
+      "flag": "🇸🇪",
+      "code": "SWE"
+    },
+    "team2": {
+      "name_pl": "Tunezja",
+      "name_en": "Tunisia",
+      "flag": "🇹🇳",
+      "code": "TUN"
+    },
+    "history": {
+      "total_matches": 4,
+      "team1_wins": 2,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 6,
+      "goals_team2": 4
+    },
+    "matches": [
+      {
+        "year": 2003,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "4 mecze, wszystkie towarzyskie. Tunezja wygrała ostatni 1:0 w 2003.",
+    "hook_en": "4 matches, all friendlies. Tunisia won the last one 1:0 in 2003.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ned-swe",
+    "episode_number": 33,
+    "group": "F",
+    "team1": {
+      "name_pl": "Holandia",
+      "name_en": "Netherlands",
+      "flag": "🇳🇱",
+      "code": "NED"
+    },
+    "team2": {
+      "name_pl": "Szwecja",
+      "name_en": "Sweden",
+      "flag": "🇸🇪",
+      "code": "SWE"
+    },
+    "history": {
+      "total_matches": 20,
+      "team1_wins": 12,
+      "team2_wins": 4,
+      "draws": 4,
+      "goals_team1": 46,
+      "goals_team2": 22
+    },
+    "matches": [
+      {
+        "year": 1974,
+        "competition_pl": "MŚ 1974 – faza grupowa (II runda)",
+        "competition_en": "1974 World Cup – Group Stage (2nd round)",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2017,
+        "competition_pl": "Eliminacje MŚ 2018",
+        "competition_en": "2018 World Cup Qualifier",
+        "score": "2:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "20 meczów, Holandia dominuje. Szwecja zna ich grę, ale liczby mówią same za siebie.",
+    "hook_en": "20 matches, Netherlands dominates. Sweden knows their game, but the numbers speak for themselves.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "tun-jpn",
+    "episode_number": 34,
+    "group": "F",
+    "team1": {
+      "name_pl": "Tunezja",
+      "name_en": "Tunisia",
+      "flag": "🇹🇳",
+      "code": "TUN"
+    },
+    "team2": {
+      "name_pl": "Japonia",
+      "name_en": "Japan",
+      "flag": "🇯🇵",
+      "code": "JPN"
+    },
+    "history": {
+      "total_matches": 6,
+      "team1_wins": 1,
+      "team2_wins": 4,
+      "draws": 1,
+      "goals_team1": 5,
+      "goals_team2": 13
+    },
+    "matches": [
+      {
+        "year": 2002,
+        "competition_pl": "MŚ 2002 – faza grupowa",
+        "competition_en": "2002 World Cup – Group Stage",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Japonia dominuje w bilansie. Na MŚ 2002 rozbiła Tunezję 2:0 na ich wspólnym turnieju.",
+    "hook_en": "Japan dominates the head-to-head. At the 2002 World Cup they demolished Tunisia 2:0 at their joint tournament.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "swe-jpn",
+    "episode_number": 35,
+    "group": "F",
+    "team1": {
+      "name_pl": "Szwecja",
+      "name_en": "Sweden",
+      "flag": "🇸🇪",
+      "code": "SWE"
+    },
+    "team2": {
+      "name_pl": "Japonia",
+      "name_en": "Japan",
+      "flag": "🇯🇵",
+      "code": "JPN"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": false,
+    "note_pl": "Dane wymagają weryfikacji",
+    "note_en": "Data requires verification",
+    "hook_pl": "Dane historyczne wymagają weryfikacji przed emisją.",
+    "hook_en": "Historical data requires verification before publication.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "tun-ned",
+    "episode_number": 36,
+    "group": "F",
+    "team1": {
+      "name_pl": "Tunezja",
+      "name_en": "Tunisia",
+      "flag": "🇹🇳",
+      "code": "TUN"
+    },
+    "team2": {
+      "name_pl": "Holandia",
+      "name_en": "Netherlands",
+      "flag": "🇳🇱",
+      "code": "NED"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": false,
+    "note_pl": "Dane wymagają weryfikacji",
+    "note_en": "Data requires verification",
+    "hook_pl": "Dane historyczne wymagają weryfikacji przed emisją.",
+    "hook_en": "Historical data requires verification before publication.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "bel-egy",
+    "episode_number": 37,
+    "group": "G",
+    "team1": {
+      "name_pl": "Belgia",
+      "name_en": "Belgium",
+      "flag": "🇧🇪",
+      "code": "BEL"
+    },
+    "team2": {
+      "name_pl": "Egipt",
+      "name_en": "Egypt",
+      "flag": "🇪🇬",
+      "code": "EGY"
+    },
+    "history": {
+      "total_matches": 4,
+      "team1_wins": 1,
+      "team2_wins": 3,
+      "draws": 0,
+      "goals_team1": 5,
+      "goals_team2": 9
+    },
+    "matches": [
+      {
+        "year": 2022,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Egipt wygrał 3 z 4 meczów, w tym ostatni 2:1 w 2022. Belgia szuka rewanżu na mundialu.",
+    "hook_en": "Egypt won 3 of 4 matches, including the last 2:1 in 2022. Belgium seeks revenge at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "irn-nzl",
+    "episode_number": 38,
+    "group": "G",
+    "team1": {
+      "name_pl": "Iran",
+      "name_en": "Iran",
+      "flag": "🇮🇷",
+      "code": "IRN"
+    },
+    "team2": {
+      "name_pl": "Nowa Zelandia",
+      "name_en": "New Zealand",
+      "flag": "🇳🇿",
+      "code": "NZL"
+    },
+    "history": {
+      "total_matches": 2,
+      "team1_wins": 2,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 5,
+      "goals_team2": 0
+    },
+    "matches": [
+      {
+        "year": 2003,
+        "competition_pl": "AFC–OFC Challenge Cup",
+        "competition_en": "AFC–OFC Challenge Cup",
+        "score": "3:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Iran wygrał oba mecze, ostatnio 3:0 w 2003. Nowa Zelandia szuka pierwszej wygranej.",
+    "hook_en": "Iran won both matches, last 3:0 in 2003. New Zealand still looking for their first win.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "bel-irn",
+    "episode_number": 39,
+    "group": "G",
+    "team1": {
+      "name_pl": "Belgia",
+      "name_en": "Belgium",
+      "flag": "🇧🇪",
+      "code": "BEL"
+    },
+    "team2": {
+      "name_pl": "Iran",
+      "name_en": "Iran",
+      "flag": "🇮🇷",
+      "code": "IRN"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Nigdy wcześniej. Belgia kontra Iran — pierwsze starcie w historii, od razu na mundialu.",
+    "hook_en": "Never before. Belgium vs Iran — first ever clash, straight at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "nzl-egy",
+    "episode_number": 40,
+    "group": "G",
+    "team1": {
+      "name_pl": "Nowa Zelandia",
+      "name_en": "New Zealand",
+      "flag": "🇳🇿",
+      "code": "NZL"
+    },
+    "team2": {
+      "name_pl": "Egipt",
+      "name_en": "Egypt",
+      "flag": "🇪🇬",
+      "code": "EGY"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 1,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 3,
+      "goals_team2": 4
+    },
+    "matches": [
+      {
+        "year": 2024,
+        "competition_pl": "FIFA Series 2024",
+        "competition_en": "FIFA Series 2024",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Egipt wygrał ostatni mecz w FIFA Series 2024. Nowa Zelandia chce to odwrócić.",
+    "hook_en": "Egypt won the last match at FIFA Series 2024. New Zealand wants to turn it around.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "egy-irn",
+    "episode_number": 41,
+    "group": "G",
+    "team1": {
+      "name_pl": "Egipt",
+      "name_en": "Egypt",
+      "flag": "🇪🇬",
+      "code": "EGY"
+    },
+    "team2": {
+      "name_pl": "Iran",
+      "name_en": "Iran",
+      "flag": "🇮🇷",
+      "code": "IRN"
+    },
+    "history": {
+      "total_matches": 2,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 2,
+      "goals_team1": 2,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2000,
+        "competition_pl": "LG Cup 2000",
+        "competition_en": "LG Cup 2000",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": "Egipt wygrał 8:7 w karnych",
+        "note_en": "Egypt won 8:7 on penalties"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Dwa remisy, w tym dramatyczne 8:7 w karnych w 2000. Czas na wynik w 90 minutach.",
+    "hook_en": "Two draws, including a dramatic 8:7 penalty shootout in 2000. Time for a result in 90 minutes.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "nzl-bel",
+    "episode_number": 42,
+    "group": "G",
+    "team1": {
+      "name_pl": "Nowa Zelandia",
+      "name_en": "New Zealand",
+      "flag": "🇳🇿",
+      "code": "NZL"
+    },
+    "team2": {
+      "name_pl": "Belgia",
+      "name_en": "Belgium",
+      "flag": "🇧🇪",
+      "code": "BEL"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Nigdy wcześniej. Nowa Zelandia vs Belgia — historia zaczyna się na MŚ 2026.",
+    "hook_en": "Never before. New Zealand vs Belgium — history begins at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "esp-cpv",
+    "episode_number": 43,
+    "group": "H",
+    "team1": {
+      "name_pl": "Hiszpania",
+      "name_en": "Spain",
+      "flag": "🇪🇸",
+      "code": "ESP"
+    },
+    "team2": {
+      "name_pl": "Republika Zielonego Przylądka",
+      "name_en": "Cape Verde",
+      "flag": "🇨🇻",
+      "code": "CPV"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Hiszpania kontra Republika Zielonego Przylądka — pierwsze spotkanie w historii.",
+    "hook_en": "Spain vs Cape Verde — first ever meeting in history.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "ksa-uru",
+    "episode_number": 44,
+    "group": "H",
+    "team1": {
+      "name_pl": "Arabia Saudyjska",
+      "name_en": "Saudi Arabia",
+      "flag": "🇸🇦",
+      "code": "KSA"
+    },
+    "team2": {
+      "name_pl": "Urugwaj",
+      "name_en": "Uruguay",
+      "flag": "🇺🇾",
+      "code": "URU"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 1,
+      "team2_wins": 2,
+      "draws": 0,
+      "goals_team1": 2,
+      "goals_team2": 4
+    },
+    "matches": [
+      {
+        "year": 2018,
+        "competition_pl": "MŚ 2018 – faza grupowa",
+        "competition_en": "2018 World Cup – Group Stage",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Urugwaj wygrał na MŚ 2018. Arabia Saudyjska czeka na mundialowy rewanż.",
+    "hook_en": "Uruguay won at the 2018 World Cup. Saudi Arabia awaits their World Cup revenge.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "esp-ksa",
+    "episode_number": 45,
+    "group": "H",
+    "team1": {
+      "name_pl": "Hiszpania",
+      "name_en": "Spain",
+      "flag": "🇪🇸",
+      "code": "ESP"
+    },
+    "team2": {
+      "name_pl": "Arabia Saudyjska",
+      "name_en": "Saudi Arabia",
+      "flag": "🇸🇦",
+      "code": "KSA"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 3,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 8,
+      "goals_team2": 0
+    },
+    "matches": [
+      {
+        "year": 2006,
+        "competition_pl": "MŚ 2006 – faza grupowa",
+        "competition_en": "2006 World Cup – Group Stage",
+        "score": "1:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2012,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "5:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "3 mecze, 3 wygrane Hiszpanii — w tym 5:0 w 2012. Arabia Saudyjska bez gola.",
+    "hook_en": "3 matches, 3 Spain wins — including 5:0 in 2012. Saudi Arabia yet to score.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "uru-cpv",
+    "episode_number": 46,
+    "group": "H",
+    "team1": {
+      "name_pl": "Urugwaj",
+      "name_en": "Uruguay",
+      "flag": "🇺🇾",
+      "code": "URU"
+    },
+    "team2": {
+      "name_pl": "Republika Zielonego Przylądka",
+      "name_en": "Cape Verde",
+      "flag": "🇨🇻",
+      "code": "CPV"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Urugwaj vs Republika Zielonego Przylądka — pierwsze spotkanie w historii.",
+    "hook_en": "Uruguay vs Cape Verde — first ever meeting in history.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "cpv-ksa",
+    "episode_number": 47,
+    "group": "H",
+    "team1": {
+      "name_pl": "Republika Zielonego Przylądka",
+      "name_en": "Cape Verde",
+      "flag": "🇨🇻",
+      "code": "CPV"
+    },
+    "team2": {
+      "name_pl": "Arabia Saudyjska",
+      "name_en": "Saudi Arabia",
+      "flag": "🇸🇦",
+      "code": "KSA"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Republika Zielonego Przylądka vs Arabia Saudyjska — nigdy wcześniej.",
+    "hook_en": "Cape Verde vs Saudi Arabia — never before.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "uru-esp",
+    "episode_number": 48,
+    "group": "H",
+    "team1": {
+      "name_pl": "Urugwaj",
+      "name_en": "Uruguay",
+      "flag": "🇺🇾",
+      "code": "URU"
+    },
+    "team2": {
+      "name_pl": "Hiszpania",
+      "name_en": "Spain",
+      "flag": "🇪🇸",
+      "code": "ESP"
+    },
+    "history": {
+      "total_matches": 10,
+      "team1_wins": 4,
+      "team2_wins": 4,
+      "draws": 2,
+      "goals_team1": 17,
+      "goals_team2": 18
+    },
+    "matches": [
+      {
+        "year": 1950,
+        "competition_pl": "MŚ 1950 – faza grupowa",
+        "competition_en": "1950 World Cup – Group Stage",
+        "score": "2:2",
+        "winner": "draw",
+        "has_video": false,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 1990,
+        "competition_pl": "MŚ 1990 – faza grupowa",
+        "competition_en": "1990 World Cup – Group Stage",
+        "score": "0:0",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      },
+      {
+        "year": 2013,
+        "competition_pl": "Puchar Konfederacji 2013",
+        "competition_en": "2013 Confederations Cup",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "10 meczów, bilans wyrównany. Dwa mundialowe remisy i wieloletnia rywalizacja na najwyższym poziomie.",
+    "hook_en": "10 matches, balanced record. Two World Cup draws and a long rivalry at the highest level.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "fra-sen",
+    "episode_number": 49,
+    "group": "I",
+    "team1": {
+      "name_pl": "Francja",
+      "name_en": "France",
+      "flag": "🇫🇷",
+      "code": "FRA"
+    },
+    "team2": {
+      "name_pl": "Senegal",
+      "name_en": "Senegal",
+      "flag": "🇸🇳",
+      "code": "SEN"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 1
+    },
+    "matches": [
+      {
+        "year": 2002,
+        "competition_pl": "MŚ 2002 – faza grupowa (otwarcie)",
+        "competition_en": "2002 World Cup – Group Stage (opening match)",
+        "score": "1:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Sensacja otwarcia MŚ 2002 — Senegal pokonał mistrza świata",
+        "note_en": "Shock of the 2002 World Cup opening — Senegal beat the world champions"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Jeden mecz, jeden szok. Senegal pokonał Francję 1:0 na otwarciu MŚ 2002. Francja nie zapomniała.",
+    "hook_en": "One match, one shock. Senegal beat France 1:0 at the 2002 World Cup opening. France hasn't forgotten.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "irq-nor",
+    "episode_number": 50,
+    "group": "I",
+    "team1": {
+      "name_pl": "Irak",
+      "name_en": "Iraq",
+      "flag": "🇮🇶",
+      "code": "IRQ"
+    },
+    "team2": {
+      "name_pl": "Norwegia",
+      "name_en": "Norway",
+      "flag": "🇳🇴",
+      "code": "NOR"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Irak vs Norwegia — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Iraq vs Norway — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "fra-irq",
+    "episode_number": 51,
+    "group": "I",
+    "team1": {
+      "name_pl": "Francja",
+      "name_en": "France",
+      "flag": "🇫🇷",
+      "code": "FRA"
+    },
+    "team2": {
+      "name_pl": "Irak",
+      "name_en": "Iraq",
+      "flag": "🇮🇶",
+      "code": "IRQ"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Francja kontra Irak — nigdy wcześniej. Historia zaczyna się w 2026.",
+    "hook_en": "France vs Iraq — never before. History begins in 2026.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "nor-sen",
+    "episode_number": 52,
+    "group": "I",
+    "team1": {
+      "name_pl": "Norwegia",
+      "name_en": "Norway",
+      "flag": "🇳🇴",
+      "code": "NOR"
+    },
+    "team2": {
+      "name_pl": "Senegal",
+      "name_en": "Senegal",
+      "flag": "🇸🇳",
+      "code": "SEN"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 1,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 2006,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Senegal wygrał jedyne starcie 2:1 w 2006. Norwegia szuka rewanżu na mundialu.",
+    "hook_en": "Senegal won the only clash 2:1 in 2006. Norway seeks revenge at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "nor-fra",
+    "episode_number": 53,
+    "group": "I",
+    "team1": {
+      "name_pl": "Norwegia",
+      "name_en": "Norway",
+      "flag": "🇳🇴",
+      "code": "NOR"
+    },
+    "team2": {
+      "name_pl": "Francja",
+      "name_en": "France",
+      "flag": "🇫🇷",
+      "code": "FRA"
+    },
+    "history": {
+      "total_matches": 16,
+      "team1_wins": 3,
+      "team2_wins": 11,
+      "draws": 2,
+      "goals_team1": 18,
+      "goals_team2": 38
+    },
+    "matches": [
+      {
+        "year": 2014,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "4:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "16 meczów, Francja dominuje. Ostatnio rozbiła Norwegię 4:0 w 2014.",
+    "hook_en": "16 matches, France dominates. Last time they demolished Norway 4:0 in 2014.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "sen-irq",
+    "episode_number": 54,
+    "group": "I",
+    "team1": {
+      "name_pl": "Senegal",
+      "name_en": "Senegal",
+      "flag": "🇸🇳",
+      "code": "SEN"
+    },
+    "team2": {
+      "name_pl": "Irak",
+      "name_en": "Iraq",
+      "flag": "🇮🇶",
+      "code": "IRQ"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Senegal vs Irak — pierwsze spotkanie. Nowe afrykańsko-azjatyckie starcie na MŚ 2026.",
+    "hook_en": "Senegal vs Iraq — first ever meeting. A new Africa vs Asia clash at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "arg-alg",
+    "episode_number": 55,
+    "group": "J",
+    "team1": {
+      "name_pl": "Argentyna",
+      "name_en": "Argentina",
+      "flag": "🇦🇷",
+      "code": "ARG"
+    },
+    "team2": {
+      "name_pl": "Algieria",
+      "name_en": "Algeria",
+      "flag": "🇩🇿",
+      "code": "ALG"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 1,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 4,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 2007,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "4:3",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Jeden mecz, thriller 4:3 w 2007. Czekali 18 lat na kolejne starcie — oto ono.",
+    "hook_en": "One match, a 4:3 thriller in 2007. They waited 18 years for the next clash — here it is.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "aut-jor",
+    "episode_number": 56,
+    "group": "J",
+    "team1": {
+      "name_pl": "Austria",
+      "name_en": "Austria",
+      "flag": "🇦🇹",
+      "code": "AUT"
+    },
+    "team2": {
+      "name_pl": "Jordania",
+      "name_en": "Jordan",
+      "flag": "🇯🇴",
+      "code": "JOR"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Austria vs Jordania — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Austria vs Jordan — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "arg-aut",
+    "episode_number": 57,
+    "group": "J",
+    "team1": {
+      "name_pl": "Argentyna",
+      "name_en": "Argentina",
+      "flag": "🇦🇷",
+      "code": "ARG"
+    },
+    "team2": {
+      "name_pl": "Austria",
+      "name_en": "Austria",
+      "flag": "🇦🇹",
+      "code": "AUT"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 1,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 5,
+      "goals_team2": 4
+    },
+    "matches": [
+      {
+        "year": 1990,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "3 mecze, wszystkie towarzyskie, bilans wyrównany. Ostatnio remis 1:1 w 1990.",
+    "hook_en": "3 matches, all friendlies, balanced record. Last time a 1:1 draw in 1990.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "jor-alg",
+    "episode_number": 58,
+    "group": "J",
+    "team1": {
+      "name_pl": "Jordania",
+      "name_en": "Jordan",
+      "flag": "🇯🇴",
+      "code": "JOR"
+    },
+    "team2": {
+      "name_pl": "Algieria",
+      "name_en": "Algeria",
+      "flag": "🇩🇿",
+      "code": "ALG"
+    },
+    "history": {
+      "total_matches": 3,
+      "team1_wins": 1,
+      "team2_wins": 1,
+      "draws": 1,
+      "goals_team1": 3,
+      "goals_team2": 3
+    },
+    "matches": [
+      {
+        "year": 2004,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "3 mecze, bilans wyrównany. Ostatni remis 1:1 w 2004 — wynik wciąż nierozstrzygnięty.",
+    "hook_en": "3 matches, balanced record. Last draw 1:1 in 2004 — still no decisive winner.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "alg-aut",
+    "episode_number": 59,
+    "group": "J",
+    "team1": {
+      "name_pl": "Algieria",
+      "name_en": "Algeria",
+      "flag": "🇩🇿",
+      "code": "ALG"
+    },
+    "team2": {
+      "name_pl": "Austria",
+      "name_en": "Austria",
+      "flag": "🇦🇹",
+      "code": "AUT"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 2
+    },
+    "matches": [
+      {
+        "year": 1982,
+        "competition_pl": "MŚ 1982 – faza grupowa",
+        "competition_en": "1982 World Cup – Group Stage",
+        "score": "2:0",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Austria wygrała na MŚ 1982. Algieria czeka na rewanż od 44 lat.",
+    "hook_en": "Austria won at the 1982 World Cup. Algeria has been waiting for revenge for 44 years.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "jor-arg",
+    "episode_number": 60,
+    "group": "J",
+    "team1": {
+      "name_pl": "Jordania",
+      "name_en": "Jordan",
+      "flag": "🇯🇴",
+      "code": "JOR"
+    },
+    "team2": {
+      "name_pl": "Argentyna",
+      "name_en": "Argentina",
+      "flag": "🇦🇷",
+      "code": "ARG"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Jordania vs mistrz świata — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Jordan vs the world champions — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "por-cod",
+    "episode_number": 61,
+    "group": "K",
+    "team1": {
+      "name_pl": "Portugalia",
+      "name_en": "Portugal",
+      "flag": "🇵🇹",
+      "code": "POR"
+    },
+    "team2": {
+      "name_pl": "DR Konga",
+      "name_en": "DR Congo",
+      "flag": "🇨🇩",
+      "code": "COD"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Portugalia kontra DR Konga — pierwsze spotkanie w historii, od razu na mundialu.",
+    "hook_en": "Portugal vs DR Congo — first ever meeting, straight at the World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "uzb-col",
+    "episode_number": 62,
+    "group": "K",
+    "team1": {
+      "name_pl": "Uzbekistan",
+      "name_en": "Uzbekistan",
+      "flag": "🇺🇿",
+      "code": "UZB"
+    },
+    "team2": {
+      "name_pl": "Kolumbia",
+      "name_en": "Colombia",
+      "flag": "🇨🇴",
+      "code": "COL"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Uzbekistan vs Kolumbia — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Uzbekistan vs Colombia — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "por-uzb",
+    "episode_number": 63,
+    "group": "K",
+    "team1": {
+      "name_pl": "Portugalia",
+      "name_en": "Portugal",
+      "flag": "🇵🇹",
+      "code": "POR"
+    },
+    "team2": {
+      "name_pl": "Uzbekistan",
+      "name_en": "Uzbekistan",
+      "flag": "🇺🇿",
+      "code": "UZB"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Portugalia vs Uzbekistan — nowe rozdanie na MŚ 2026.",
+    "hook_en": "Portugal vs Uzbekistan — a new chapter at the 2026 World Cup.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "col-cod",
+    "episode_number": 64,
+    "group": "K",
+    "team1": {
+      "name_pl": "Kolumbia",
+      "name_en": "Colombia",
+      "flag": "🇨🇴",
+      "code": "COL"
+    },
+    "team2": {
+      "name_pl": "DR Konga",
+      "name_en": "DR Congo",
+      "flag": "🇨🇩",
+      "code": "COD"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Kolumbia vs DR Konga — afrykańsko-południowoamerykańskie starcie po raz pierwszy.",
+    "hook_en": "Colombia vs DR Congo — a South America vs Africa clash for the very first time.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "col-por",
+    "episode_number": 65,
+    "group": "K",
+    "team1": {
+      "name_pl": "Kolumbia",
+      "name_en": "Colombia",
+      "flag": "🇨🇴",
+      "code": "COL"
+    },
+    "team2": {
+      "name_pl": "Portugalia",
+      "name_en": "Portugal",
+      "flag": "🇵🇹",
+      "code": "POR"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Kolumbia kontra Portugalia — nigdy wcześniej na żadnym turnieju.",
+    "hook_en": "Colombia vs Portugal — never before at any tournament.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "cod-uzb",
+    "episode_number": 66,
+    "group": "K",
+    "team1": {
+      "name_pl": "DR Konga",
+      "name_en": "DR Congo",
+      "flag": "🇨🇩",
+      "code": "COD"
+    },
+    "team2": {
+      "name_pl": "Uzbekistan",
+      "name_en": "Uzbekistan",
+      "flag": "🇺🇿",
+      "code": "UZB"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "DR Konga vs Uzbekistan — pierwsze spotkanie. Afryka kontra Azja Centralna.",
+    "hook_en": "DR Congo vs Uzbekistan — first ever meeting. Africa vs Central Asia.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "eng-cro",
+    "episode_number": 67,
+    "group": "L",
+    "team1": {
+      "name_pl": "Anglia",
+      "name_en": "England",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "code": "ENG"
+    },
+    "team2": {
+      "name_pl": "Chorwacja",
+      "name_en": "Croatia",
+      "flag": "🇭🇷",
+      "code": "CRO"
+    },
+    "history": {
+      "total_matches": 11,
+      "team1_wins": 6,
+      "team2_wins": 3,
+      "draws": 2,
+      "goals_team1": 21,
+      "goals_team2": 14
+    },
+    "matches": [
+      {
+        "year": 2018,
+        "competition_pl": "MŚ 2018 – półfinał",
+        "competition_en": "2018 World Cup – Semi-final",
+        "score": "2:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Chorwacja wygrała po dogrywce — Mandžukić 109'",
+        "note_en": "Croatia won after extra time — Mandžukić 109'"
+      },
+      {
+        "year": 2021,
+        "competition_pl": "Euro 2020 – faza grupowa",
+        "competition_en": "Euro 2020 – Group Stage",
+        "score": "1:0",
+        "winner": "team1",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "11 meczów. Chorwacja złamała Anglię w półfinale 2018. Na Euro 2020 Anglia się odegrała.",
+    "hook_en": "11 matches. Croatia broke England's hearts in the 2018 semi-final. At Euro 2020 England got their revenge.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "gha-pan",
+    "episode_number": 68,
+    "group": "L",
+    "team1": {
+      "name_pl": "Ghana",
+      "name_en": "Ghana",
+      "flag": "🇬🇭",
+      "code": "GHA"
+    },
+    "team2": {
+      "name_pl": "Panama",
+      "name_en": "Panama",
+      "flag": "🇵🇦",
+      "code": "PAN"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Ghana vs Panama — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Ghana vs Panama — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "eng-gha",
+    "episode_number": 69,
+    "group": "L",
+    "team1": {
+      "name_pl": "Anglia",
+      "name_en": "England",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "code": "ENG"
+    },
+    "team2": {
+      "name_pl": "Ghana",
+      "name_en": "Ghana",
+      "flag": "🇬🇭",
+      "code": "GHA"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 1,
+      "goals_team1": 1,
+      "goals_team2": 1
+    },
+    "matches": [
+      {
+        "year": 2011,
+        "competition_pl": "Mecz towarzyski",
+        "competition_en": "Friendly",
+        "score": "1:1",
+        "winner": "draw",
+        "has_video": true,
+        "note_pl": null,
+        "note_en": null
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Jeden mecz, remis 1:1 w 2011. Anglia i Ghana bez rozstrzygnięcia — aż do teraz.",
+    "hook_en": "One match, a 1:1 draw in 2011. England and Ghana unsettled — until now.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "pan-cro",
+    "episode_number": 70,
+    "group": "L",
+    "team1": {
+      "name_pl": "Panama",
+      "name_en": "Panama",
+      "flag": "🇵🇦",
+      "code": "PAN"
+    },
+    "team2": {
+      "name_pl": "Chorwacja",
+      "name_en": "Croatia",
+      "flag": "🇭🇷",
+      "code": "CRO"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Panama vs Chorwacja — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Panama vs Croatia — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "pan-eng",
+    "episode_number": 71,
+    "group": "L",
+    "team1": {
+      "name_pl": "Panama",
+      "name_en": "Panama",
+      "flag": "🇵🇦",
+      "code": "PAN"
+    },
+    "team2": {
+      "name_pl": "Anglia",
+      "name_en": "England",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "code": "ENG"
+    },
+    "history": {
+      "total_matches": 1,
+      "team1_wins": 0,
+      "team2_wins": 1,
+      "draws": 0,
+      "goals_team1": 1,
+      "goals_team2": 6
+    },
+    "matches": [
+      {
+        "year": 2018,
+        "competition_pl": "MŚ 2018 – faza grupowa",
+        "competition_en": "2018 World Cup – Group Stage",
+        "score": "6:1",
+        "winner": "team2",
+        "has_video": true,
+        "note_pl": "Anglia strzeliła 6 goli — hat-trick Kane'a",
+        "note_en": "England scored 6 goals — Kane's hat-trick"
+      }
+    ],
+    "first_ever": false,
+    "hook_pl": "Anglia rozbiła Panamę 6:1 na MŚ 2018. Panama po rewanż — lub przynajmniej godny wynik.",
+    "hook_en": "England demolished Panama 6:1 at the 2018 World Cup. Panama wants revenge — or at least a respectable score.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  },
+  {
+    "id": "cro-gha",
+    "episode_number": 72,
+    "group": "L",
+    "team1": {
+      "name_pl": "Chorwacja",
+      "name_en": "Croatia",
+      "flag": "🇭🇷",
+      "code": "CRO"
+    },
+    "team2": {
+      "name_pl": "Ghana",
+      "name_en": "Ghana",
+      "flag": "🇬🇭",
+      "code": "GHA"
+    },
+    "history": {
+      "total_matches": 0,
+      "team1_wins": 0,
+      "team2_wins": 0,
+      "draws": 0,
+      "goals_team1": 0,
+      "goals_team2": 0
+    },
+    "matches": [],
+    "first_ever": true,
+    "hook_pl": "Chorwacja vs Ghana — pierwsze spotkanie w historii obu reprezentacji.",
+    "hook_en": "Croatia vs Ghana — first ever meeting in the history of both nations.",
+    "published": false,
+    "youtube_url": null,
+    "tiktok_url": null,
+    "publish_date": null
+  }
+]
