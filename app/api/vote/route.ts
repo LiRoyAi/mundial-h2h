@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
+import { getBadges } from "@/lib/badges";
 
 const redis = Redis.fromEnv();
 
@@ -28,6 +29,13 @@ export async function POST(request: NextRequest) {
     redis.set(voteKey, score),
     redis.set(`onboarded:${nick}`, "1", { ex: 30 * 24 * 3600 }),
   ]);
+
+  // Track registration order for pierwsza_krew badge
+  const alreadyReg = await redis.exists(`registered_seq:${nick}`);
+  if (!alreadyReg) {
+    const seq = await redis.incr("player_registration_count");
+    await redis.set(`registered_seq:${nick}`, seq);
+  }
 
   const keys = await redis.keys(`votes:${matchId}:*`);
   const counts: Record<string, number> = {};
@@ -121,11 +129,20 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  // Fetch badges for top-50 in one batch
+  const badgeRaws = top50.length > 0
+    ? await redis.mget<(string | null)[]>(...top50.map((e) => `badge:${e.nick}`))
+    : [];
+
   return Response.json({
     matchId,
     results,
     result: result ?? null,
-    ranking: top50.map((e) => ({ ...e, accuracy: accuracyMap[e.nick] ?? null })),
+    ranking: top50.map((e, i) => {
+      let badges: string[] = [];
+      try { if (badgeRaws[i]) badges = JSON.parse(badgeRaws[i]!); } catch { /* */ }
+      return { ...e, accuracy: accuracyMap[e.nick] ?? null, badges };
+    }),
     total,
     userRank,
   });

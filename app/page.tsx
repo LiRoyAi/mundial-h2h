@@ -33,7 +33,16 @@ interface RankingEntry {
   nick: string;
   points: number;
   accuracy: number | null;
+  badges?: string[];
 }
+
+const BADGE_EMOJIS: Record<string, string> = {
+  snajper: "🎯",
+  hot_streak: "🔥",
+  perfect_day: "⭐",
+  underdog: "😈",
+  pierwsza_krew: "🩸",
+};
 
 interface UserRank {
   position: number;
@@ -1441,11 +1450,16 @@ export default function MundialPage() {
                     color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
                   }}>{i + 1}</span>
                   <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
-                    className="flex-1 text-sm tracking-wide hover:underline"
+                    className="flex-1 text-sm tracking-wide hover:underline flex items-center gap-1.5 min-w-0"
                     style={{
                       fontFamily: B,
                       color: entry.nick === nick ? "#FFD700" : "#f5f5f5",
-                    }}>{entry.nick}</a>
+                    }}>
+                    <span className="truncate">{entry.nick}</span>
+                    {entry.badges && entry.badges.slice(0, 2).map((b) => (
+                      <span key={b} className="text-xs shrink-0" title={b}>{BADGE_EMOJIS[b] ?? ""}</span>
+                    ))}
+                  </a>
                   {entry.accuracy !== null && (
                     <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
                       {entry.accuracy}%

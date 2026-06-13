@@ -29,7 +29,16 @@ interface PlayerData {
   missedCount: number;
   votedCount: number;
   votes: VoteEntry[];
+  badges: string[];
 }
+
+const BADGE_DEFS: { id: string; emoji: string; label: string }[] = [
+  { id: "snajper",      emoji: "🎯", label: "SNAJPER"       },
+  { id: "hot_streak",   emoji: "🔥", label: "HOT STREAK"    },
+  { id: "perfect_day",  emoji: "⭐", label: "PERFECT DAY"   },
+  { id: "underdog",     emoji: "😈", label: "UNDERDOG"      },
+  { id: "pierwsza_krew",emoji: "🩸", label: "PIERWSZA KREW" },
+];
 
 function toLocalDate(deadline: string) {
   const d = new Date(new Date(deadline).getTime() + 2 * 3600_000);
@@ -120,7 +129,7 @@ export default function PlayerPage() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}
-          className="grid grid-cols-3 gap-2 mb-6">
+          className="grid grid-cols-3 gap-2 mb-4">
           {[
             { label: "NAJLEPSZY WYNIK", value: data.bestDay > 0 ? `${data.bestDay} PKT` : "—" },
             { label: "ULUBIONY WYNIK", value: data.favoriteScore ?? "—" },
@@ -131,6 +140,26 @@ export default function PlayerPage() {
               <p className="leading-none" style={{ fontFamily: B, fontSize: "1.4rem", color: "#888" }}>{value}</p>
             </div>
           ))}
+        </motion.div>
+
+        {/* Badges */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}
+          className="flex flex-wrap gap-2 mb-6">
+          {BADGE_DEFS.map(({ id, emoji, label }) => {
+            const earned = data.badges.includes(id);
+            return (
+              <span key={id} className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[10px] tracking-widest"
+                style={{
+                  fontFamily: B,
+                  background: earned ? "rgba(255,215,0,0.08)" : "#0a0a0a",
+                  border: `1px solid ${earned ? "rgba(255,215,0,0.35)" : "#1a1a1a"}`,
+                  color: earned ? "#FFD700" : "#333",
+                }}>
+                <span style={{ opacity: earned ? 1 : 0.25 }}>{emoji}</span>
+                {label}
+              </span>
+            );
+          })}
         </motion.div>
 
         {/* Vote history */}

@@ -1,6 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
 import matchesData from "@/data/matches.json";
+import { calculateAndSaveBadges } from "@/lib/badges";
 
 const redis = Redis.fromEnv();
 export const dynamic = "force-dynamic";
@@ -137,6 +138,8 @@ export async function GET(
     else break;
   }
 
+  const badges = await calculateAndSaveBadges(redis, nick);
+
   return Response.json({
     nick,
     totalPoints,
@@ -149,5 +152,6 @@ export async function GET(
     missedCount,
     votedCount: votes.length,
     votes,
+    badges,
   });
 }

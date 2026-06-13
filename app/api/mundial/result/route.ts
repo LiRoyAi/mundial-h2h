@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
+import { calculateAndSaveBadges } from "@/lib/badges";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
@@ -113,6 +114,12 @@ export async function POST(request: NextRequest) {
   } catch {
     // Silently ignore — filesystem is read-only in Vercel; result is in Redis
   }
+
+  // Recalculate badges for all voters of this match
+  try {
+    const nicks = voteKeys.map((vk) => vk.replace(`vote:${matchId}:`, ""));
+    await Promise.all(nicks.map((n) => calculateAndSaveBadges(redis, n)));
+  } catch { /* don't fail the result save if badge calc errors */ }
 
   return Response.json({
     ok: true,
