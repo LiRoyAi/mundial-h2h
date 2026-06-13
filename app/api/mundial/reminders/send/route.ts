@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { Resend } from "resend";
+import { BrevoClient } from "@getbrevo/brevo";
 import { NextRequest } from "next/server";
 import matchesData from "@/data/matches.json";
 
@@ -34,9 +34,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const resendKey = process.env.RESEND_API_KEY;
-  if (!resendKey) {
-    return Response.json({ error: "RESEND_API_KEY not set" }, { status: 500 });
+  const brevoKey = process.env.BREVO_API_KEY;
+  if (!brevoKey) {
+    return Response.json({ error: "BREVO_API_KEY not set" }, { status: 500 });
   }
 
   const todayMatches = MATCHES
@@ -65,21 +65,23 @@ export async function GET(request: NextRequest) {
   const dateStr = `${day} ${months[nowCest.getUTCMonth()]}`;
 
   const subject = `Mundial 2026 — mecze na dziś (${dateStr})`;
-  const text =
+  const textContent =
     `Hej!\n\nDziś grają:\n\n${matchLines}\n\nTypuj na: mundial.liroy.pl\n\n---\nAby wypisać się, odpisz na tego maila.`;
 
-  const resend = new Resend(resendKey);
+  const brevo = new BrevoClient({ apiKey: brevoKey });
   let sent = 0;
 
   for (let i = 0; i < emails.length; i += 100) {
     const batch = emails.slice(i, i + 100);
-    await resend.batch.send(
-      batch.map((to) => ({
-        from: "Mundial 2026 <phantom@liroy.pl>",
-        to,
-        subject,
-        text,
-      }))
+    await Promise.all(
+      batch.map((to) =>
+        brevo.transactionalEmails.sendTransacEmail({
+          sender: { name: "Mundial 2026", email: "mundial@liroy.pl" },
+          to: [{ email: to }],
+          subject,
+          textContent,
+        })
+      )
     );
     sent += batch.length;
   }
