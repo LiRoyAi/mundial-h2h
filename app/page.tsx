@@ -551,6 +551,19 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
             </AnimatePresence>
           </div>
         )}
+        {match.youtube_pl && (
+          <div className="mt-3 flex justify-center">
+            <a
+              href={match.youtube_pl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 border border-[#FFD700]/40 text-[#FFD700] hover:border-[#FFD700]/70 hover:bg-[#FFD700]/5 transition-colors text-[9px] tracking-widest"
+              style={{ fontFamily: B }}
+            >
+              ▶ OBEJRZYJ H2H ARCHIVE
+            </a>
+          </div>
+        )}
       </div>
     </motion.div>
   );
