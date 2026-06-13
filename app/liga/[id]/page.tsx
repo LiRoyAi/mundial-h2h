@@ -1,10 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const B = "var(--font-bebas), 'Bebas Neue', sans-serif";
+
+const REACTIONS_LIST = [
+  { id: "co_typujesz", label: "😂 Co ty typujesz?" },
+  { id: "var",         label: "⚖️ VAR ci nie pomoże" },
+  { id: "farciarz",    label: "🍀 Farciarz" },
+  { id: "szacun",      label: "👊 Szacun za typ" },
+  { id: "dogonie",     label: "🏃 Dzisiaj cię dogonię" },
+  { id: "strzal",      label: "💥 To był strzał życia" },
+];
 
 interface RankingEntry {
   nick: string;
@@ -41,6 +50,14 @@ interface League {
   todaySection: TodaySection;
 }
 
+interface ReactionFeedItem {
+  nick: string;
+  reactionId: string;
+  label: string;
+  matchId: string;
+  createdAt: string;
+}
+
 type AuthState = "idle" | "checking" | "pin_register" | "pin_login" | "pin_claim";
 
 async function shareOrCopy(text: string): Promise<void> {
@@ -70,6 +87,29 @@ export default function LeaguePage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
 
+  const [reactions, setReactions] = useState<ReactionFeedItem[]>([]);
+  const [sendingReaction, setSendingReaction] = useState<string | null>(null);
+  const [flashedReaction, setFlashedReaction] = useState<string | null>(null);
+  const [hasSentToday, setHasSentToday] = useState(false);
+  const reactionIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const todayMatchId = new Date().toISOString().slice(0, 10);
+
+  const fetchReactions = useCallback(async (currentNick?: string) => {
+    try {
+      const res = await fetch(`/api/mundial/leagues/${leagueId}/reactions`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const list: ReactionFeedItem[] = data.reactions ?? [];
+      setReactions(list);
+      if (currentNick) {
+        const alreadySent = list.some((r) => r.nick === currentNick && r.matchId === todayMatchId);
+        if (alreadySent) setHasSentToday(true);
+      }
+    } catch { /* ignore */ }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [leagueId]);
+
   const fetchLeague = async (): Promise<League | null> => {
     try {
       const res = await fetch(`/api/mundial/leagues/${leagueId}`);
@@ -91,6 +131,9 @@ export default function LeaguePage() {
         setIsMember(data.ranking.some((e) => e.nick === storedNick));
       }
     });
+    fetchReactions(storedNick || undefined);
+    reactionIntervalRef.current = setInterval(() => fetchReactions(storedNick || undefined), 30_000);
+    return () => { if (reactionIntervalRef.current) clearInterval(reactionIntervalRef.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leagueId]);
 
@@ -163,6 +206,27 @@ export default function LeaguePage() {
     } catch {
       setPinError("Błąd połączenia.");
     }
+  };
+
+  const sendReaction = async (reactionId: string) => {
+    if (!nick || !isMember || hasSentToday || sendingReaction) return;
+    setSendingReaction(reactionId);
+    try {
+      const res = await fetch(`/api/mundial/leagues/${leagueId}/reaction`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nick, matchId: todayMatchId, reactionId }),
+      });
+      if (res.ok) {
+        const label = REACTIONS_LIST.find((r) => r.id === reactionId)?.label ?? "";
+        const newItem: ReactionFeedItem = { nick, reactionId, label, matchId: todayMatchId, createdAt: new Date().toISOString() };
+        setReactions((prev) => [newItem, ...prev].slice(0, 10));
+        setHasSentToday(true);
+        setFlashedReaction(reactionId);
+        setTimeout(() => setFlashedReaction(null), 1000);
+      }
+    } catch { /* ignore */ }
+    finally { setSendingReaction(null); }
   };
 
   const shareInvite = async () => {
@@ -424,6 +488,78 @@ export default function LeaguePage() {
 
           </motion.div>
         )}
+
+        {/* 💬 SZATNIA */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.22 }}
+          className="border border-[#FFD700]/15 bg-[#0a0a0a] rounded-sm overflow-hidden">
+
+          <div className="px-6 py-4 border-b border-[#111]">
+            <p className="text-xs tracking-[0.4em]" style={{ fontFamily: B, color: "#FFD700" }}>💬 SZATNIA</p>
+          </div>
+
+          {/* Feed */}
+          <div className="px-6 py-3 min-h-[56px]">
+            {reactions.length === 0 ? (
+              <p className="text-[10px] tracking-widest text-center py-2" style={{ fontFamily: B, color: "#2a2a2a" }}>
+                BRAK REAKCJI — BĄDŹ PIERWSZY
+              </p>
+            ) : (
+              <ul className="space-y-1.5">
+                <AnimatePresence initial={false}>
+                  {reactions.map((r, i) => (
+                    <motion.li
+                      key={`${r.nick}-${r.createdAt}`}
+                      initial={i === 0 ? { opacity: 0, y: -6 } : false}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex items-baseline gap-2 text-[11px]"
+                    >
+                      <span className="shrink-0" style={{ fontFamily: B, color: r.nick === nick ? "#FFD700" : "#555" }}>
+                        {r.nick}:
+                      </span>
+                      <span style={{ fontFamily: B, color: "#888" }}>{r.label}</span>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+            )}
+          </div>
+
+          {/* Reaction buttons — members only */}
+          {isMember && (
+            <div className="border-t border-[#111] px-4 py-4">
+              {hasSentToday ? (
+                <p className="text-[9px] tracking-[0.3em] text-center" style={{ fontFamily: B, color: "#333" }}>
+                  JUTRO MOŻESZ ZAREAGOWAĆ PONOWNIE
+                </p>
+              ) : (
+                <div className="grid grid-cols-2 gap-1.5">
+                  {REACTIONS_LIST.map(({ id, label }) => {
+                    const isFlashed = flashedReaction === id;
+                    const isSending = sendingReaction === id;
+                    return (
+                      <motion.button
+                        key={id}
+                        onClick={() => sendReaction(id)}
+                        disabled={!!sendingReaction}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-2 py-2.5 text-left text-[9px] leading-tight tracking-wide border transition-colors disabled:opacity-40"
+                        style={{
+                          fontFamily: B,
+                          borderColor: isFlashed ? "#FFD700" : "rgba(255,215,0,0.12)",
+                          color: isFlashed ? "#000" : "#555",
+                          background: isFlashed ? "#FFD700" : isSending ? "rgba(255,215,0,0.05)" : "transparent",
+                        }}
+                      >
+                        {label}
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+        </motion.div>
 
         {/* Ranking */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}
