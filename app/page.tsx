@@ -235,6 +235,8 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   const [communityDist, setCommunityDist] = useState<{ score: string; pct: number }[]>([]);
   const [liroyPick, setLiroyPick] = useState<string | null>(null);
   const [showH2H, setShowH2H] = useState(false);
+  const [challengeSide, setChallengeSide] = useState<"with" | "against" | null>(null);
+  const [challengeLoading, setChallengeLoading] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -262,6 +264,14 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
       .then((data) => { if (data?.top3?.length) setCommunityDist(data.top3); })
       .catch(() => {});
   }, [match.id, isPast, matchResult]);
+
+  useEffect(() => {
+    if (!voted || !nick) return;
+    fetch(`/api/mundial/challenge?matchId=${match.id}&nick=${encodeURIComponent(nick)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.side) setChallengeSide(data.side); })
+      .catch(() => {});
+  }, [voted, match.id, nick]);
 
   useEffect(() => {
     if (isPast || matchResult) return;
@@ -299,6 +309,20 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
   const handleBrag = () => {
     const vote = localStorage.getItem(`voted:${match.id}`);
     void shareOrCopy(`Trafiłem wynik meczu ${match.t1.name} – ${match.t2.name}: ${vote} ⚽\nmundial.liroy.pl`);
+  };
+
+  const handleChallenge = async (side: "with" | "against") => {
+    if (!nick.trim()) return;
+    setChallengeLoading(true);
+    try {
+      await fetch("/api/mundial/challenge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId: match.id, nick, side }),
+      });
+      setChallengeSide(side);
+    } catch { /* ignore */ }
+    finally { setChallengeLoading(false); }
   };
 
   const myVote = voted ? localStorage.getItem(`voted:${match.id}`) : null;
@@ -394,6 +418,42 @@ function MatchCard({ match, nick, onFirstVote }: { match: Match; nick: string; o
             <span className="text-base tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
               {liroyPick}
             </span>
+          </div>
+        )}
+
+        {!isPast && voted && liroyPick && !matchResult && nick && (
+          <div className="mt-3 px-1">
+            <p className="text-center text-[9px] tracking-[0.3em] mb-2" style={{ fontFamily: B, color: "#444" }}>
+              ⚔️ LIROY CHALLENGE
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleChallenge("with")}
+                disabled={challengeLoading}
+                className="flex-1 py-2 text-[9px] tracking-widest border transition-colors disabled:opacity-50"
+                style={{
+                  fontFamily: B,
+                  borderColor: challengeSide === "with" ? "#FFD700" : "rgba(255,215,0,0.2)",
+                  color: challengeSide === "with" ? "#000" : "#555",
+                  background: challengeSide === "with" ? "#FFD700" : "transparent",
+                }}
+              >
+                GRAM Z LIROY-EM 🤝
+              </button>
+              <button
+                onClick={() => handleChallenge("against")}
+                disabled={challengeLoading}
+                className="flex-1 py-2 text-[9px] tracking-widest border transition-colors disabled:opacity-50"
+                style={{
+                  fontFamily: B,
+                  borderColor: challengeSide === "against" ? "#FFD700" : "rgba(255,215,0,0.2)",
+                  color: challengeSide === "against" ? "#000" : "#555",
+                  background: challengeSide === "against" ? "#FFD700" : "transparent",
+                }}
+              >
+                GRAM PRZECIWKO 🥊
+              </button>
+            </div>
           </div>
         )}
 
@@ -926,6 +986,8 @@ export default function MundialPage() {
   const [reminderSubmitting, setReminderSubmitting] = useState(false);
   const [reminderDone, setReminderDone] = useState(false);
   const [reminderError, setReminderError] = useState("");
+  const [challengeRanking, setChallengeRanking] = useState<{ nick: string; wins: number }[]>([]);
+  const [showChallengeRanking, setShowChallengeRanking] = useState(false);
 
   useEffect(() => {
     console.log("[hero] state — mounted:", mounted, "| nickSaved:", nickSaved, "| hero visible:", mounted && !nickSaved);
@@ -978,6 +1040,11 @@ export default function MundialPage() {
     } else {
       fetchRanking("");
     }
+    fetch("/api/mundial/challenge")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.ranking) setChallengeRanking(data.ranking); })
+      .catch(() => {});
+
     const interval = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(interval);
   }, []);
@@ -1564,6 +1631,46 @@ export default function MundialPage() {
           </section>
         );
       })()}
+
+      {/* ── CHALLENGE RANKING ────────────────────────────────────────── */}
+      {challengeRanking.length > 0 && (
+        <section className="px-6 pb-6 max-w-lg mx-auto">
+          <div className="border border-[#FFD700]/10 bg-[#0a0a0a] rounded-sm overflow-hidden">
+            <button
+              onClick={() => setShowChallengeRanking((v) => !v)}
+              className="w-full px-6 py-4 flex items-center justify-between"
+            >
+              <p className="text-xs tracking-[0.35em]" style={{ fontFamily: B, color: "#FFD700" }}>
+                ⚔️ CHALLENGE RANKING
+              </p>
+              <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+                {challengeRanking.length > 0 ? `${challengeRanking.length} GRACZY ` : ""}{showChallengeRanking ? "▲" : "▼"}
+              </span>
+            </button>
+
+            {showChallengeRanking && (
+              <ul className="divide-y divide-[#0f0f0f] border-t border-[#111]">
+                {challengeRanking.map((entry, i) => (
+                  <li key={entry.nick} className="flex items-center gap-4 px-6 py-3">
+                    <span className="w-6 text-center text-sm" style={{
+                      fontFamily: B,
+                      color: i === 0 ? "#FFD700" : i < 3 ? "#888" : "#2a2a2a",
+                    }}>{i + 1}</span>
+                    <a href={`/gracz/${encodeURIComponent(entry.nick)}`}
+                      className="flex-1 text-sm tracking-wide hover:underline truncate"
+                      style={{ fontFamily: B, color: entry.nick === nick ? "#FFD700" : "#f5f5f5" }}>
+                      {entry.nick}
+                    </a>
+                    <span className="text-[10px] tracking-widest" style={{ fontFamily: B, color: "#FFD700" }}>
+                      {entry.wins} {entry.wins === 1 ? "wygrana" : "wygranych"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ── REMINDER ─────────────────────────────────────────────────── */}
       <section className="px-6 pb-16 max-w-lg mx-auto">

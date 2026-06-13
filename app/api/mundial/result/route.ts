@@ -121,6 +121,41 @@ export async function POST(request: NextRequest) {
     await Promise.all(nicks.map((n) => calculateAndSaveBadges(redis, n)));
   } catch { /* don't fail the result save if badge calc errors */ }
 
+  // Calculate challenge wins
+  try {
+    const liroyVote = await redis.get<string>(`vote:${matchId}:LiROY`);
+    let liroyPts = 0;
+    if (liroyVote) {
+      const lParsed = parseScore(liroyVote.replace("-", ":"));
+      if (lParsed) {
+        if (lParsed.g1 === g1 && lParsed.g2 === g2) liroyPts = 3;
+        else if (winner(lParsed.g1, lParsed.g2) === actualWinner) liroyPts = 1;
+      }
+    }
+    const challengeKeys = await redis.keys(`challenge:${matchId}:*`);
+    const challengeOps: Promise<unknown>[] = [];
+    for (const ck of challengeKeys) {
+      const challengeNick = ck.slice(`challenge:${matchId}:`.length);
+      const side = await redis.get<string>(ck);
+      if (!side) continue;
+      const playerVote = await redis.get<string>(`vote:${matchId}:${challengeNick}`);
+      if (!playerVote) continue;
+      const pParsed = parseScore(playerVote.replace("-", ":"));
+      if (!pParsed) continue;
+      let playerPts = 0;
+      if (pParsed.g1 === g1 && pParsed.g2 === g2) playerPts = 3;
+      else if (winner(pParsed.g1, pParsed.g2) === actualWinner) playerPts = 1;
+      const won =
+        (side === "against" && playerPts > liroyPts) ||
+        (side === "with" && playerPts === liroyPts);
+      if (won) {
+        challengeOps.push(redis.incrby(`challenge_wins:${challengeNick}`, 1));
+        challengeOps.push(redis.zincrby("challenge_ranking", 1, challengeNick));
+      }
+    }
+    if (challengeOps.length > 0) await Promise.all(challengeOps);
+  } catch { /* don't fail result save if challenge calc errors */ }
+
   return Response.json({
     ok: true,
     matchId,
