@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import matchesData from "@/data/matches.json";
 import AIComment from "@/components/AIComment";
+import TimeMachineModal from "@/components/TimeMachineModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -439,6 +440,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [liroyAnalysis, setLiroyAnalysis] = useState<string | null | undefined>(undefined);
   const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(false);
   const [aiComment, setAiComment] = useState<string | null>(null);
+  const [timeMachineOpen, setTimeMachineOpen] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -615,6 +617,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const myVote = voted ? localStorage.getItem(`voted:${match.id}`) : null;
 
   return (
+    <>
     <motion.div
       initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
       className={`relative border bg-[#0a0a0a] rounded-sm overflow-hidden transition-colors ${goldenBallActive ? "border-[#FFD700]" : "border-[#FFD700]/20"}`}
@@ -702,6 +705,20 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
             </span>
           </div>
         </div>
+
+        {match.h2h && (
+          <div className="flex justify-center mt-3">
+            <button
+              onClick={() => setTimeMachineOpen(true)}
+              className="px-3 py-1 text-xs uppercase tracking-widest border transition-colors"
+              style={{ fontFamily: B, borderColor: "rgba(255,215,0,0.35)", color: "#FFD700" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#FFD700"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,215,0,0.06)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,215,0,0.35)"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+            >
+              ⏰ H2H TIME MACHINE
+            </button>
+          </div>
+        )}
 
         {error && <p className="text-center text-red-500 text-xs mt-4 tracking-wide">{error}</p>}
         {isPast && !voted && !matchResult && (
@@ -1078,6 +1095,13 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
         )}
       </div>
     </motion.div>
+
+    <TimeMachineModal
+      match={match}
+      isOpen={timeMachineOpen}
+      onClose={() => setTimeMachineOpen(false)}
+    />
+    </>
   );
 }
 
