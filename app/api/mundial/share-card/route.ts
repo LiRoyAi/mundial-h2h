@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import sharp from "sharp";
 
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const W = 1080;
