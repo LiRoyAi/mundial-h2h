@@ -45,6 +45,53 @@ export default function AdminPage() {
   const [pickSubmitting, setPickSubmitting] = useState<Record<string, boolean>>({});
   const [pickMessages, setPickMessages] = useState<Record<string, string>>({});
 
+  const [analyses, setAnalyses] = useState<Record<string, string | null>>({});
+  const [analysisInputs, setAnalysisInputs] = useState<Record<string, string>>({});
+  const [analysisSubmitting, setAnalysisSubmitting] = useState<Record<string, boolean>>({});
+  const [analysisMessages, setAnalysisMessages] = useState<Record<string, string>>({});
+
+  const fetchAnalyses = useCallback(async () => {
+    const entries = await Promise.all(
+      MATCHES.map(async (m) => {
+        try {
+          const res = await fetch(`/api/mundial/liroy-analysis?matchId=${m.id}`);
+          if (res.ok) { const d = await res.json(); return [m.id, d.analysis ?? null] as const; }
+        } catch { /* ignore */ }
+        return [m.id, null] as const;
+      })
+    );
+    setAnalyses(Object.fromEntries(entries));
+    setAnalysisInputs((prev) => {
+      const next = { ...prev };
+      for (const [id, val] of entries) {
+        if (!(id in next) && val !== null) next[id] = val;
+      }
+      return next;
+    });
+  }, []);
+
+  const submitAnalysis = async (matchId: string) => {
+    const analysis = analysisInputs[matchId] ?? "";
+    setAnalysisSubmitting((p) => ({ ...p, [matchId]: true }));
+    setAnalysisMessages((p) => ({ ...p, [matchId]: "" }));
+    try {
+      const res = await fetch("/api/mundial/liroy-analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId, analysis, adminKey: key }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAnalysisMessages((p) => ({ ...p, [matchId]: data.error ?? "Error." }));
+      } else {
+        setAnalysisMessages((p) => ({ ...p, [matchId]: analysis.trim() ? "✓ Saved." : "✓ Cleared." }));
+        setAnalyses((p) => ({ ...p, [matchId]: analysis.trim() || null }));
+      }
+    } finally {
+      setAnalysisSubmitting((p) => ({ ...p, [matchId]: false }));
+    }
+  };
+
   const fetchPicks = useCallback(async () => {
     const entries = await Promise.all(
       MATCHES.map(async (m) => {
@@ -169,7 +216,7 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (authed) { fetchResults(key); fetchPicks(); }
+    if (authed) { fetchResults(key); fetchPicks(); fetchAnalyses(); }
   }, [authed, key, fetchResults, fetchPicks]);
 
   if (!authed) {
@@ -303,6 +350,7 @@ export default function AdminPage() {
               <th style={{ padding: "4px 8px" }}>Match</th>
               <th style={{ padding: "4px 8px", width: 100 }}>Current</th>
               <th style={{ padding: "4px 8px", width: 200 }}>Set pick</th>
+              <th style={{ padding: "4px 8px", width: 280 }}>Analiza LiROY-a</th>
               <th style={{ padding: "4px 8px" }}>Message</th>
             </tr>
           </thead>
@@ -346,6 +394,33 @@ export default function AdminPage() {
                           {busy ? "…" : current ? "Update" : "Set"}
                         </button>
                       </span>
+                    </td>
+                    <td style={{ padding: "6px 8px", verticalAlign: "top" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                        <textarea
+                          rows={3}
+                          value={analysisInputs[m.id] ?? ""}
+                          onChange={(e) => setAnalysisInputs((p) => ({ ...p, [m.id]: e.target.value }))}
+                          placeholder="Wpisz analizę LiROY-a…"
+                          style={{ width: "100%", padding: "4px 6px", fontSize: 12, resize: "vertical", fontFamily: "monospace" }}
+                        />
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <button
+                            onClick={() => submitAnalysis(m.id)}
+                            disabled={analysisSubmitting[m.id] ?? false}
+                            style={{ padding: "2px 10px", cursor: "pointer" }}>
+                            {analysisSubmitting[m.id] ? "…" : analyses[m.id] ? "Update" : "Save"}
+                          </button>
+                          {analyses[m.id] && (
+                            <span style={{ fontSize: 11, color: "#888" }}>saved ✓</span>
+                          )}
+                        </div>
+                        {analysisMessages[m.id] && (
+                          <span style={{ fontSize: 11, color: analysisMessages[m.id].startsWith("✓") ? "green" : "red" }}>
+                            {analysisMessages[m.id]}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td style={{ padding: "6px 8px", color: pickMessages[m.id]?.startsWith("✓") ? "green" : "red" }}>
                       {pickMessages[m.id] ?? ""}

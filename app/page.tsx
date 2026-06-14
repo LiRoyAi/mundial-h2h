@@ -290,6 +290,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [showAiBrief, setShowAiBrief] = useState(false);
   const [inputFlash, setInputFlash] = useState(false);
   const [cardFlash, setCardFlash] = useState(false);
+  const [liroyAnalysis, setLiroyAnalysis] = useState<string | null | undefined>(undefined);
+  const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -353,6 +355,14 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
       .then((data) => { if (data?.pick) setLiroyPick(data.pick); })
       .catch(() => {});
   }, [match.id, isPast, matchResult]);
+
+  useEffect(() => {
+    if (matchResult) return;
+    fetch(`/api/mundial/liroy-analysis?matchId=${match.id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setLiroyAnalysis(d?.analysis ?? null))
+      .catch(() => setLiroyAnalysis(null));
+  }, [match.id, matchResult]);
 
   const totalVotes = Object.values(results).reduce((a, b) => a + b, 0);
   const getBarWidth = (key: string) =>
@@ -843,6 +853,38 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
                         BŁĄD GENEROWANIA
                       </p>
                     )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+        {liroyAnalysis && !matchResult && (
+          <div className="mt-2 border-t border-[#111] pt-2">
+            <button
+              onClick={() => setShowLiroyAnalysis((v) => !v)}
+              className="w-full flex items-center justify-between py-1.5"
+            >
+              <span className="text-[9px] tracking-[0.3em]" style={{ fontFamily: B, color: showLiroyAnalysis ? "#FFD700" : "#444" }}>
+                📋 ANALIZA LIROYA
+              </span>
+              <span className="text-[9px]" style={{ fontFamily: B, color: "#333" }}>
+                {showLiroyAnalysis ? "▲" : "▼"}
+              </span>
+            </button>
+            <AnimatePresence>
+              {showLiroyAnalysis && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }} className="overflow-hidden"
+                >
+                  <div className="pb-3">
+                    <p className="text-[10px] leading-relaxed" style={{ fontFamily: B, color: "#FFD700" }}>
+                      {liroyAnalysis}
+                    </p>
+                    <p className="text-[8px] tracking-widest mt-2" style={{ fontFamily: B, color: "#333" }}>
+                      analiza LiROY-a
+                    </p>
                   </div>
                 </motion.div>
               )}
