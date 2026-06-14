@@ -153,6 +153,26 @@ async function shareOrCopy(text: string): Promise<void> {
   try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
 }
 
+async function shareStories(url: string, filename: string): Promise<void> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const file = new File([blob], filename, { type: "image/png" });
+    if (typeof navigator !== "undefined" && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title: "H2H Archive" });
+      return;
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  } catch { /* silent */ }
+}
+
 // ─── Countdown ────────────────────────────────────────────────────────────────
 
 function Countdown({ target, short = false }: { target: Date; short?: boolean }) {
@@ -441,6 +461,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(false);
   const [aiComment, setAiComment] = useState<string | null>(null);
   const [timeMachineOpen, setTimeMachineOpen] = useState(false);
+  const [storiesLoading, setStoriesLoading] = useState(false);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -880,7 +901,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
         )}
 
         {justVoted && !isPast && !matchResult && (
-          <div className="mt-3 flex justify-center">
+          <div className="mt-3 flex justify-center gap-2 flex-wrap">
             <motion.button
               initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
@@ -889,17 +910,48 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
               style={{ fontFamily: B, color: "#FFD700" }}>
               📤 UDOSTĘPNIJ TYP
             </motion.button>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              disabled={storiesLoading}
+              onClick={() => {
+                const s = myVote?.replace("-", ":") ?? `${score1}:${score2}`;
+                const gb = (goldenBallActive || goldenBallUsed) ? "&gb=1" : "";
+                void (async () => {
+                  setStoriesLoading(true);
+                  await shareStories(`/api/mundial/share-card?type=pick&nick=${encodeURIComponent(nick)}&score=${encodeURIComponent(s)}&t1=${encodeURIComponent(match.t1.name)}&t2=${encodeURIComponent(match.t2.name)}&f1=${encodeURIComponent(match.t1.flag)}&f2=${encodeURIComponent(match.t2.flag)}${gb}`, `typ-${match.id}.png`);
+                  setStoriesLoading(false);
+                })();
+              }}
+              className="px-5 py-2 text-[10px] tracking-widest border border-[#FFD700]/40 hover:border-[#FFD700]/80 transition-colors disabled:opacity-40"
+              style={{ fontFamily: B, color: "#FFD700" }}>
+              {storiesLoading ? "…" : "📲 STORIES"}
+            </motion.button>
           </div>
         )}
 
         {matchResult && voted && myVote?.replace("-", ":") === matchResult && (
-          <div className="mt-3 flex justify-center">
+          <div className="mt-3 flex justify-center gap-2 flex-wrap">
             <motion.button
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={handleBrag}
               className="px-8 py-2 text-black text-xs tracking-[0.2em]"
               style={{ fontFamily: B, background: "#FFD700" }}>
               POCHWAL SIĘ 🎯
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              disabled={storiesLoading}
+              onClick={() => {
+                void (async () => {
+                  setStoriesLoading(true);
+                  await shareStories(`/api/mundial/share-card?type=hit&nick=${encodeURIComponent(nick)}&score=${encodeURIComponent(matchResult)}&t1=${encodeURIComponent(match.t1.name)}&t2=${encodeURIComponent(match.t2.name)}`, `trafiony-${match.id}.png`);
+                  setStoriesLoading(false);
+                })();
+              }}
+              className="px-6 py-2 text-[10px] tracking-widest border border-[#FFD700]/60 hover:border-[#FFD700] transition-colors disabled:opacity-40"
+              style={{ fontFamily: B, color: "#FFD700" }}>
+              {storiesLoading ? "…" : "📲 STORIES"}
             </motion.button>
           </div>
         )}
@@ -1630,6 +1682,7 @@ export default function MundialPage() {
 
   const [notification, setNotification] = useState("");
   const [notifShareText, setNotifShareText] = useState<string | null>(null);
+  const [notifShareCardUrl, setNotifShareCardUrl] = useState<string | null>(null);
   const [pendingBadgeId, setPendingBadgeId] = useState<string | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
@@ -1660,6 +1713,7 @@ export default function MundialPage() {
     setNotifShareText(
       `${emoji} Zdobyłem odznakę ${name} w H2H Archive!\nJestem #${userRank.position} z ${userRank.points} pkt\nmundial.liroy.pl/gracz/${nick}`
     );
+    setNotifShareCardUrl(`/api/mundial/share-card?type=badge&nick=${encodeURIComponent(nick)}&badgeId=${encodeURIComponent(pendingBadgeId)}&badgeName=${encodeURIComponent(name)}&pts=${userRank.points}&rank=${userRank.position}`);
     setPendingBadgeId(null);
   }, [pendingBadgeId, userRank, nick]);
 
@@ -1676,7 +1730,8 @@ export default function MundialPage() {
     }
     setNotification(msg);
     setNotifShareText(shareText);
-    setTimeout(() => { setNotification(""); setNotifShareText(null); }, 7000);
+    setNotifShareCardUrl(null);
+    setTimeout(() => { setNotification(""); setNotifShareText(null); setNotifShareCardUrl(null); }, 7000);
   }, []);
 
   useEffect(() => {
@@ -1719,6 +1774,7 @@ export default function MundialPage() {
                   : `Awansujesz z #${userOldPos} na #${userNewPos}!`;
                 setNotification(msg);
                 setNotifShareText(null);
+                setNotifShareCardUrl(null);
                 setTimeout(() => setNotification(""), 5000);
               }
             }
@@ -1772,6 +1828,7 @@ export default function MundialPage() {
           if (data?.message) {
             setNotification(data.message);
             setNotifShareText(null);
+            setNotifShareCardUrl(null);
             if (data.newBadgeId) setPendingBadgeId(data.newBadgeId);
             setTimeout(() => setNotification(""), 6000);
           }
@@ -2553,19 +2610,30 @@ export default function MundialPage() {
           >
             <div
               className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-3 text-center pointer-events-auto max-w-sm w-full"
-              onClick={() => { setNotification(""); setNotifShareText(null); }}
+              onClick={() => { setNotification(""); setNotifShareText(null); setNotifShareCardUrl(null); }}
             >
               <p className="text-sm tracking-[0.15em] whitespace-pre-line" style={{ fontFamily: B, color: "#FFD700" }}>
                 {notification}
               </p>
               {notifShareText && (
-                <button
-                  onClick={(e) => { e.stopPropagation(); void shareOrCopy(notifShareText); }}
-                  className="mt-2 px-4 py-1.5 text-[10px] tracking-widest border border-[#FFD700]/50 hover:border-[#FFD700] transition-colors"
-                  style={{ fontFamily: B, color: "#FFD700" }}
-                >
-                  📤 Pochwal się
-                </button>
+                <div className="mt-2 flex justify-center gap-2 flex-wrap">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); void shareOrCopy(notifShareText); }}
+                    className="px-4 py-1.5 text-[10px] tracking-widest border border-[#FFD700]/50 hover:border-[#FFD700] transition-colors"
+                    style={{ fontFamily: B, color: "#FFD700" }}
+                  >
+                    📤 Pochwal się
+                  </button>
+                  {notifShareCardUrl && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); void shareStories(notifShareCardUrl, "odznaka.png"); }}
+                      className="px-4 py-1.5 text-[10px] tracking-widest border border-[#FFD700]/50 hover:border-[#FFD700] transition-colors"
+                      style={{ fontFamily: B, color: "#FFD700" }}
+                    >
+                      📲 STORIES
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           </motion.div>
