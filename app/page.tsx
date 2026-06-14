@@ -262,6 +262,142 @@ function StadiumBg() {
   );
 }
 
+// ─── BottomNav ───────────────────────────────────────────────────────────────
+
+function BottomNav({ nick, firstLeagueId, navTab, onTabChange }: {
+  nick: string;
+  firstLeagueId: string | null;
+  navTab: string;
+  onTabChange: (tab: string) => void;
+}) {
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const tabs = [
+    { id: "dzis",    emoji: "⚽", label: "DZIŚ",    action: () => { onTabChange("dzis");    scrollTo("mecze"); } },
+    { id: "ligi",    emoji: "🏆", label: "LIGI",    action: () => { onTabChange("ligi");    if (firstLeagueId) window.location.href = `/liga/${firstLeagueId}`; else scrollTo("ligi"); } },
+    { id: "ranking", emoji: "📊", label: "RANKING", action: () => { onTabChange("ranking"); scrollTo("ranking"); } },
+    { id: "grupy",   emoji: "📁", label: "GRUPY",   action: () => { const next = navTab === "grupy" ? "dzis" : "grupy"; onTabChange(next); setTimeout(() => scrollTo(next === "grupy" ? "grupy" : "mecze"), 30); } },
+    { id: "profil",  emoji: "👤", label: "PROFIL",  action: () => { if (nick) window.location.href = `/gracz/${encodeURIComponent(nick)}`; else scrollTo("ligi"); } },
+  ];
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-[#FFD700]/20" style={{ background: "#080808" }}>
+      <div className="flex">
+        {tabs.map((tab) => {
+          const active = navTab === tab.id;
+          return (
+            <button key={tab.id} onClick={tab.action}
+              className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 min-h-[44px]"
+              style={{ fontFamily: B, borderTop: `2px solid ${active ? "#FFD700" : "transparent"}` }}>
+              <span className="text-[18px] leading-none">{tab.emoji}</span>
+              <span className="text-[7px] tracking-widest" style={{ color: active ? "#FFD700" : "#444" }}>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
+// ─── GroupsSection ────────────────────────────────────────────────────────────
+
+interface TeamStanding {
+  name: string; flag: string;
+  pts: number; w: number; d: number; l: number;
+  gf: number; ga: number; mp: number;
+}
+
+function GroupsSection({ visible }: { visible: boolean }) {
+  const [groups, setGroups] = useState<{ id: string; teams: TeamStanding[] }[]>([]);
+  const [loadingGroups, setLoadingGroups] = useState(false);
+  const [fetched, setFetched] = useState(false);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set(["A"]));
+
+  useEffect(() => {
+    if (!visible || fetched) return;
+    setLoadingGroups(true);
+    fetch("/api/mundial/groups")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (d?.groups) setGroups(d.groups); })
+      .catch(() => {})
+      .finally(() => { setLoadingGroups(false); setFetched(true); });
+  }, [visible, fetched]);
+
+  if (!visible) return null;
+
+  const toggle = (id: string) =>
+    setExpanded((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+
+  return (
+    <section id="grupy" className="px-4 pb-8 max-w-2xl mx-auto">
+      <div className="mb-5 text-center">
+        <p className="text-[10px] tracking-[0.5em]" style={{ fontFamily: B, color: "#FFD700" }}>TABELE GRUPOWE</p>
+        <div className="mx-auto mt-3 h-px w-24" style={{ background: "rgba(255,215,0,0.1)" }} />
+      </div>
+
+      {loadingGroups && (
+        <div className="flex justify-center py-10">
+          <div className="w-5 h-5 border border-[#FFD700]/30 border-t-[#FFD700] rounded-full animate-spin" />
+        </div>
+      )}
+
+      {!loadingGroups && fetched && groups.length === 0 && (
+        <p className="text-center py-6 text-[10px] tracking-widest" style={{ fontFamily: B, color: "#333" }}>
+          BRAK WYNIKÓW — graj dalej!
+        </p>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {groups.map((g) => {
+          const open = expanded.has(g.id);
+          return (
+            <div key={g.id} className="border border-[#FFD700]/15 bg-[#0a0a0a] rounded-sm overflow-hidden">
+              <button onClick={() => toggle(g.id)} className="w-full flex items-center justify-between px-4 py-3">
+                <span className="text-xs tracking-[0.3em]" style={{ fontFamily: B, color: "#FFD700" }}>GRUPA {g.id}</span>
+                <span className="text-[10px]" style={{ fontFamily: B, color: "#333" }}>{open ? "▲" : "▼"}</span>
+              </button>
+              {open && (
+                <div className="border-t border-[#111] overflow-x-auto">
+                  <table className="w-full" style={{ fontFamily: B, fontSize: "10px", borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ color: "#444" }}>
+                        <th className="text-left px-3 py-2">DRUŻYNA</th>
+                        <th className="text-center px-2 py-2">M</th>
+                        <th className="text-center px-2 py-2">W</th>
+                        <th className="text-center px-2 py-2">R</th>
+                        <th className="text-center px-2 py-2">P</th>
+                        <th className="text-center px-2 py-2 pr-3" style={{ color: "#FFD700" }}>PKT</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.teams.map((t, i) => (
+                        <tr key={t.name} className="border-t border-[#0f0f0f]">
+                          <td className="px-3 py-2">
+                            <span className="flex items-center gap-1.5">
+                              <span>{t.flag}</span>
+                              <span className="tracking-wide" style={{ color: i < 2 ? "#f5f5f5" : "#555" }}>{t.name}</span>
+                            </span>
+                          </td>
+                          <td className="text-center px-2 py-2" style={{ color: "#555" }}>{t.mp}</td>
+                          <td className="text-center px-2 py-2" style={{ color: "#555" }}>{t.w}</td>
+                          <td className="text-center px-2 py-2" style={{ color: "#555" }}>{t.d}</td>
+                          <td className="text-center px-2 py-2" style={{ color: "#555" }}>{t.l}</td>
+                          <td className="text-center px-2 py-2 pr-3" style={{ color: "#FFD700", fontWeight: "bold" }}>{t.pts}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
 function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, firstLeagueId, onGoldenBallResult }: {
@@ -1309,7 +1445,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount, goldenBalls }: {
   if (!nickSaved && todayCount === 0) return null;
 
   return (
-    <section className="px-6 pb-6 max-w-lg mx-auto">
+    <section id="ligi" className="px-6 pb-6 max-w-lg mx-auto">
       {/* Stats tiles */}
       {nickSaved && (
         <div className="grid grid-cols-2 gap-2 mb-3">
@@ -1449,6 +1585,7 @@ export default function MundialPage() {
   const prevPositionsRef = useRef<Map<string, number>>(new Map());
   const [rankingAnimations, setRankingAnimations] = useState<Map<string, { delta: number; epoch: number }>>(new Map());
   const [showIntro, setShowIntro] = useState(false);
+  const [navTab, setNavTab] = useState("dzis");
 
   const handleIntroDone = useCallback(() => {
     sessionStorage.setItem("flags_intro_seen", "1");
@@ -1885,6 +2022,9 @@ export default function MundialPage() {
 
       {mounted && <Dashboard nick={nick} nickSaved={nickSaved} userRank={userRank} todayCount={todayUpcoming.length} goldenBalls={goldenBalls} />}
 
+      {/* ── GRUPY ────────────────────────────────────────────────────── */}
+      <GroupsSection visible={navTab === "grupy"} />
+
       {/* ── MECZE ────────────────────────────────────────────────────── */}
       <section id="mecze" className="px-6 pb-16 max-w-2xl mx-auto">
 
@@ -2315,7 +2455,7 @@ export default function MundialPage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer className="pb-12 text-center space-y-2">
+      <footer className="pb-24 md:pb-12 text-center space-y-2">
         <p className="text-[8px] tracking-[0.4em]" style={{ fontFamily: B, color: "#1a1a1a" }}>
           H2H ARCHIVE © 2026 · LIROY.PL
         </p>
@@ -2337,7 +2477,7 @@ export default function MundialPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 48 }}
             transition={{ duration: 0.35 }}
-            className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none"
+            className="fixed bottom-20 md:bottom-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none"
           >
             <div
               className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-3 text-center pointer-events-auto max-w-sm w-full"
@@ -2367,6 +2507,12 @@ export default function MundialPage() {
         )}
       </AnimatePresence>
       </main>
+      <BottomNav
+        nick={nick}
+        firstLeagueId={firstLeagueId}
+        navTab={navTab}
+        onTabChange={setNavTab}
+      />
     </>
   );
 }
