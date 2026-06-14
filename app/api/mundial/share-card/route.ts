@@ -1,14 +1,21 @@
 import { NextRequest } from "next/server";
-import { createCanvas, CanvasRenderingContext2D } from "@napi-rs/canvas";
+import { createCanvas, GlobalFonts, CanvasRenderingContext2D } from "@napi-rs/canvas";
+import path from "path";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+// Register bundled fonts once at module load — system fonts unavailable on Vercel Linux
+const fontsDir = path.join(process.cwd(), "public", "fonts");
+GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Regular.ttf"), "Roboto");
+GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Bold.ttf"), "Roboto");
+GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Black.ttf"), "Roboto");
 
 const W = 1080;
 const H = 1920;
 const GOLD = "#FFD700";
 const BG = "#0a0a0a";
-const F = "Arial";
+const F = "Roboto";
 
 type Ctx = CanvasRenderingContext2D;
 
@@ -40,7 +47,7 @@ function drawHeader(ctx: Ctx) {
   ctx.fillText("H2H ARCHIVE", W / 2, 108);
 
   ctx.fillStyle = "#444";
-  ctx.font = `26px ${F}`;
+  ctx.font = `400 26px ${F}`;
   ctx.letterSpacing = "0px";
   ctx.fillText("mundial.liroy.pl", W / 2, 154);
 
@@ -55,7 +62,7 @@ function drawFooter(ctx: Ctx) {
   ctx.beginPath(); ctx.moveTo(80, 1824); ctx.lineTo(1000, 1824); ctx.stroke();
 
   ctx.fillStyle = "#444";
-  ctx.font = `30px ${F}`;
+  ctx.font = `400 30px ${F}`;
   ctx.textAlign = "center";
   ctx.letterSpacing = "0px";
   ctx.fillText("Typuj razem ze mna!", W / 2, 1864);
@@ -111,43 +118,42 @@ function pickCard(
   drawBg(ctx);
   drawHeader(ctx);
 
-  // Flags (emoji — render if system font supports it, otherwise invisible)
-  txt(ctx, f1, 240, 400, `110px ${F}`, "#fff");
-  txt(ctx, f2, 840, 400, `110px ${F}`, "#fff");
-
-  // Team names with maxWidth to compress long names
+  // Country codes / team names — upper third
+  txt(ctx, f1, 240, 440, `700 36px ${F}`, "#888");
+  txt(ctx, f2, 840, 440, `700 36px ${F}`, "#888");
+  txt(ctx, "VS", W / 2, 480, `900 40px ${F}`, "#333");
   ctx.fillStyle = "#ccc";
-  ctx.font = `600 30px ${F}`;
+  ctx.font = `600 32px ${F}`;
   ctx.textAlign = "center";
   ctx.letterSpacing = "0px";
-  ctx.fillText(trunc(t1, 22), 240, 462, 400);
-  ctx.fillText(trunc(t2, 22), 840, 462, 400);
+  ctx.fillText(trunc(t1, 20), 240, 534, 420);
+  ctx.fillText(trunc(t2, 20), 840, 534, 420);
 
-  txt(ctx, "VS", W / 2, 390, `900 36px ${F}`, "#333");
-  txt(ctx, "MOJ TYP", W / 2, 562, `700 28px ${F}`, "#444", "center", "14px");
-  hline(ctx, 380, 584, 700);
+  // MOJ TYP label — mid
+  txt(ctx, "MOJ TYP", W / 2, 690, `700 30px ${F}`, "#444", "center", "14px");
+  hline(ctx, 380, 716, 700);
 
-  const scoreY = gb ? 740 : 820;
-  txt(ctx, score, W / 2, scoreY, `900 230px ${F}`, GOLD);
+  // Score — vertical center of card (~960)
+  const scoreY = gb ? 920 : 980;
+  txt(ctx, score, W / 2, scoreY, `900 240px ${F}`, GOLD);
 
+  // Golden ball badge
   if (gb) {
     ctx.fillStyle = "#1a1400";
-    ctx.fillRect(290, scoreY + 48, 500, 68);
-    txt(ctx, "ZLOTA PILKA", W / 2, scoreY + 93, `700 28px ${F}`, GOLD, "center", "6px");
+    ctx.fillRect(290, scoreY + 46, 500, 70);
+    txt(ctx, "ZLOTA PILKA", W / 2, scoreY + 93, `700 30px ${F}`, GOLD, "center", "6px");
   }
 
-  const nickY = gb ? 940 : 970;
-  txt(ctx, `@${trunc(nick, 20)}`, W / 2, nickY, `700 58px ${F}`, "#fff");
+  // Nick — lower third
+  const nickY = gb ? 1160 : 1200;
+  txt(ctx, `@${trunc(nick, 20)}`, W / 2, nickY, `700 60px ${F}`, "#fff");
 
   ctx.strokeStyle = "#1a1a1a";
   ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(80, gb ? 1010 : 1040);
-  ctx.lineTo(1000, gb ? 1010 : 1040);
-  ctx.stroke();
+  const divY = gb ? 1240 : 1280;
+  ctx.beginPath(); ctx.moveTo(80, divY); ctx.lineTo(1000, divY); ctx.stroke();
 
   drawFooter(ctx);
-
   return canvas.toBuffer("image/png");
 }
 
@@ -158,20 +164,20 @@ function hitCard(nick: string, score: string, t1: string, t2: string): Buffer {
   drawBg(ctx);
   drawHeader(ctx);
 
-  txt(ctx, "OK", W / 2, 528, `900 200px ${F}`, GOLD);
-  hline(ctx, 200, 570, 880);
-  txt(ctx, "TRAFIONY!", W / 2, 638, `900 68px ${F}`, GOLD, "center", "4px");
-  txt(ctx, `${trunc(t1, 18)} - ${trunc(t2, 18)}`, W / 2, 706, `32px ${F}`, "#666");
-  txt(ctx, score, W / 2, 940, `900 220px ${F}`, GOLD);
-  hline(ctx, 300, 984, 780);
-  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 1072, `700 60px ${F}`, "#fff");
+  txt(ctx, "TRAFIONY!", W / 2, 500, `900 88px ${F}`, GOLD, "center", "4px");
+  txt(ctx, `${trunc(t1, 18)} - ${trunc(t2, 18)}`, W / 2, 590, `400 32px ${F}`, "#666");
+  hline(ctx, 200, 630, 880);
+
+  txt(ctx, score, W / 2, 1010, `900 260px ${F}`, GOLD);
+  hline(ctx, 300, 1060, 780);
+
+  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 1180, `700 60px ${F}`, "#fff");
 
   ctx.fillStyle = "#1a1400";
-  ctx.fillRect(390, 1110, 300, 74);
-  txt(ctx, "+3 PKT", W / 2, 1158, `900 38px ${F}`, GOLD, "center", "6px");
+  ctx.fillRect(390, 1220, 300, 76);
+  txt(ctx, "+3 PKT", W / 2, 1270, `900 40px ${F}`, GOLD, "center", "6px");
 
   drawFooter(ctx);
-
   return canvas.toBuffer("image/png");
 }
 
@@ -185,14 +191,13 @@ function rankCard(nick: string, rank: string, pts: string): Buffer {
   const rankText = `#${rank}`;
   const fs = rankText.length <= 3 ? 320 : rankText.length <= 4 ? 260 : 210;
 
-  txt(ctx, "RANKING", W / 2, 330, `700 30px ${F}`, "#444", "center", "14px");
-  txt(ctx, rankText, W / 2, 790, `900 ${fs}px ${F}`, GOLD);
-  hline(ctx, 200, 848, 880);
-  txt(ctx, `${pts} PKT`, W / 2, 966, `900 96px ${F}`, "#fff");
-  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 1058, `700 56px ${F}`, "#888");
+  txt(ctx, "RANKING", W / 2, 430, `700 30px ${F}`, "#444", "center", "14px");
+  txt(ctx, rankText, W / 2, 960, `900 ${fs}px ${F}`, GOLD);
+  hline(ctx, 200, 1020, 880);
+  txt(ctx, `${pts} PKT`, W / 2, 1150, `900 96px ${F}`, "#fff");
+  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 1260, `700 56px ${F}`, "#888");
 
   drawFooter(ctx);
-
   return canvas.toBuffer("image/png");
 }
 
@@ -219,24 +224,22 @@ function badgeCard(
   };
   const letter = LETTERS[badgeId] ?? "B";
 
-  // Circle badge
   ctx.beginPath();
-  ctx.arc(W / 2, 500, 180, 0, Math.PI * 2);
+  ctx.arc(W / 2, 560, 180, 0, Math.PI * 2);
   ctx.fillStyle = "#1a1400";
   ctx.fill();
   ctx.strokeStyle = GOLD;
   ctx.lineWidth = 3;
   ctx.stroke();
 
-  txt(ctx, letter, W / 2, 568, `900 200px ${F}`, GOLD);
-  txt(ctx, "ODZNAKA ZDOBYTA", W / 2, 660, `700 34px ${F}`, "#666", "center", "10px");
-  txt(ctx, badgeName.toUpperCase(), W / 2, 758, `900 82px ${F}`, GOLD);
-  hline(ctx, 200, 800, 880);
-  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 898, `700 62px ${F}`, "#fff");
-  txt(ctx, `#${rank} • ${pts} pkt`, W / 2, 980, `34px ${F}`, "#666");
+  txt(ctx, letter, W / 2, 620, `900 220px ${F}`, GOLD);
+  txt(ctx, "ODZNAKA ZDOBYTA", W / 2, 740, `700 34px ${F}`, "#666", "center", "10px");
+  txt(ctx, badgeName.toUpperCase(), W / 2, 868, `900 88px ${F}`, GOLD);
+  hline(ctx, 200, 920, 880);
+  txt(ctx, `@${trunc(nick, 20)}`, W / 2, 1060, `700 62px ${F}`, "#fff");
+  txt(ctx, `#${rank} • ${pts} pkt`, W / 2, 1170, `400 36px ${F}`, "#666");
 
   drawFooter(ctx);
-
   return canvas.toBuffer("image/png");
 }
 
