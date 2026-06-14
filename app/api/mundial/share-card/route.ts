@@ -6,23 +6,25 @@ import fs from "fs";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Register bundled fonts — with diagnostics to trace failures on Vercel Linux
 const fontsDir = path.join(process.cwd(), "public", "fonts");
-try {
-  const dirExists = fs.existsSync(fontsDir);
-  const files = dirExists ? fs.readdirSync(fontsDir) : [];
-  console.log("SHARE_CARD font_dir:", fontsDir);
-  console.log("SHARE_CARD dir_exists:", dirExists);
-  console.log("SHARE_CARD files:", files);
-  console.log("SHARE_CARD families_before:", GlobalFonts.families.length);
-  if (dirExists) {
-    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Regular.ttf"), "Roboto");
-    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Bold.ttf"), "Roboto");
-    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Black.ttf"), "Roboto");
+
+// Lazy one-time font registration per Lambda instance.
+// Using register(Buffer) instead of registerFromPath so Node.js fs reads the
+// file — bypasses native binary path-resolution quirks on Vercel Linux.
+let _fontsReady = false;
+function ensureFonts() {
+  if (_fontsReady) return;
+  _fontsReady = true;
+  const names = ["Roboto-Regular.ttf", "Roboto-Bold.ttf", "Roboto-Black.ttf"];
+  for (const name of names) {
+    try {
+      const buf = fs.readFileSync(path.join(fontsDir, name));
+      GlobalFonts.register(buf, "Roboto");
+    } catch (e) {
+      console.error(`SHARE_CARD failed to register ${name}:`, e);
+    }
   }
-  console.log("SHARE_CARD families_after:", GlobalFonts.families.length);
-} catch (e) {
-  console.error("SHARE_CARD font_error:", e);
+  console.log("SHARE_CARD families after registration:", GlobalFonts.families.length);
 }
 
 const W = 1080;
@@ -258,6 +260,8 @@ function badgeCard(
 }
 
 export async function GET(request: NextRequest) {
+  ensureFonts();
+
   const p = request.nextUrl.searchParams;
 
   // Diagnostic mode: ?diag=1 returns JSON with font-registration state
