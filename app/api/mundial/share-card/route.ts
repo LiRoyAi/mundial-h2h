@@ -259,6 +259,19 @@ function badgeCard(
 
 export async function GET(request: NextRequest) {
   const p = request.nextUrl.searchParams;
+
+  // Diagnostic mode: ?diag=1 returns JSON with font-registration state
+  if (p.get("diag") === "1") {
+    const dirExists = fs.existsSync(fontsDir);
+    return Response.json({
+      cwd: process.cwd(),
+      fontsDir,
+      dirExists,
+      files: dirExists ? fs.readdirSync(fontsDir) : [],
+      families: GlobalFonts.families.map((f) => f.family),
+    });
+  }
+
   const type = p.get("type") ?? "pick";
   const nick = p.get("nick") ?? "anonim";
 
