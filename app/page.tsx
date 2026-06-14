@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import matchesData from "@/data/matches.json";
+import AIComment from "@/components/AIComment";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -437,6 +438,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [cardFlash, setCardFlash] = useState(false);
   const [liroyAnalysis, setLiroyAnalysis] = useState<string | null | undefined>(undefined);
   const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(false);
+  const [aiComment, setAiComment] = useState<string | null>(null);
   const isPast = new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
@@ -553,6 +555,29 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
       setCardFlash(true);
       setTimeout(() => setCardFlash(false), 300);
       onFirstVote?.();
+      void (async () => {
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 3000);
+          const r = await fetch("/api/mundial/ai-comment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              matchId: match.id,
+              nick,
+              score: `${score1}:${score2}`,
+              goldenBall: goldenBallActive,
+              result: matchResult,
+            }),
+            signal: controller.signal,
+          });
+          clearTimeout(timeout);
+          if (r.ok) {
+            const d = await r.json();
+            if (d.comment) setAiComment(d.comment);
+          }
+        } catch { /* fail silently */ }
+      })();
     } catch { setError("Błąd połączenia. Spróbuj ponownie."); }
     finally { setLoading(false); }
   };
@@ -825,6 +850,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
             </motion.div>
           )}
         </AnimatePresence>
+
+        <AIComment comment={aiComment} onDismiss={() => setAiComment(null)} />
 
         {voted && goldenBallUsed && (
           <div className="mt-3 flex justify-center">
