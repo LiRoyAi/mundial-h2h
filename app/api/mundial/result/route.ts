@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
-import { calculateAndSaveBadges } from "@/lib/badges";
+import { calculateAndSaveBadges, getBadges, BADGE_EMOJIS, BADGE_NAMES } from "@/lib/badges";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
 
   const pointOps: Promise<unknown>[] = [];
   const notifOps: Promise<unknown>[] = [];
+  const nickToMsg = new Map<string, string>();
   for (const vk of voteKeys) {
     const nick = vk.replace(`vote:${matchId}:`, "");
     const voted = await redis.get<string>(vk);
@@ -99,6 +100,7 @@ export async function POST(request: NextRequest) {
       pts === 1 ? "+1 pkt — trafiony zwycięzca" :
       pts === -1 ? "-1 pkt — pudło z Złotą Piłką 😬" :
                    "pudło — 0 pkt, następnym razem";
+    nickToMsg.set(nick, msg);
     notifOps.push(redis.set(`notification:${nick}`, msg, { ex: 7 * 24 * 3600 }));
   }
 
@@ -122,10 +124,25 @@ export async function POST(request: NextRequest) {
     // Silently ignore — filesystem is read-only in Vercel; result is in Redis
   }
 
-  // Recalculate badges for all voters of this match
+  // Recalculate badges for all voters; detect newly earned ones and update notifications
   try {
     const nicks = voteKeys.map((vk) => vk.replace(`vote:${matchId}:`, ""));
-    await Promise.all(nicks.map((n) => calculateAndSaveBadges(redis, n)));
+    const badgeUpdateOps: Promise<unknown>[] = [];
+    await Promise.all(nicks.map(async (n) => {
+      const oldBadges = await getBadges(redis, n);
+      const newBadges = await calculateAndSaveBadges(redis, n);
+      const fresh = newBadges.filter((b) => !oldBadges.includes(b));
+      if (fresh.length === 0) return;
+      const badgeId = fresh[0];
+      const emoji = BADGE_EMOJIS[badgeId] ?? "🏅";
+      const name = BADGE_NAMES[badgeId] ?? badgeId;
+      const baseMsg = nickToMsg.get(n) ?? "";
+      const updatedMsg = `${baseMsg}\nZdobyłeś odznakę ${emoji} ${name}!`;
+      const ttl = 7 * 24 * 3600;
+      badgeUpdateOps.push(redis.set(`notification:${n}`, updatedMsg, { ex: ttl }));
+      badgeUpdateOps.push(redis.set(`notification_badge:${n}`, badgeId, { ex: ttl }));
+    }));
+    if (badgeUpdateOps.length > 0) await Promise.all(badgeUpdateOps);
   } catch { /* don't fail the result save if badge calc errors */ }
 
   // Calculate challenge wins

@@ -10,15 +10,17 @@ export async function GET(request: NextRequest) {
   const nick = new URL(request.url).searchParams.get("nick");
   if (!nick) return Response.json({ message: null, showOnboarding: false });
 
-  const [message, onboarded, rankingVal] = await Promise.all([
+  const [message, onboarded, rankingVal, newBadgeId] = await Promise.all([
     redis.get<string>(`notification:${nick}`),
     redis.exists(`onboarded:${nick}`),
     redis.get(`ranking:${nick}`),
+    redis.get<string>(`notification_badge:${nick}`),
   ]);
 
-  if (message) {
-    await redis.del(`notification:${nick}`);
-  }
+  const delOps: Promise<unknown>[] = [];
+  if (message) delOps.push(redis.del(`notification:${nick}`));
+  if (newBadgeId) delOps.push(redis.del(`notification_badge:${nick}`));
+  if (delOps.length > 0) await Promise.all(delOps);
 
   let showOnboarding = false;
   if (!onboarded) {
@@ -30,5 +32,5 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return Response.json({ message: message ?? null, showOnboarding });
+  return Response.json({ message: message ?? null, showOnboarding, newBadgeId: newBadgeId ?? null });
 }

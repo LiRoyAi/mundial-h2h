@@ -45,6 +45,15 @@ const BADGE_EMOJIS: Record<string, string> = {
   comeback_king: "👑",
 };
 
+const BADGE_NAMES: Record<string, string> = {
+  snajper: "Snajper",
+  hot_streak: "Hot Streak",
+  perfect_day: "Perfect Day",
+  underdog: "Underdog",
+  pierwsza_krew: "Pierwsza Krew",
+  comeback_king: "Comeback King",
+};
+
 interface UserRank {
   position: number;
   points: number;
@@ -1570,6 +1579,7 @@ export default function MundialPage() {
 
   const [notification, setNotification] = useState("");
   const [notifShareText, setNotifShareText] = useState<string | null>(null);
+  const [pendingBadgeId, setPendingBadgeId] = useState<string | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const [reminderChecked, setReminderChecked] = useState(false);
@@ -1591,6 +1601,16 @@ export default function MundialPage() {
     sessionStorage.setItem("flags_intro_seen", "1");
     setShowIntro(false);
   }, []);
+
+  useEffect(() => {
+    if (!pendingBadgeId || !userRank || !nick) return;
+    const emoji = BADGE_EMOJIS[pendingBadgeId] ?? "🏅";
+    const name = BADGE_NAMES[pendingBadgeId] ?? pendingBadgeId;
+    setNotifShareText(
+      `${emoji} Zdobyłem odznakę ${name} w H2H Archive!\nJestem #${userRank.position} z ${userRank.points} pkt\nmundial.liroy.pl/gracz/${nick}`
+    );
+    setPendingBadgeId(null);
+  }, [pendingBadgeId, userRank, nick]);
 
   const handleGoldenBallResult = useCallback((pts: number) => {
     let msg: string;
@@ -1701,6 +1721,7 @@ export default function MundialPage() {
           if (data?.message) {
             setNotification(data.message);
             setNotifShareText(null);
+            if (data.newBadgeId) setPendingBadgeId(data.newBadgeId);
             setTimeout(() => setNotification(""), 6000);
           }
           if (data?.showOnboarding) setShowOnboarding(true);
@@ -2483,7 +2504,7 @@ export default function MundialPage() {
               className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-3 text-center pointer-events-auto max-w-sm w-full"
               onClick={() => { setNotification(""); setNotifShareText(null); }}
             >
-              <p className="text-sm tracking-[0.15em]" style={{ fontFamily: B, color: "#FFD700" }}>
+              <p className="text-sm tracking-[0.15em] whitespace-pre-line" style={{ fontFamily: B, color: "#FFD700" }}>
                 {notification}
               </p>
               {notifShareText && (

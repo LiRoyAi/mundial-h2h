@@ -6,6 +6,24 @@ const MATCHES = matchesData.matches as MatchInfo[];
 
 export type BadgeId = "snajper" | "hot_streak" | "perfect_day" | "underdog" | "pierwsza_krew" | "comeback_king";
 
+export const BADGE_EMOJIS: Record<BadgeId, string> = {
+  snajper: "🎯",
+  hot_streak: "🔥",
+  perfect_day: "⭐",
+  underdog: "😈",
+  pierwsza_krew: "🩸",
+  comeback_king: "👑",
+};
+
+export const BADGE_NAMES: Record<BadgeId, string> = {
+  snajper: "Snajper",
+  hot_streak: "Hot Streak",
+  perfect_day: "Perfect Day",
+  underdog: "Underdog",
+  pierwsza_krew: "Pierwsza Krew",
+  comeback_king: "Comeback King",
+};
+
 function parseScore(s: string): [number, number] | null {
   const parts = s.replace("-", ":").split(":").map(Number);
   if (parts.length !== 2 || parts.some(isNaN)) return null;
