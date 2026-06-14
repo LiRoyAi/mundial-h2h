@@ -414,10 +414,10 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
         {cardFlash && (
           <motion.div
             className="absolute inset-0 pointer-events-none z-10"
-            initial={{ opacity: 0.35 }}
+            initial={{ opacity: 0.5 }}
             animate={{ opacity: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5 }}
             style={{ background: "#FFD700" }}
           />
         )}
@@ -450,9 +450,9 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
                   </div>
                   <motion.div
                     key={`pts-${matchResult}`}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ type: "spring", stiffness: 420, damping: 22, delay: 0.1 }}
+                    initial={{ opacity: 0, y: 14, scale: 0 }}
+                    animate={{ opacity: 1, y: 0, scale: [0, 1.2, 1] }}
+                    transition={{ type: "spring", stiffness: 420, damping: 18, delay: 0.1 }}
                   >
                     <PtsBadge pts={calcPts(myVote, matchResult, goldenBallUsed)} />
                   </motion.div>
@@ -471,8 +471,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
           ) : !isPast ? (
             <motion.div
               className="flex items-center gap-3"
-              animate={{ boxShadow: inputFlash ? "0 0 20px rgba(255,215,0,0.5)" : "0 0 0px rgba(255,215,0,0)" }}
-              transition={{ duration: 0.25 }}
+              animate={{ boxShadow: inputFlash ? "0 0 0 3px #FFD700" : "0 0 0 0px #FFD700" }}
+              transition={{ duration: 0.4 }}
             >
               <ScorePicker value={score1} onChange={setScore1} />
               <span style={{ fontFamily: B, fontSize: "2rem", color: "#FFD700" }}>:</span>
@@ -530,8 +530,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
             <div className="flex justify-center mt-4">
               <motion.button
                 whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.87 }}
-                transition={{ type: "spring", stiffness: 500, damping: 14 }}
+                whileTap={{ scale: 0.75 }}
+                transition={{ type: "spring", stiffness: 600, damping: 8 }}
                 onClick={handleVote} disabled={loading}
                 className="px-10 py-3 text-black text-sm tracking-[0.2em] disabled:opacity-50"
                 style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
