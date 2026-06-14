@@ -20,6 +20,18 @@ function trunc(s: string, n: number) {
   return s.length > n ? s.slice(0, n - 1) + "…" : s;
 }
 
+function ScoreDisplay({ score, size }: { score: string; size: number }) {
+  const [s1, s2] = score.split(":");
+  const sepSize = Math.round(size * 0.55);
+  return (
+    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 0 }}>
+      <span style={{ fontSize: size, fontWeight: 900, color: GOLD, lineHeight: 1 }}>{s1 ?? score}</span>
+      <span style={{ fontSize: sepSize, fontWeight: 900, color: GOLD, lineHeight: 1, margin: `0 ${Math.round(size * 0.06)}px`, paddingBottom: Math.round(size * 0.08) }}>:</span>
+      <span style={{ fontSize: size, fontWeight: 900, color: GOLD, lineHeight: 1 }}>{s2 ?? ""}</span>
+    </div>
+  );
+}
+
 // ── Shared layout pieces ─────────────────────────────────────────────────────
 
 function Header() {
@@ -78,7 +90,7 @@ function PickCard({ nick, score, t1, t2, f1, f2, gb }: {
 
       {/* Score — vertically centered in remaining space */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 0 }}>
-        <span style={{ fontSize: 260, fontWeight: 900, color: GOLD, lineHeight: 1 }}>{score}</span>
+        <ScoreDisplay score={score} size={260} />
         {gb && (
           <div style={{ display: "flex", background: "#1a1400", padding: "16px 60px", marginTop: 28 }}>
             <span style={{ fontSize: 30, fontWeight: 700, color: GOLD, letterSpacing: 6 }}>ZLOTA PILKA</span>
@@ -107,8 +119,21 @@ function HitCard({ nick, score, t1, t2 }: { nick: string; score: string; t1: str
         <div style={{ height: 1, background: "#222", width: 680, marginTop: 40 }} />
       </div>
 
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ fontSize: 280, fontWeight: 900, color: GOLD, lineHeight: 1 }}>{score}</span>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 0 }}>
+        {/* CSS checkmark: L-shape rotated -45deg */}
+        <div style={{ display: "flex", width: 140, height: 140, alignItems: "center", justifyContent: "center" }}>
+          <div style={{
+            display: "flex",
+            width: 80, height: 46,
+            borderLeft: `12px solid ${GOLD}`,
+            borderBottom: `12px solid ${GOLD}`,
+            transform: "rotate(-45deg)",
+            marginTop: -24,
+          }} />
+        </div>
+        <div style={{ display: "flex", marginTop: 28 }}>
+          <ScoreDisplay score={score} size={260} />
+        </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingBottom: 60 }}>
