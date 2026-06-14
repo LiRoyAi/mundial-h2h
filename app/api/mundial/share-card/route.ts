@@ -1,15 +1,29 @@
 import { NextRequest } from "next/server";
 import { createCanvas, GlobalFonts, CanvasRenderingContext2D } from "@napi-rs/canvas";
 import path from "path";
+import fs from "fs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Register bundled fonts once at module load — system fonts unavailable on Vercel Linux
+// Register bundled fonts — with diagnostics to trace failures on Vercel Linux
 const fontsDir = path.join(process.cwd(), "public", "fonts");
-GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Regular.ttf"), "Roboto");
-GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Bold.ttf"), "Roboto");
-GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Black.ttf"), "Roboto");
+try {
+  const dirExists = fs.existsSync(fontsDir);
+  const files = dirExists ? fs.readdirSync(fontsDir) : [];
+  console.log("SHARE_CARD font_dir:", fontsDir);
+  console.log("SHARE_CARD dir_exists:", dirExists);
+  console.log("SHARE_CARD files:", files);
+  console.log("SHARE_CARD families_before:", GlobalFonts.families.length);
+  if (dirExists) {
+    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Regular.ttf"), "Roboto");
+    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Bold.ttf"), "Roboto");
+    GlobalFonts.registerFromPath(path.join(fontsDir, "Roboto-Black.ttf"), "Roboto");
+  }
+  console.log("SHARE_CARD families_after:", GlobalFonts.families.length);
+} catch (e) {
+  console.error("SHARE_CARD font_error:", e);
+}
 
 const W = 1080;
 const H = 1920;
