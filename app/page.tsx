@@ -229,6 +229,39 @@ function PtsBadge({ pts }: { pts: number }) {
   return <span className="text-xs tracking-widest" style={{ fontFamily: B, color: "#555" }}>0 PKT</span>;
 }
 
+// ─── StadiumBg ────────────────────────────────────────────────────────────────
+
+const DOTS: [number, number, number, number][] = [
+  // [x%, y%, dur(s), delay(s)]  — stadium lights: top clusters + sides
+  [5, 5, 3.2, -1.1], [8, 3, 4.5, -0.3], [12, 8, 2.8, -2.4], [3, 11, 3.7, -4.1], [15, 4, 4.1, -1.8],
+  [22, 4, 3.5, -3.2], [28, 6, 2.6, -0.7], [35, 3, 4.8, -5.1], [32, 10, 3.1, -2.9], [25, 9, 4.3, -1.4],
+  [45, 5, 2.9, -4.6], [52, 3, 3.6, -0.5], [58, 7, 4.2, -3.8], [65, 4, 2.7, -1.9], [68, 9, 3.4, -5.3],
+  [75, 3, 4.6, -2.2], [80, 6, 3.0, -4.0], [85, 4, 2.8, -0.9], [88, 8, 4.4, -3.5], [92, 5, 3.3, -1.6],
+  [95, 11, 4.0, -5.8], [97, 3, 3.8, -2.0],
+  [3, 24, 3.8, -2.7], [2, 37, 4.7, -1.3], [4, 51, 3.2, -4.9], [2, 64, 4.1, -0.6], [5, 76, 3.6, -3.3],
+  [97, 21, 4.3, -1.7], [96, 34, 3.1, -4.5], [98, 49, 4.8, -2.1], [96, 63, 3.5, -0.8], [97, 77, 4.0, -3.9],
+  [8, 89, 3.7, -2.4], [12, 93, 4.2, -5.2], [85, 91, 3.4, -1.1], [92, 86, 4.6, -3.7],
+];
+
+const TIERS = [16, 24, 32, 40, 49, 58, 67, 76, 84];
+
+function StadiumBg() {
+  return (
+    <div className="stadium-bg">
+      {TIERS.map((y) => (
+        <div key={y} className="stadium-tier" style={{ top: `${y}%` }} />
+      ))}
+      {DOTS.map(([x, y, dur, del], i) => (
+        <div
+          key={i}
+          className="stadium-dot"
+          style={{ left: `${x}%`, top: `${y}%`, animationDuration: `${dur}s`, animationDelay: `${del}s` }}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── MatchCard ────────────────────────────────────────────────────────────────
 
 function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, firstLeagueId, onGoldenBallResult }: {
@@ -1625,8 +1658,9 @@ export default function MundialPage() {
 
   return (
     <>
+      <StadiumBg />
       {showIntro && <FlagsIntro onDone={handleIntroDone} />}
-      <main style={{ background: "#000", minHeight: "100vh" }}>
+      <main style={{ background: "transparent", minHeight: "100vh", position: "relative", zIndex: 1 }}>
 
       {/* ── HERO — guests only ───────────────────────────────────────── */}
       {mounted && !nickSaved && (

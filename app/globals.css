@@ -26,3 +26,42 @@ body {
 .pulse-gold {
   animation: pulse-gold 1.5s ease-in-out infinite;
 }
+
+/* ── Stadium background ──────────────────────────────────────────────────── */
+
+@keyframes stadium-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
+}
+
+.stadium-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(ellipse 90% 65% at 50% 38%, #0e0e0e 0%, #000 72%);
+}
+
+.stadium-tier {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.stadium-dot {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  will-change: opacity;
+  animation-name: stadium-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stadium-dot { animation: none; opacity: 0.4; }
+}
