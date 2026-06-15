@@ -135,18 +135,23 @@ export async function POST(request: NextRequest) {
         return arr.find((m) => m.id === matchId) ?? null;
       } catch { return null; }
     })();
-    fetch(makeWebhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        matchId,
-        result,
-        t1: match?.t1?.name ?? matchId.split("-")[0],
-        t2: match?.t2?.name ?? matchId.split("-")[1],
-        f1: match?.t1?.flag ?? "",
-        f2: match?.t2?.flag ?? "",
-      }),
-    }).catch(() => {});
+    try {
+      await Promise.race([
+        fetch(makeWebhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            matchId,
+            result,
+            t1: match?.t1?.name ?? matchId.split("-")[0],
+            t2: match?.t2?.name ?? matchId.split("-")[1],
+            f1: match?.t1?.flag ?? "",
+            f2: match?.t2?.flag ?? "",
+          }),
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 3000)),
+      ]);
+    } catch { /* ignore */ }
   }
 
   // Recalculate badges for all voters; detect newly earned ones and update notifications
