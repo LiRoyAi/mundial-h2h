@@ -124,6 +124,31 @@ export async function POST(request: NextRequest) {
     // Silently ignore — filesystem is read-only in Vercel; result is in Redis
   }
 
+  // Fire Make.com webhook (best-effort, non-blocking)
+  const makeWebhook = process.env.MAKE_WEBHOOK_RESULT;
+  if (makeWebhook) {
+    const match = (() => {
+      try {
+        const dataPath = join(process.cwd(), "data", "matches.json");
+        const data = JSON.parse(readFileSync(dataPath, "utf-8"));
+        const arr: { id: string; t1?: { name?: string; flag?: string }; t2?: { name?: string; flag?: string } }[] = data.matches ?? data;
+        return arr.find((m) => m.id === matchId) ?? null;
+      } catch { return null; }
+    })();
+    fetch(makeWebhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        matchId,
+        result,
+        t1: match?.t1?.name ?? matchId.split("-")[0],
+        t2: match?.t2?.name ?? matchId.split("-")[1],
+        f1: match?.t1?.flag ?? "",
+        f2: match?.t2?.flag ?? "",
+      }),
+    }).catch(() => {});
+  }
+
   // Recalculate badges for all voters; detect newly earned ones and update notifications
   try {
     const nicks = voteKeys.map((vk) => vk.replace(`vote:${matchId}:`, ""));
