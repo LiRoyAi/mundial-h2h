@@ -37,14 +37,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { matchId?: string; result?: string; adminKey?: string };
+  let body: { matchId?: string; result?: string; adminKey?: string; force?: boolean };
   try {
     body = await request.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { matchId, result, adminKey } = body;
+  const { matchId, result, adminKey, force } = body;
 
   if (adminKey !== process.env.ADMIN_KEY) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
@@ -58,23 +58,15 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Invalid result format, use e.g. 2:0" }, { status: 400 });
   }
 
-  // Reject results for matches that haven't kicked off yet
-  try {
-    const dataPath = join(process.cwd(), "data", "matches.json");
-    const data = JSON.parse(readFileSync(dataPath, "utf-8"));
-    const arr: { id: string; deadline?: string }[] = data.matches ?? data;
-    const matchEntry = arr.find((m) => m.id === matchId);
-    if (matchEntry?.deadline && new Date(matchEntry.deadline) > new Date()) {
-      return Response.json(
-        { error: `Match ${matchId} hasn't kicked off yet. Deadline: ${matchEntry.deadline}` },
-        { status: 400 }
-      );
-    }
-  } catch { /* if file unreadable, skip this check */ }
-
   const alreadyApplied = await redis.get(`result_applied:${matchId}`);
-  if (alreadyApplied) {
-    return Response.json({ error: "Result already applied for this match" }, { status: 409 });
+  if (alreadyApplied && !force) {
+    return Response.json(
+      { error: `Result already applied for ${matchId}. Use force:true to overwrite (points won't be recalculated).` },
+      { status: 409 }
+    );
+  }
+  if (alreadyApplied && force) {
+    await redis.del(`result_applied:${matchId}`);
   }
 
   // Fetch all per-nick votes for this match
