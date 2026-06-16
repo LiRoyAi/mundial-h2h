@@ -146,6 +146,7 @@ export async function POST(request: NextRequest) {
             t2: match?.t2?.name ?? matchId.split("-")[1],
             f1: match?.t1?.flag ?? "",
             f2: match?.t2?.flag ?? "",
+            shareCardUrl: `https://mundial.liroy.pl/api/mundial/share-card?type=pick&nick=LiROY&score=${encodeURIComponent(result)}&t1=${encodeURIComponent(match?.t1?.name ?? "")}&t2=${encodeURIComponent(match?.t2?.name ?? "")}&f1=${encodeURIComponent(match?.t1?.flag ?? "")}&f2=${encodeURIComponent(match?.t2?.flag ?? "")}`,
           }),
         }),
         new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 3000)),
