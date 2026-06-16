@@ -149,6 +149,37 @@ function HitCard({ nick, score, t1, t2 }: { nick: string; score: string; t1: str
   );
 }
 
+function ResultCard({ score, t1, t2, f1, f2 }: { score: string; t1: string; t2: string; f1: string; f2: string }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", width: 1080, height: 1920, background: BG, fontFamily: "Roboto" }}>
+      <Header />
+
+      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center", padding: "80px 60px 20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 380 }}>
+          <span style={{ fontSize: 38, fontWeight: 700, color: "#777" }}>{f1}</span>
+          <span style={{ fontSize: 34, fontWeight: 600, color: "#ccc", marginTop: 18, textAlign: "center" }}>{trunc(t1, 20)}</span>
+        </div>
+        <span style={{ fontSize: 40, fontWeight: 900, color: "#333" }}>VS</span>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 380 }}>
+          <span style={{ fontSize: 38, fontWeight: 700, color: "#777" }}>{f2}</span>
+          <span style={{ fontSize: 34, fontWeight: 600, color: "#ccc", marginTop: 18, textAlign: "center" }}>{trunc(t2, 20)}</span>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 60 }}>
+        <span style={{ fontSize: 28, fontWeight: 700, color: "#444", letterSpacing: 14 }}>WYNIK</span>
+        <div style={{ height: 1, background: "#222", width: 320, marginTop: 18 }} />
+      </div>
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <ScoreDisplay score={score} size={260} />
+      </div>
+
+      <Footer />
+    </div>
+  );
+}
+
 function RankCard({ nick, rank, pts }: { nick: string; rank: string; pts: string }) {
   const rankText = `#${rank}`;
   const fs = rankText.length <= 3 ? 340 : rankText.length <= 4 ? 280 : 220;
@@ -233,7 +264,9 @@ export async function GET(request: NextRequest) {
 
   let element: React.ReactElement;
 
-  if (type === "hit") {
+  if (type === "result") {
+    element = <ResultCard score={p.get("score") ?? "?:?"} t1={p.get("t1") ?? ""} t2={p.get("t2") ?? ""} f1={p.get("f1") ?? ""} f2={p.get("f2") ?? ""} />;
+  } else if (type === "hit") {
     element = <HitCard nick={nick} score={p.get("score") ?? "?:?"} t1={p.get("t1") ?? ""} t2={p.get("t2") ?? ""} />;
   } else if (type === "rank") {
     element = <RankCard nick={nick} rank={p.get("rank") ?? "?"} pts={p.get("pts") ?? "0"} />;

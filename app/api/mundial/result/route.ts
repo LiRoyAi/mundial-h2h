@@ -58,6 +58,20 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Invalid result format, use e.g. 2:0" }, { status: 400 });
   }
 
+  // Reject results for matches that haven't kicked off yet
+  try {
+    const dataPath = join(process.cwd(), "data", "matches.json");
+    const data = JSON.parse(readFileSync(dataPath, "utf-8"));
+    const arr: { id: string; deadline?: string }[] = data.matches ?? data;
+    const matchEntry = arr.find((m) => m.id === matchId);
+    if (matchEntry?.deadline && new Date(matchEntry.deadline) > new Date()) {
+      return Response.json(
+        { error: `Match ${matchId} hasn't kicked off yet. Deadline: ${matchEntry.deadline}` },
+        { status: 400 }
+      );
+    }
+  } catch { /* if file unreadable, skip this check */ }
+
   const alreadyApplied = await redis.get(`result_applied:${matchId}`);
   if (alreadyApplied) {
     return Response.json({ error: "Result already applied for this match" }, { status: 409 });
@@ -146,7 +160,7 @@ export async function POST(request: NextRequest) {
             t2: match?.t2?.name ?? matchId.split("-")[1],
             f1: match?.t1?.flag ?? "",
             f2: match?.t2?.flag ?? "",
-            shareCardUrl: `https://mundial.liroy.pl/api/mundial/share-card?type=pick&nick=LiROY&score=${encodeURIComponent(result)}&t1=${encodeURIComponent(match?.t1?.name ?? "")}&t2=${encodeURIComponent(match?.t2?.name ?? "")}&f1=${encodeURIComponent(match?.t1?.flag ?? "")}&f2=${encodeURIComponent(match?.t2?.flag ?? "")}`,
+            shareCardUrl: `https://mundial.liroy.pl/api/mundial/share-card?type=result&score=${encodeURIComponent(result)}&t1=${encodeURIComponent(match?.t1?.name ?? "")}&t2=${encodeURIComponent(match?.t2?.name ?? "")}&f1=${encodeURIComponent(match?.t1?.flag ?? "")}&f2=${encodeURIComponent(match?.t2?.flag ?? "")}`,
           }),
         }),
         new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 3000)),
