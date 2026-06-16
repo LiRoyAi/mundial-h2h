@@ -129,7 +129,10 @@ export async function POST(request: NextRequest) {
   if (makeWebhook) {
     const match = await fetch(`https://mundial.liroy.pl/api/mundial/matches`)
       .then(r => r.json())
-      .then((matches: any[]) => matches.find((m: any) => m.id === matchId) ?? null)
+      .then((data: any) => {
+        const arr = Array.isArray(data) ? data : (data.matches ?? []);
+        return arr.find((m: any) => m.id === matchId) ?? null;
+      })
       .catch(() => null);
     try {
       await Promise.race([
