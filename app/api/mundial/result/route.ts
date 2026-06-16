@@ -127,14 +127,10 @@ export async function POST(request: NextRequest) {
   // Fire Make.com webhook (best-effort, non-blocking)
   const makeWebhook = process.env.MAKE_WEBHOOK_RESULT;
   if (makeWebhook) {
-    const match = (() => {
-      try {
-        const dataPath = join(process.cwd(), "data", "matches.json");
-        const data = JSON.parse(readFileSync(dataPath, "utf-8"));
-        const arr: { id: string; t1?: { name?: string; flag?: string }; t2?: { name?: string; flag?: string } }[] = data.matches ?? data;
-        return arr.find((m) => m.id === matchId) ?? null;
-      } catch { return null; }
-    })();
+    const match = await fetch(`https://mundial.liroy.pl/api/mundial/matches`)
+      .then(r => r.json())
+      .then((matches: any[]) => matches.find((m: any) => m.id === matchId) ?? null)
+      .catch(() => null);
     try {
       await Promise.race([
         fetch(makeWebhook, {
