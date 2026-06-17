@@ -64,12 +64,15 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "FOOTBALL_DATA_API_KEY not configured" }, { status: 500 });
   }
 
-  // Fetch finished WC matches from football-data.org
+  // Fetch ALL finished WC matches — no date or timezone filtering.
+  // Matches can end late-night in US/Mexico/Canada time zones, so any date
+  // comparison would risk skipping legitimate results. The only guard is
+  // Redis idempotency (result_applied:{matchId}) which prevents double-scoring.
   const fdRes = await fetch(
     "https://api.football-data.org/v4/competitions/WC/matches?status=FINISHED",
     {
       headers: { "X-Auth-Token": apiKey },
-      next: { revalidate: 0 },
+      cache: "no-store",
     }
   );
   if (!fdRes.ok) {
@@ -82,16 +85,18 @@ export async function POST(request: NextRequest) {
   const fdData = await fdRes.json();
   const fdMatches: any[] = fdData.matches ?? [];
 
-  // Load local matches to build the known-ID set
-  let localIds: Set<string>;
+  // Load local matches to build the known-ID set (file is bundled at build time,
+  // readable at Vercel runtime just like any static asset).
+  let localIds: Set<string> = new Set();
   try {
     const raw = readFileSync(join(process.cwd(), "data", "matches.json"), "utf-8");
     const parsed = JSON.parse(raw);
     const arr: any[] = parsed.matches ?? parsed;
     localIds = new Set(arr.map((m: any) => m.id));
   } catch {
-    // On Vercel the filesystem is read-only at runtime but file is bundled at build time
-    localIds = new Set(); // will fall back to Redis-only check below
+    // Non-fatal: if file can't be read, localIds stays empty and we'll try all
+    // WC matches (applyResult will gracefully skip unknown matchIds via the
+    // result endpoint's own validation).
   }
 
   const baseUrl = "https://mundial.liroy.pl";
@@ -113,7 +118,9 @@ export async function POST(request: NextRequest) {
 
     const matchId = `${homeTla}-${awayTla}`;
 
-    // Skip if not in our tournament (when localIds is available)
+    // Filter only our tournament matches; skip WC matches not in matches.json
+    // (e.g. editions from other years if API returns them).
+    // This is NOT a date filter — matches are identified by team TLAs, not dates.
     if (localIds.size > 0 && !localIds.has(matchId)) continue;
 
     const homeGoals = m.score?.fullTime?.home;
