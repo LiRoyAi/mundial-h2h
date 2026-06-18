@@ -35,7 +35,7 @@ export async function GET(_request: NextRequest) {
     result: m.result ?? null,
   }));
 
-  return Response.json(matches, {
+  return Response.json({ matches }, {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Cache-Control": "no-store",
