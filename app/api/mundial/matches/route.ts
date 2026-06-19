@@ -17,12 +17,12 @@ type RawMatch = {
   result?: string | null;
 };
 
-export async function GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   const dataPath = join(process.cwd(), "data", "matches.json");
   const data = JSON.parse(readFileSync(dataPath, "utf-8"));
   const raw: RawMatch[] = data.matches ?? data;
 
-  const matches = raw.map((m) => ({
+  let matches = raw.map((m) => ({
     id: m.id,
     group: m.group,
     t1: m.t1,
@@ -34,6 +34,20 @@ export async function GET(_request: NextRequest) {
     youtube_en: m.youtube_en ?? null,
     result: m.result ?? null,
   }));
+
+  if (request.nextUrl.searchParams.has("window")) {
+    const window = request.nextUrl.searchParams.get("window");
+    if (window === "pre24") {
+      const now = Date.now();
+      const lo = now + 22 * 60 * 60 * 1000;
+      const hi = now + 24 * 60 * 60 * 1000;
+      matches = matches.filter((m) => {
+        if (!m.deadline) return false;
+        const t = new Date(m.deadline).getTime();
+        return t >= lo && t <= hi;
+      });
+    }
+  }
 
   return Response.json({ matches }, {
     headers: {
