@@ -215,17 +215,19 @@ function Countdown({ target, short = false }: { target: Date; short?: boolean })
 
 // ─── ScorePicker ──────────────────────────────────────────────────────────────
 
-function ScorePicker({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+function ScorePicker({ value, onChange }: { value: number | null; onChange: (v: number) => void }) {
   return (
     <div className="flex flex-col items-center gap-1">
       <button
-        onClick={() => onChange(Math.min(9, value + 1))}
+        onClick={() => onChange(Math.min(9, (value ?? -1) + 1))}
         className="w-9 h-9 flex items-center justify-center border border-[#FFD700]/40 text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors"
         style={{ fontFamily: B, fontSize: "1.2rem" }}
       >+</button>
-      <span className="text-3xl w-10 text-center" style={{ fontFamily: B, color: "#fff" }}>{value}</span>
+      <span className="text-3xl w-10 text-center" style={{ fontFamily: B, color: value === null ? "#555" : "#fff" }}>
+        {value === null ? "–" : value}
+      </span>
       <button
-        onClick={() => onChange(Math.max(0, value - 1))}
+        onClick={() => onChange(Math.max(0, (value ?? 1) - 1))}
         className="w-9 h-9 flex items-center justify-center border border-[#FFD700]/40 text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors"
         style={{ fontFamily: B, fontSize: "1.2rem" }}
       >−</button>
@@ -437,8 +439,8 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   firstLeagueId?: string | null;
   onGoldenBallResult?: (pts: number) => void;
 }) {
-  const [score1, setScore1] = useState(0);
-  const [score2, setScore2] = useState(0);
+  const [score1, setScore1] = useState<number | null>(null);
+  const [score2, setScore2] = useState<number | null>(null);
   const [voted, setVoted] = useState(false);
   const [justVoted, setJustVoted] = useState(false);
   const [results, setResults] = useState<Results>({});
@@ -541,6 +543,7 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
 
   const handleVote = async () => {
     if (!nick.trim()) { setError("Wpisz nick przed typowaniem!"); return; }
+    if (score1 === null || score2 === null) { setError("Ustaw wynik przed typowaniem!"); return; }
     setError(""); setLoading(true);
     setInputFlash(true);
     setTimeout(() => setInputFlash(false), 500);
@@ -783,10 +786,10 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.75 }}
                 transition={{ type: "spring", stiffness: 600, damping: 8 }}
-                onClick={handleVote} disabled={loading}
+                onClick={handleVote} disabled={loading || score1 === null || score2 === null}
                 className="px-10 py-3 text-black text-sm tracking-[0.2em] disabled:opacity-50"
                 style={{ fontFamily: B, background: "#FFD700", letterSpacing: "0.2em" }}>
-                {loading ? "WYSYŁAM..." : goldenBallActive ? "⭐ TYPUJ Z ZŁOTĄ PIŁKĄ" : "TYPUJ"}
+                {loading ? "WYSYŁAM..." : score1 === null || score2 === null ? "USTAW WYNIK" : goldenBallActive ? "⭐ TYPUJ Z ZŁOTĄ PIŁKĄ" : "TYPUJ"}
               </motion.button>
             </div>
           </>
