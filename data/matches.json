@@ -2940,6 +2940,174 @@
       "published": false,
       "result": null,
       "h2h": null
+    },
+    {
+      "id": "can-mar",
+      "group": "1/8",
+      "t1": {
+        "name": "Kanada",
+        "flag": "🇨🇦"
+      },
+      "t2": {
+        "name": "Maroko",
+        "flag": "🇲🇦"
+      },
+      "date": "4 lipca 2026",
+      "time": "19:00",
+      "deadline": "2026-07-04T15:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "pry-fra",
+      "group": "1/8",
+      "t1": {
+        "name": "Paragwaj",
+        "flag": "🇵🇾"
+      },
+      "t2": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "date": "4 lipca 2026",
+      "time": "23:00",
+      "deadline": "2026-07-04T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "bra-nor",
+      "group": "1/8",
+      "t1": {
+        "name": "Brazylia",
+        "flag": "🇧🇷"
+      },
+      "t2": {
+        "name": "Norwegia",
+        "flag": "🇳🇴"
+      },
+      "date": "5 lipca 2026",
+      "time": "22:00",
+      "deadline": "2026-07-05T18:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "mex-eng",
+      "group": "1/8",
+      "t1": {
+        "name": "Meksyk",
+        "flag": "🇲🇽"
+      },
+      "t2": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "date": "6 lipca 2026",
+      "time": "02:00",
+      "deadline": "2026-07-05T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "por-esp",
+      "group": "1/8",
+      "t1": {
+        "name": "Portugalia",
+        "flag": "🇵🇹"
+      },
+      "t2": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "date": "6 lipca 2026",
+      "time": "21:00",
+      "deadline": "2026-07-06T17:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "usa-bel",
+      "group": "1/8",
+      "t1": {
+        "name": "USA",
+        "flag": "🇺🇸"
+      },
+      "t2": {
+        "name": "Belgia",
+        "flag": "🇧🇪"
+      },
+      "date": "7 lipca 2026",
+      "time": "02:00",
+      "deadline": "2026-07-06T22:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "arg-egy",
+      "group": "1/8",
+      "t1": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "t2": {
+        "name": "Egipt",
+        "flag": "🇪🇬"
+      },
+      "date": "7 lipca 2026",
+      "time": "18:00",
+      "deadline": "2026-07-07T14:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "sui-col",
+      "group": "1/8",
+      "t1": {
+        "name": "Szwajcaria",
+        "flag": "🇨🇭"
+      },
+      "t2": {
+        "name": "Kolumbia",
+        "flag": "🇨🇴"
+      },
+      "date": "7 lipca 2026",
+      "time": "22:00",
+      "deadline": "2026-07-07T18:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
     }
   ]
 }
