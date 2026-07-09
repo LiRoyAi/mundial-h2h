@@ -3108,6 +3108,90 @@
       "published": false,
       "result": null,
       "h2h": null
+    },
+    {
+      "id": "fra-mar",
+      "group": "1/4",
+      "t1": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "t2": {
+        "name": "Maroko",
+        "flag": "🇲🇦"
+      },
+      "date": "9 lipca 2026",
+      "time": "22:00",
+      "deadline": "2026-07-09T20:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "esp-bel",
+      "group": "1/4",
+      "t1": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "t2": {
+        "name": "Belgia",
+        "flag": "🇧🇪"
+      },
+      "date": "10 lipca 2026",
+      "time": "21:00",
+      "deadline": "2026-07-10T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "nor-eng",
+      "group": "1/4",
+      "t1": {
+        "name": "Norwegia",
+        "flag": "🇳🇴"
+      },
+      "t2": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "date": "11 lipca 2026",
+      "time": "23:00",
+      "deadline": "2026-07-11T21:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "arg-sui",
+      "group": "1/4",
+      "t1": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "t2": {
+        "name": "Szwajcaria",
+        "flag": "🇨🇭"
+      },
+      "date": "12 lipca 2026",
+      "time": "03:00",
+      "deadline": "2026-07-12T01:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
     }
   ]
 }
