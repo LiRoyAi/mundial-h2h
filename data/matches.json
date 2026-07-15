@@ -3192,6 +3192,48 @@
       "published": false,
       "result": null,
       "h2h": null
+    },
+    {
+      "id": "esp-fra",
+      "group": "1/2",
+      "t1": {
+        "name": "Hiszpania",
+        "flag": "🇪🇸"
+      },
+      "t2": {
+        "name": "Francja",
+        "flag": "🇫🇷"
+      },
+      "date": "14 lipca 2026",
+      "time": "21:00",
+      "deadline": "2026-07-14T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
+    },
+    {
+      "id": "eng-arg",
+      "group": "1/2",
+      "t1": {
+        "name": "Anglia",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "t2": {
+        "name": "Argentyna",
+        "flag": "🇦🇷"
+      },
+      "date": "15 lipca 2026",
+      "time": "21:00",
+      "deadline": "2026-07-15T19:00:00Z",
+      "youtube_pl": null,
+      "youtube_en": null,
+      "tiktok_url": null,
+      "published": false,
+      "result": null,
+      "h2h": null
     }
   ]
 }
