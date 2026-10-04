@@ -1,53 +1,13 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
-import { getBadges } from "@/lib/badges";
+import { tournamentClosed } from "@/lib/tournament";
 
 const redis = Redis.fromEnv();
 
 export const dynamic = "force-dynamic";
 
-export async function POST(request: NextRequest) {
-  let body: { matchId?: string; score?: string; nick?: string };
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const { matchId, score, nick } = body;
-  if (!matchId || !score || !nick) {
-    return Response.json({ error: "Missing fields" }, { status: 400 });
-  }
-
-  const scoreKey = `votes:${matchId}:${score}`;
-  const nickKey  = `ranking:${nick}`;
-  const voteKey  = `vote:${matchId}:${nick}`;
-
-  await Promise.all([
-    redis.incr(scoreKey),
-    redis.incr(nickKey),
-    redis.set(voteKey, score),
-    redis.set(`onboarded:${nick}`, "1", { ex: 30 * 24 * 3600 }),
-    redis.set(`golden_balls:${nick}`, 3, { nx: true }),
-  ]);
-
-  // Track registration order for pierwsza_krew badge
-  const alreadyReg = await redis.exists(`registered_seq:${nick}`);
-  if (!alreadyReg) {
-    const seq = await redis.incr("player_registration_count");
-    await redis.set(`registered_seq:${nick}`, seq);
-  }
-
-  const keys = await redis.keys(`votes:${matchId}:*`);
-  const counts: Record<string, number> = {};
-  if (keys.length > 0) {
-    const values = await redis.mget<number[]>(...keys);
-    keys.forEach((k, i) => {
-      counts[k.replace(`votes:${matchId}:`, "")] = values[i] ?? 0;
-    });
-  }
-
-  return Response.json({ matchId, results: counts });
+export function POST() {
+  return tournamentClosed();
 }
 
 export async function GET(request: NextRequest) {

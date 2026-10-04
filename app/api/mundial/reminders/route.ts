@@ -1,45 +1,15 @@
-import { Redis } from "@upstash/redis";
-import { NextRequest } from "next/server";
-
-const redis = Redis.fromEnv();
+import { tournamentClosed } from "@/lib/tournament";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  const emails = await redis.smembers<string[]>("reminders");
-  return Response.json({ emails, count: emails.length });
+export function GET() {
+  return tournamentClosed();
 }
 
-export async function POST(request: NextRequest) {
-  let body: { email?: string };
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const email = body.email?.trim().toLowerCase();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return Response.json({ error: "Nieprawidłowy adres email" }, { status: 400 });
-  }
-
-  await redis.sadd("reminders", email);
-  return Response.json({ ok: true });
+export function POST() {
+  return tournamentClosed();
 }
 
-export async function DELETE(request: NextRequest) {
-  let body: { email?: string };
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const email = body.email?.trim().toLowerCase();
-  if (!email) {
-    return Response.json({ error: "Missing email" }, { status: 400 });
-  }
-
-  await redis.srem("reminders", email);
-  return Response.json({ ok: true });
+export function DELETE() {
+  return tournamentClosed();
 }

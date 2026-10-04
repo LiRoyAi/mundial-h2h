@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
+import { tournamentClosed } from "@/lib/tournament";
 
 const redis = Redis.fromEnv();
 export const dynamic = "force-dynamic";
@@ -26,22 +27,6 @@ export async function GET(request: NextRequest) {
   return Response.json({ side: side ?? null });
 }
 
-export async function POST(request: NextRequest) {
-  let body: { matchId?: string; nick?: string; side?: string };
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const { matchId, nick, side } = body;
-  if (!matchId || !nick || !side) {
-    return Response.json({ error: "Missing fields" }, { status: 400 });
-  }
-  if (side !== "with" && side !== "against") {
-    return Response.json({ error: "side must be 'with' or 'against'" }, { status: 400 });
-  }
-
-  await redis.set(`challenge:${matchId}:${nick}`, side, { ex: 30 * 24 * 3600 });
-  return Response.json({ ok: true });
+export function POST() {
+  return tournamentClosed();
 }

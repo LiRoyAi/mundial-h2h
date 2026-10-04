@@ -1,6 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { createHash } from "crypto";
 import { NextRequest } from "next/server";
+import { tournamentClosed } from "@/lib/tournament";
 
 const redis = Redis.fromEnv();
 
@@ -39,15 +40,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (action === "register") {
-    if (!pin || !/^\d{4}$/.test(pin)) {
-      return Response.json({ error: "PIN musi mieć 4 cyfry" }, { status: 400 });
-    }
-    const existing = await redis.get<string>(pinKey);
-    if (existing) {
-      return Response.json({ error: "Nick już zajęty" }, { status: 409 });
-    }
-    await redis.set(pinKey, hashPin(pin));
-    return Response.json({ ok: true });
+    return tournamentClosed();
   }
 
   if (action === "login") {

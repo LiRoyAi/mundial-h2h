@@ -1,8 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/mundial/reminders/send",
-      "schedule": "0 7 * * *"
-    }
-  ]
-}
+{}

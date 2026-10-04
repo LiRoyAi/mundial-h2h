@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import matchesData from "@/data/matches.json";
 import AIComment from "@/components/AIComment";
 import TimeMachineModal from "@/components/TimeMachineModal";
+import { TOURNAMENT_CLOSED } from "@/lib/tournament";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -460,11 +461,11 @@ function MatchCard({ match, nick, onFirstVote, goldenBalls, onGoldenBallUse, fir
   const [inputFlash, setInputFlash] = useState(false);
   const [cardFlash, setCardFlash] = useState(false);
   const [liroyAnalysis, setLiroyAnalysis] = useState<string | null | undefined>(undefined);
-  const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(false);
+  const [showLiroyAnalysis, setShowLiroyAnalysis] = useState(true);
   const [aiComment, setAiComment] = useState<string | null>(null);
   const [timeMachineOpen, setTimeMachineOpen] = useState(false);
   const [storiesLoading, setStoriesLoading] = useState(false);
-  const isPast = new Date() > new Date(match.deadline);
+  const isPast = TOURNAMENT_CLOSED || new Date() > new Date(match.deadline);
   const { date, time } = toLocal(match.deadline);
 
   const fetchResults = useCallback(async () => {
@@ -1510,6 +1511,54 @@ function FlagsIntro({ onDone }: { onDone: () => void }) {
 
 // ─── Dashboard ───────────────────────────────────────────────────────────────
 
+const FINAL_MATCH = MATCHES.find((m) => m.group === "final") ?? null;
+
+function TournamentOverBanner({ winner }: { winner: RankingEntry | null }) {
+  const [finalResult, setFinalResult] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!FINAL_MATCH) return;
+    fetch(`/api/vote?matchId=${FINAL_MATCH.id}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data?.result) setFinalResult(data.result); })
+      .catch(() => {});
+  }, []);
+
+  let champion: { name: string; flag: string } | null = null;
+  if (FINAL_MATCH && finalResult) {
+    const [g1, g2] = finalResult.split(":").map(Number);
+    if (g1 > g2) champion = FINAL_MATCH.t1;
+    else if (g2 > g1) champion = FINAL_MATCH.t2;
+  }
+
+  return (
+    <section className="px-4 pt-6 pb-2 max-w-2xl mx-auto">
+      <div className="border border-[#FFD700]/50 bg-[#0d0d00] px-6 py-5 rounded-sm text-center">
+        <p className="text-xs tracking-[0.4em]" style={{ fontFamily: B, color: "#FFD700" }}>
+          🏁 TURNIEJ ZAKOŃCZONY
+        </p>
+        {FINAL_MATCH && finalResult && (
+          <p className="mt-3 text-sm tracking-wide" style={{ fontFamily: B, color: "#ccc" }}>
+            FINAŁ: {FINAL_MATCH.t1.flag} {FINAL_MATCH.t1.name} {finalResult} {FINAL_MATCH.t2.name} {FINAL_MATCH.t2.flag}
+            {champion && <span style={{ color: "#FFD700" }}> — MISTRZ ŚWIATA: {champion.name} {champion.flag}</span>}
+          </p>
+        )}
+        {winner && (
+          <p className="mt-2 text-sm tracking-wide" style={{ fontFamily: B, color: "#ccc" }}>
+            🏆 ZWYCIĘZCA TYPERA:{" "}
+            <a href={`/gracz/${encodeURIComponent(winner.nick)}`} className="hover:underline" style={{ color: "#FFD700" }}>
+              {winner.nick}
+            </a>{" "}— {winner.points} PKT
+          </p>
+        )}
+        <p className="mt-3 text-[10px] tracking-widest" style={{ fontFamily: B, color: "#555" }}>
+          Typowanie zamknięte. Poniżej końcowy ranking i archiwum wszystkich meczów.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function Dashboard({ nick, nickSaved, userRank, todayCount, goldenBalls }: {
   nick: string;
   nickSaved: boolean;
@@ -1617,7 +1666,7 @@ function Dashboard({ nick, nickSaved, userRank, todayCount, goldenBalls }: {
             </span>
           </button>
         )}
-        {nickSaved && (
+        {nickSaved && !TOURNAMENT_CLOSED && (
           <button
             onClick={() => { setShowCreate((v) => !v); setCreateError(""); }}
             className="py-3 px-5 min-h-[44px] flex items-center border border-[#FFD700]/15 hover:border-[#FFD700]/45 transition-colors text-[10px] tracking-widest whitespace-nowrap"
@@ -1674,7 +1723,7 @@ export default function MundialPage() {
   const [userRank, setUserRank] = useState<UserRank | null>(null);
   const [showBeaters, setShowBeaters] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">("DZIŚ");
+  const [activeTab, setActiveTab] = useState<"DZIŚ" | "NADCHODZĄCE" | "ZAKOŃCZONE">(TOURNAMENT_CLOSED ? "ZAKOŃCZONE" : "DZIŚ");
   const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
   const [now, setNow] = useState(new Date(0)); // fixed sentinel avoids SSR/client mismatch
   const [modalMatch, setModalMatch] = useState<Match | null>(null);
@@ -1865,6 +1914,9 @@ export default function MundialPage() {
       setPendingNick(t);
       if (data.exists) {
         setAuthState("pin_login");
+      } else if (TOURNAMENT_CLOSED) {
+        setAuthState("idle");
+        setPinError("Turniej zakończony — rejestracja nowych graczy jest zamknięta.");
       } else if (data.hasRanking) {
         setAuthState("pin_claim");
       } else {
@@ -1972,6 +2024,8 @@ export default function MundialPage() {
       <StadiumBg />
       {showIntro && <FlagsIntro onDone={handleIntroDone} />}
       <main style={{ background: "transparent", minHeight: "100vh", position: "relative", zIndex: 1 }}>
+
+      {TOURNAMENT_CLOSED && <TournamentOverBanner winner={ranking[0] ?? null} />}
 
       {/* ── HERO — guests only ───────────────────────────────────────── */}
       {mounted && !nickSaved && (
@@ -2142,6 +2196,7 @@ export default function MundialPage() {
                   {authState === "checking" ? "..." : "OK"}
                 </button>
               </div>
+              {pinError && <p className="text-red-500 text-xs text-center mt-2" style={{ fontFamily: B }}>{pinError}</p>}
             </motion.div>
           )}
         </AnimatePresence>
@@ -2523,7 +2578,7 @@ export default function MundialPage() {
       )}
 
       {/* ── REMINDER ─────────────────────────────────────────────────── */}
-      <section className="px-6 pb-16 max-w-lg mx-auto">
+      {!TOURNAMENT_CLOSED && <section className="px-6 pb-16 max-w-lg mx-auto">
         <div className="border border-[#FFD700]/10 bg-[#0a0a0a] px-6 py-5 rounded-sm">
           <label className="flex items-start gap-3 cursor-pointer select-none">
             <input
@@ -2584,7 +2639,7 @@ export default function MundialPage() {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </section>}
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
       <footer className="pb-24 md:pb-12 text-center space-y-2">

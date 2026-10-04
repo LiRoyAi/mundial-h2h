@@ -1,7 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { NextRequest } from "next/server";
 import matchesData from "@/data/matches.json";
-import { calculateAndSaveBadges } from "@/lib/badges";
+import { getBadges } from "@/lib/badges";
 
 const redis = Redis.fromEnv();
 export const dynamic = "force-dynamic";
@@ -143,9 +143,8 @@ export async function GET(
 
   const storedBest = (await redis.get<number>(`best_streak:${nick}`)) ?? 0;
   const bestStreak = Math.max(streak, storedBest);
-  if (streak > storedBest) await redis.set(`best_streak:${nick}`, streak);
 
-  const badges = await calculateAndSaveBadges(redis, nick);
+  const badges = await getBadges(redis, nick);
 
   return Response.json({
     nick,
